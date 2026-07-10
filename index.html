@@ -129,11 +129,28 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
         <video id="hero-vid-full" src="assets/hero-vid_1.mp4" controls="" loop="" playsinline="" style="max-width:100%;max-height:100%;width:auto;height:auto;border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,.7)"></video>
       </div>
 
-      <!-- headline + subhead + cta -->
+      <!-- headline + cta -->
+      <sc-if value="{{ heroMob }}" hint-placeholder-val="{{ false }}">
       <div style="{{ heroContentStyle }}">
-        <h1 style="{{ heroH1Style }}">Когда апгрейд стоит как крыло самолета,<br>железу нужна <span style="background:linear-gradient(120deg,#0F9F94,#8CFFF6);-webkit-background-clip:text;background-clip:text;color:transparent">нормальная защита</span></h1>
-        <a href="#compare" class="agni-cta-hero" style="{{ heroBtnStyle }}">Подобрать сетевой фильтр</a>
+        <h1 style="{{ heroH1Style }}">Если железо стоит как крыло самолета, нужен защитный сетевой фильтр уровня PRO</h1>
+        <a href="#compare" class="agni-cta-hero" style="{{ heroBtnStyle }}">Прокачать защиту сетапа</a>
       </div>
+      </sc-if>
+      <sc-if value="{{ heroDesktop }}" hint-placeholder-val="{{ true }}">
+      <div style="{{ heroDeskWrap }}">
+        <h1 style="{{ heroPart1Style }}"><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">Если</span> железо <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">стоит</span><br><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">как</span> крыло самолета,</h1>
+        <div style="{{ heroRightColStyle }}">
+        <div style="{{ heroPart2Style }}"><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">нужен</span> защитный<br>сетевой фильтр<br><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">уровня</span> PRO</div>
+        <div style="{{ heroCtaWrapStyle }}">
+          <div style="display:flex;flex-direction:column;line-height:1.12;padding-right:6px">
+            <span style="font:500 14px Roboto,sans-serif;letter-spacing:.02em;color:#8FA3A3">Держит нагрузку</span>
+            <span style="font:700 21px Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px">до 4000 Вт</span>
+          </div>
+          <a href="#compare" class="agni-cta-hero" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 30px;border-radius:100px;font:600 16px Roboto,sans-serif;text-decoration:none;white-space:nowrap">Прокачать защиту сетапа</a>
+        </div>
+        </div>
+      </div>
+      </sc-if>
     </div>
   </div>
   </sc-if>
@@ -1319,12 +1336,19 @@ class Component extends DCLogic {
     const heroPlaySvgStyle = 'width:' + (heroMob ? '52px' : '98px') + ';height:' + (heroMob ? '52px' : '98px') + ';display:block';
     const heroContentStyle = heroMob
       ? 'display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:26px 14px 6px'
-      : 'position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 clamp(20px,5vw,48px) clamp(28px,4vw,44px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(14px,2vw,20px)';
-    const heroH1Style = 'margin:0;font:700 clamp(26px,4.6vw,52px)/1.08 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1px;max-width:none;text-shadow:0 6px 44px rgba(0,0,0,.6)';
+      : 'position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 clamp(20px,5vw,48px) clamp(28px,4vw,44px);display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:clamp(18px,2.2vw,28px);max-width:860px';
+    const heroH1Style = 'margin:0;font:700 clamp(28px,4vw,52px)/1.08 Montserrat,sans-serif;letter-spacing:-1.5px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none';
     const heroSubStyle = 'margin:0;max-width:680px;font:400 clamp(15px,1.5vw,18px)/1.55 Roboto,sans-serif;color:#DCEAE9;text-shadow:0 2px 22px rgba(0,0,0,.7)';
     const heroBtnStyle = heroMob
       ? 'display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 28px;border-radius:14px;font:600 16px Roboto,sans-serif;width:100%;max-width:420px'
       : 'display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 32px;border-radius:14px;font:600 17px Roboto,sans-serif;max-width:100%';
+    // desktop split headline: zone 1 (top-left) + zone 2 (mid-right), CTA bottom-left
+    const heroGradFont = 'font:700 clamp(28px,3.1vw,48px)/1.14 Montserrat,sans-serif;letter-spacing:-1.5px;white-space:nowrap;color:#FFFFFF;text-shadow:0 4px 30px rgba(0,0,0,.55)';
+    const heroDeskWrap = 'position:absolute;left:0;right:0;top:0;bottom:0;z-index:3;max-width:1340px;margin:0 auto;padding:0 clamp(24px,5vw,72px);pointer-events:none';
+    const heroPart1Style = 'position:absolute;top:16%;left:0;z-index:3;margin:0;' + heroGradFont;
+    const heroRightColStyle = 'position:absolute;top:38%;right:0;z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:clamp(14px,1.8vw,24px);pointer-events:none';
+    const heroPart2Style = 'margin:0;text-align:left;' + heroGradFont;
+    const heroCtaWrapStyle = 'z-index:3;pointer-events:auto;display:inline-flex;align-items:center;gap:18px;padding:10px 10px 10px 26px;border-radius:100px;background:rgba(18,22,24,.4);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 16px 44px -18px rgba(0,0,0,.7)';
 
     const trustMob = this.state.gw === 'sm';
     const trustScrimStyle = trustMob
@@ -1396,6 +1420,13 @@ class Component extends DCLogic {
       heroVidBtnStyle: 'position:absolute;bottom:clamp(16px,2vw,26px);right:clamp(16px,2vw,26px);z-index:5;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:none;cursor:pointer;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .2s',
       heroPlaySvgStyle,
       heroContentStyle,
+      heroMob,
+      heroDesktop: !heroMob,
+      heroDeskWrap,
+      heroPart1Style,
+      heroPart2Style,
+      heroRightColStyle,
+      heroCtaWrapStyle,
       heroH1Style,
       heroSubStyle,
       heroBtnStyle,
