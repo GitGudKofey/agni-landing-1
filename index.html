@@ -137,8 +137,10 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 
 <div id="top"></div>
 
+<!-- ============ HERO + SCENARIOS stack wrapper -->
+<div style="position:relative">
 <!-- ============ HERO ============ -->
-<section ref="{{ heroRef }}" style="position:relative;overflow:hidden;padding-top:74px;padding-bottom:60px">
+<section ref="{{ heroRef }}" style="position:sticky;top:0;z-index:0;overflow:hidden;padding-top:74px;padding-bottom:60px">
   <!-- ambient glows -->
 
   <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ false }}">
@@ -315,7 +317,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <sc-if value="{{ heroDesktop }}" hint-placeholder-val="{{ true }}">
       <div style="{{ heroCenterColStyle }}">
         <h1 style="{{ heroCenterH1Style }}"><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">Если</span> железо <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">стоит как</span> крыло самолета, <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">нужен</span> защитный сетевой фильтр <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">уровня</span> PRO</h1>
-        <a href="#compare" class="hero-cta-big" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:space-between;gap:32px;height:70px;min-width:360px;padding:0 34px;border-radius:16px;font:600 19px Roboto,sans-serif;text-decoration:none;white-space:nowrap"><span style="position:relative;z-index:1">Прокачать защиту сетапа</span><i class="ph-fill ph-shield-check" style="position:relative;z-index:1;font-size:26px"></i></a>
+        <a href="#compare" class="hero-cta-big" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;height:70px;min-width:360px;padding:0 34px;border-radius:16px;font:600 19px Roboto,sans-serif;text-decoration:none;white-space:nowrap"><span style="position:relative;z-index:1">Прокачать защиту сетапа</span></a>
       </div>
       </sc-if>
     </div>
@@ -376,15 +378,20 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 </section>
 
 <!-- ============ SCENARIOS ============ -->
-<div style="position:relative;background:#000;overflow:clip">
+<div style="position:relative;z-index:2;background:#000;overflow:clip;border-radius:clamp(24px,3vw,48px) clamp(24px,3vw,48px) 0 0;box-shadow:0 -30px 80px rgba(0,0,0,.55)">
   <section id="scenarios" style="position:relative;max-width:1440px;margin:0 auto;padding:clamp(56px,8vh,88px) clamp(16px,4.2vw,32px) 40px">
   <sc-if value="{{ scTablet }}" hint-placeholder-val="{{ false }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,16px);padding-top:clamp(84px,13vh,140px);padding-bottom:clamp(88px,13vh,114px);pointer-events:none;z-index:2">
-      <h2 style="position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;margin:0;text-align:center;font:700 clamp(30px,4.8vw,58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 style="position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
       <div style="position:relative;height:min(40vh,380px);aspect-ratio:1463 / 570;flex-shrink:0">
         <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
-          <image-slot id="scene-imgt-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyleT }}" shape="rect" placeholder="Изображение сценария"></image-slot>
+          <sc-if value="{{ s.noVid }}" hint-placeholder-val="{{ true }}">
+            <image-slot id="scene-imgt-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyleT }}" shape="rect" placeholder="Изображение сценария"></image-slot>
+          </sc-if>
+          <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if>
+          </sc-if>
         </sc-for>
       </div>
       <div style="position:relative;width:100%;max-width:540px;height:52px;flex-shrink:0">
@@ -435,7 +442,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <sc-if value="{{ scDesktop }}" hint-placeholder-val="{{ true }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.4vh,40px);padding-top:clamp(96px,14vh,150px);padding-bottom:clamp(80px,11vh,118px);pointer-events:none;z-index:2">
-      <h2 id="sc-heading-d" style="position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;margin:0;text-align:center;font:700 clamp(30px,4.8vw,58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 id="sc-heading-d" style="position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
       <!-- SLIDES with two views: label left, devices slide in from both edges, specs right -->
       <sc-for list="{{ sceneOverlays }}" as="ov" hint-placeholder-count="1">
         <div style="{{ ov.overlayStyle }}">
@@ -446,13 +453,26 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
                 <div style="margin-top:12px;font:600 32px/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ov.title }}</div>
               </div>
               <div style="{{ ov.rightStyle }}">
+                <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
+                  <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video></sc-if>
+                </sc-if>
+                <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="scene-view-r-{{ ov.idx }}" src="{{ ov.right }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
+                </sc-if>
               </div>
             </div>
             <div style="display:flex;align-items:center;justify-content:flex-start;gap:clamp(24px,3vw,64px)">
+              <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ ov.leftWrapStyle }}">
+                  <img src="uploads/2slide-left.jpg" alt="" style="{{ ov.img1Style }}">
+                  <video class="scene-vid scene-vid-loop" src="uploads/1slide-left-42d724d6.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ ov.img2Style }}"></video>
+                </div>
+              </sc-if>
+              <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
               <div style="{{ ov.leftStyle }}">
                 <image-slot id="scene-view-l-{{ ov.idx }}" src="{{ ov.left }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
               </div>
+              </sc-if>
               <div style="flex-shrink:0;display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)">
                 <sc-for list="{{ ov.specs }}" as="sp" hint-placeholder-count="2">
                   <div>
@@ -501,7 +521,12 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <div style="position:relative;align-self:flex-start;width:100vw;margin-left:calc(50% - 50vw);height:min(56vh,560px);display:flex;align-items:center;justify-content:flex-start;gap:clamp(24px,3vw,64px);flex-shrink:0">
         <div style="position:relative;flex:0 0 auto;height:min(56vh,560px,calc((100vw - 360px) / 2.566));aspect-ratio:1463 / 570">
           <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
-            <image-slot id="scene-img-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyle }}" shape="rect" placeholder="Изображение сценария"></image-slot>
+            <sc-if value="{{ s.noVid }}" hint-placeholder-val="{{ true }}">
+              <image-slot id="scene-img-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyle }}" shape="rect" placeholder="Изображение сценария"></image-slot>
+            </sc-if>
+            <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="uploads/TP-FI3U5E-С_v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if>
+            </sc-if>
           </sc-for>
         </div>
         <div style="position:relative;flex:0 0 auto;align-self:stretch;width:clamp(200px,15vw,240px)">
@@ -551,6 +576,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   </div>
   </sc-if>
 </section>
+</div>
 </div>
 
 <!-- ============ TRUST ============ -->
@@ -881,9 +907,15 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;columns&quot;,&quot;immersive&quot;,&quot;cinema&quot;,&quot;split&quot;],&quot;default&quot;:&quot;solid&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;columns&quot;,&quot;immersive&quot;,&quot;cinema&quot;,&quot;split&quot;],&quot;default&quot;:&quot;solid&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slide1Video&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;v2slim&quot;,&quot;v3slim&quot;],&quot;default&quot;:&quot;v2slim&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { scenario: 0, compare: 0, gw: 'lg', navOpen: false, cmpA: 0, cmpB: 6, triA: 0, triB: 2, triC: 6, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, heroVidPaused: false, playedScenes: {} };
+
+  componentDidUpdate() {
+    if (this.state.playedScenes && this.state.playedScenes[0] && this._sceneVids) {
+      this._sceneVids.forEach((v) => { if (!v._started) { v._started = true; v.play().catch(() => {}); } });
+    }
+  }
 
   componentDidMount() {
     this._isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
@@ -994,6 +1026,7 @@ class Component extends DCLogic {
     const modal = document.getElementById('hero-modal');
     const full = document.getElementById('hero-vid-full');
     const closeBtn = document.getElementById('hero-modal-close');
+
     const solidVid = document.getElementById('hero-vid-solid');
     if (solidVid) { solidVid.muted = true; solidVid.loop = true; solidVid.addEventListener('ended', () => { solidVid.currentTime = 0; solidVid.play().catch(() => {}); }); solidVid.play().catch(() => {}); }
     const cine = document.getElementById('hero-vid-cinema');
@@ -1123,9 +1156,17 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    if (!this._sceneVidRef) this._sceneVidRef = (v) => {
+      if (!v) return;
+      v.muted = true; v.loop = v.classList.contains('scene-vid-loop');
+      this._sceneVids = this._sceneVids || new Set();
+      this._sceneVids.add(v);
+
+      if ((this.state.playedScenes && this.state.playedScenes[0]) || this.state.isTouch) { if (!v._started) { v._started = true; v.play().catch(() => {}); } }
+    };
     const variant = this.props.heroVariant ?? 'solid';
     const base = [
-      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление сетапом', model: 'TP-FI3U5E-C', img: 'assets/slide-1.png', thumb: 'assets/cmp-fi3u5e.png', left: 'assets/connect-left.png', right: 'assets/connect-right.png', ar: '1460 / 380',
+      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/slide-1.png', vid: 'uploads/TP-FI3U5E-С_v2slim.mp4', thumb: 'assets/cmp-fi3u5e.png', left: 'assets/connect-left.png', right: 'assets/connect-right.png', ar: '1460 / 400',
         body: 'Отключайте монитор, колонки или консоль отдельно, не вынимая вилок из розеток. Или разделите сетап на игровые и периферийные устройства и управляйте группами оборудования.' },
       { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FS8E', img: 'assets/slide-2.png', thumb: 'assets/cmp-fs8e.png', left: 'assets/connect2-left.png', right: 'assets/connect2-right.png', ar: '1460 / 400',
         body: 'Подключите ПК или консоль, монитор, роутер, колонки и зарядные устройства в одном месте. Контроль правильного заземления — безопасность игрового места. Версии с USB и без USB.' },
@@ -1135,7 +1176,7 @@ class Component extends DCLogic {
         body: 'Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.' }
     ];
     const sceneAccents = [
-      [ { big: '5', label: 'кнопок управления' }, { big: '2', label: 'группы питания' } ],
+      [ { big: '5', label: 'выключателей' }, { big: 'Включайте', label: 'только то, что нужно' } ],
       [ { pre: 'до', big: '6', label: 'устройств' }, { big: 'USB', label: 'версии с портами и без' } ],
       [ { pre: 'до', big: '8', label: 'устройств' }, { big: 'LED', label: 'индикатор заземления' } ],
       [ { big: '65 Вт', label: 'GaN для ноутбуков' }, { big: '20 Вт', label: 'быстрая зарядка' } ]
@@ -1165,6 +1206,10 @@ class Component extends DCLogic {
         bodyStyle: 'display:none;margin:0;max-width:620px;font:400 clamp(15px,1.4vw,17px)/1.62 Roboto,sans-serif;color:#8FA3A3',
         imgStyle: 'position:absolute;inset:0;width:100%;height:100%;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:' + (this.state.isTouch ? 'none' : (a ? 'auto' : 'none')),
         imgStyleT: 'position:absolute;inset:0;width:100%;height:100%;opacity:' + (a ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
+        vid: s.vid,
+        noVid: !s.vid,
+        vidStyle: 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
+        vidStyleT: 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:' + (a ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
         accentStyle: 'position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);opacity:' + (a && !s.left ? '1' : '0') + ';display:flex;flex-direction:column;gap:clamp(20px,3vh,34px);text-align:left;' + xf,
         accentStyleT: 'position:absolute;left:0;right:0;top:0;opacity:' + (a ? '1' : '0') + ';display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:clamp(28px,8vw,60px);text-align:center;' + xf,
         modelStyle: 'width:100%;font:700 clamp(16px,1.5vw,20px) Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px;margin-bottom:clamp(8px,1.2vh,14px)',
@@ -1183,6 +1228,11 @@ class Component extends DCLogic {
         title: s.title,
         left: s.left,
         right: s.right,
+        leftWrapStyle: 'width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;display:flex;align-items:stretch;justify-content:flex-end;gap:clamp(16px,1.4vw,28px)',
+        img1Style: 'height:100%;width:auto;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) .5s;transform:translateX(' + (played ? '0' : '-450%') + ')',
+        img2Style: 'height:100%;width:auto;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateX(' + (played ? '0' : '-320%') + ')',
+        vid: s.vid,
+        noVid: !s.vid,
         overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
         rightStyle: devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')',
         leftStyle: devBase + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
@@ -1513,7 +1563,7 @@ class Component extends DCLogic {
       : 'display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 32px;border-radius:14px;font:600 17px Roboto,sans-serif;max-width:100%';
     // desktop split headline: zone 1 (top-left) + zone 2 (mid-right), CTA bottom-left
     const heroGradFont = 'font:700 clamp(28px,3.1vw,48px)/1.14 Montserrat,sans-serif;letter-spacing:-1.5px;white-space:nowrap;color:#FFFFFF;text-shadow:0 4px 30px rgba(0,0,0,.55)';
-    const heroCenterColStyle = 'position:absolute;left:50%;top:25%;transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:clamp(24px,3vw,32px);text-align:center;width:min(1040px,88%);pointer-events:none';
+    const heroCenterColStyle = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:clamp(24px,3vw,32px);text-align:center;width:min(1040px,88%);pointer-events:none';
     const heroCenterH1Style = 'margin:0;text-align:center;font:700 clamp(28px,3.6vw,64px)/1.12 Montserrat,sans-serif;letter-spacing:-1.5px;color:#FFFFFF;text-shadow:0 4px 30px rgba(0,0,0,.55)';
     const heroDeskWrap = 'position:absolute;left:0;right:0;top:0;bottom:0;z-index:3;max-width:1340px;margin:0 auto;padding:0 clamp(24px,5vw,72px);pointer-events:none';
     const heroPart1Style = 'position:absolute;top:16%;left:0;z-index:3;margin:0;' + heroGradFont;
@@ -1579,12 +1629,15 @@ class Component extends DCLogic {
       duoCols,
       duoDevices,
       duoSelStyle,
+      sceneVidRef: this._sceneVidRef,
+      slide1V2: (this.props.slide1Video ?? 'v2slim') !== 'v3slim',
+      slide1V3: (this.props.slide1Video ?? 'v2slim') === 'v3slim',
       heroImmersive: variant === 'immersive',
       heroColumns: variant === 'columns',
       heroSolid: variant !== 'columns' && variant !== 'immersive' && variant !== 'split' && variant !== 'cinema',
       heroSolidCardStyle: heroMob
-        ? 'background:#082624;border-radius:24px;padding:24px;display:flex;flex-direction:column'
-        : 'min-height:0;overflow:hidden;background:#082624;border-radius:clamp(24px,5vw,100px);padding:clamp(30px,min(3vw,4vh),60px);display:flex;flex-direction:column',
+        ? 'background:#0D0D0D;border-radius:24px;padding:24px;display:flex;flex-direction:column'
+        : 'min-height:0;overflow:hidden;background:#0D0D0D;border-radius:clamp(24px,5vw,100px);padding:clamp(30px,min(3vw,4vh),60px);display:flex;flex-direction:column',
       heroSolidTextStyle: 'font:700 clamp(18px,min(2.45vw,4.4vh),62px)/1.2 Montserrat,sans-serif;letter-spacing:-.5px;color:#FFFFFF',
       heroSolidCtaStyle: heroMob
         ? 'position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:96px;background:#0F9F94;color:#FFFFFF;border-radius:24px;padding:22px 24px;font:800 22px/1.15 Montserrat,sans-serif;letter-spacing:-.5px;text-decoration:none;text-align:center;margin-top:20px'
