@@ -383,14 +383,14 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <sc-if value="{{ scTablet }}" hint-placeholder-val="{{ false }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,16px);padding-top:clamp(84px,13vh,140px);padding-bottom:clamp(88px,13vh,114px);pointer-events:none;z-index:2">
-      <h2 style="position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 style="z-index:6;position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
       <div style="position:relative;height:min(40vh,380px);aspect-ratio:1463 / 570;flex-shrink:0">
         <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
           <sc-if value="{{ s.noVid }}" hint-placeholder-val="{{ true }}">
             <image-slot id="scene-imgt-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyleT }}" shape="rect" placeholder="Изображение сценария"></image-slot>
           </sc-if>
           <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
-            <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if>
+            <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if>
           </sc-if>
         </sc-for>
       </div>
@@ -442,19 +442,19 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <sc-if value="{{ scDesktop }}" hint-placeholder-val="{{ true }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.4vh,40px);padding-top:clamp(96px,14vh,150px);padding-bottom:clamp(80px,11vh,118px);pointer-events:none;z-index:2">
-      <h2 id="sc-heading-d" style="position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 id="sc-heading-d" style="z-index:6;position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
       <!-- SLIDES with two views: label left, devices slide in from both edges, specs right -->
       <sc-for list="{{ sceneOverlays }}" as="ov" hint-placeholder-count="1">
         <div style="{{ ov.overlayStyle }}">
           <div style="width:100%;max-width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.8vh,26px)">
             <div style="display:flex;align-items:center;justify-content:flex-end;gap:clamp(24px,3vw,64px)">
-              <div style="flex-shrink:0;max-width:360px">
-                <div style="font:700 22px Montserrat,sans-serif;letter-spacing:-.3px;color:#F0FAF9">{{ ov.model }}</div>
-                <div style="margin-top:12px;font:600 32px/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ov.title }}</div>
+              <div style="{{ ov.titleWrapStyle }}">
+                <div style="font:700 clamp(16px,min(1.1vw,1.7vh),22px) Montserrat,sans-serif;letter-spacing:-.3px;color:#F0FAF9">{{ ov.model }}</div>
+                <div style="margin-top:12px;white-space:pre-line;font:600 clamp(23px,min(1.7vw,2.5vh),32px)/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ov.title }}</div>
               </div>
               <div style="{{ ov.rightStyle }}">
                 <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
-                  <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video></sc-if>
+                  <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if>
                 </sc-if>
                 <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="scene-view-r-{{ ov.idx }}" src="{{ ov.right }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
@@ -465,7 +465,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
               <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
                 <div style="{{ ov.leftWrapStyle }}">
                   <img src="assets/scene1-left-usb.jpg" alt="" style="{{ ov.img1Style }}">
-                  <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ ov.img2Style }}"></video>
+                  <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="{{ ov.img2Style }}"></video>
                 </div>
               </sc-if>
               <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
@@ -473,12 +473,12 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
                 <image-slot id="scene-view-l-{{ ov.idx }}" src="{{ ov.left }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
               </div>
               </sc-if>
-              <div style="flex-shrink:0;display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)">
+              <div style="{{ ov.specsWrapStyle }}">
                 <sc-for list="{{ ov.specs }}" as="sp" hint-placeholder-count="2">
                   <div>
                     <div style="{{ sp.preStyle }}">{{ sp.pre }}</div>
-                    <div style="font:700 clamp(30px,4.4vw,50px)/1 Montserrat,sans-serif;color:#0F9F94;letter-spacing:-1px;white-space:nowrap">{{ sp.big }}</div>
-                    <div style="margin-top:6px;font:400 18px Roboto,sans-serif;color:#8FA3A3;line-height:1.3">{{ sp.label }}</div>
+                    <div style="font:700 clamp(28px,min(4.4vw,3.9vh),50px)/1 Montserrat,sans-serif;color:#0F9F94;letter-spacing:-1px;white-space:nowrap"><sc-for list="{{ sp.bigParts }}" as="bp" hint-placeholder-count="1"><span style="{{ bp.style }}">{{ bp.t }}</span></sc-for></div>
+                    <div style="{{ sp.labelStyle }}">{{ sp.label }}</div>
                   </div>
                 </sc-for>
               </div>
@@ -489,29 +489,33 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <!-- SLIDE 4 (tower): main rises from bottom, socket detail slides from the right -->
       <sc-if value="{{ towerOverlay }}" hint-placeholder-val="{{ false }}">
       <div style="{{ towerOverlay.overlayStyle }}">
-        <div style="width:100%;max-width:min(1500px,92vw);display:flex;align-items:center;justify-content:center;gap:clamp(24px,4vw,72px)">
-          <div style="flex:1 1 0;display:flex;justify-content:flex-end">
-          <div style="flex-shrink:0;max-width:320px">
-            <div style="font:700 22px Montserrat,sans-serif;letter-spacing:-.3px;color:#F0FAF9">{{ towerOverlay.model }}</div>
-            <div style="margin-top:12px;font:600 32px/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ towerOverlay.title }}</div>
-          </div>
-          </div>
+        <div style="width:100%;max-width:min(1500px,92vw);display:flex;align-items:center;justify-content:center;gap:clamp(66px,5.8vw,116px)">
           <div style="{{ towerOverlay.mainStyle }}">
             <image-slot id="tower-main" src="{{ towerOverlay.main }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
           </div>
-          <div style="flex:1 1 0;display:flex;justify-content:flex-start">
-          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,3vh,32px)">
-            <div style="{{ towerOverlay.detailStyle }}">
-              <image-slot id="tower-detail" src="{{ towerOverlay.detail }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
+          <div style="flex:0 1 auto;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,2.6vh,30px)">
+            <div style="{{ towerOverlay.titleWrapStyle }}">
+              <div style="font:700 clamp(16px,min(1.1vw,1.7vh),22px) Montserrat,sans-serif;letter-spacing:-.3px;color:#F0FAF9">{{ towerOverlay.model }}</div>
+              <div style="margin-top:12px;font:600 clamp(23px,min(1.7vw,2.5vh),32px)/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ towerOverlay.title }}</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)">
-              <sc-for list="{{ towerOverlay.specs }}" as="sp" hint-placeholder-count="2">
-                <div>
-                  <div style="{{ sp.preStyle }}">{{ sp.pre }}</div>
-                  <div style="font:700 clamp(30px,4.4vw,50px)/1 Montserrat,sans-serif;color:#0F9F94;letter-spacing:-1px;white-space:nowrap">{{ sp.big }}</div>
-                  <div style="margin-top:6px;font:400 18px Roboto,sans-serif;color:#8FA3A3;line-height:1.3">{{ sp.label }}</div>
+            <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,2.8vh,32px)">
+            <div style="{{ towerOverlay.detailWrapStyle }}">
+              <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.4vh,26px)">
+                <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="3" ref="{{ sceneVidRef }}" style="{{ towerOverlay.img1Style }}"></video>
+                <div style="{{ towerOverlay.specTextStyle }}">
+                  <div style="{{ towerOverlay.spec1.preStyle }}">{{ towerOverlay.spec1.pre }}</div>
+                  <div style="font:700 clamp(28px,min(4.4vw,3.9vh),50px)/1.12 Montserrat,sans-serif;letter-spacing:-1px"><sc-for list="{{ towerOverlay.spec1.bigParts }}" as="bp" hint-placeholder-count="1"><span style="{{ bp.style }}">{{ bp.t }}</span></sc-for></div>
+                  <div style="{{ towerOverlay.spec1.labelStyle }}">{{ towerOverlay.spec1.label }}</div>
                 </div>
-              </sc-for>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.4vh,26px)">
+                <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="3" ref="{{ sceneVidRef }}" style="{{ towerOverlay.img2Style }}"></video>
+                <div style="{{ towerOverlay.specTextStyle }}">
+                  <div style="{{ towerOverlay.spec2.preStyle }}">{{ towerOverlay.spec2.pre }}</div>
+                  <div style="font:700 clamp(28px,min(4.4vw,3.9vh),50px)/1.12 Montserrat,sans-serif;letter-spacing:-1px"><sc-for list="{{ towerOverlay.spec2.bigParts }}" as="bp" hint-placeholder-count="1"><span style="{{ bp.style }}">{{ bp.t }}</span></sc-for></div>
+                  <div style="{{ towerOverlay.spec2.labelStyle }}">{{ towerOverlay.spec2.label }}</div>
+                </div>
+              </div>
             </div>
           </div>
           </div>
@@ -525,7 +529,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
               <image-slot id="scene-img-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyle }}" shape="rect" placeholder="Изображение сценария"></image-slot>
             </sc-if>
             <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
-              <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if>
+              <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if>
             </sc-if>
           </sc-for>
         </div>
@@ -907,13 +911,16 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;columns&quot;,&quot;immersive&quot;,&quot;cinema&quot;,&quot;split&quot;],&quot;default&quot;:&quot;solid&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slide1Video&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;v2slim&quot;,&quot;v3slim&quot;],&quot;default&quot;:&quot;v2slim&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;columns&quot;,&quot;immersive&quot;,&quot;cinema&quot;,&quot;split&quot;],&quot;default&quot;:&quot;solid&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slide1Video&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;v2slim&quot;,&quot;v3slim&quot;,&quot;v4slim&quot;],&quot;default&quot;:&quot;v4slim&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { scenario: 0, compare: 0, gw: 'lg', navOpen: false, cmpA: 0, cmpB: 6, triA: 0, triB: 2, triC: 6, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, heroVidPaused: false, playedScenes: {} };
 
   componentDidUpdate() {
-    if (this.state.playedScenes && this.state.playedScenes[0] && this._sceneVids) {
-      this._sceneVids.forEach((v) => { if (!v._started) { v._started = true; v.play().catch(() => {}); } });
+    if (this.state.playedScenes && this._sceneVids) {
+      this._sceneVids.forEach((v) => {
+        const i = parseInt(v.getAttribute('data-scene-i') || '0', 10);
+        if (this.state.playedScenes[i] && !v._started) { v._started = true; v.play().catch(() => {}); }
+      });
     }
   }
 
@@ -1162,24 +1169,25 @@ class Component extends DCLogic {
       this._sceneVids = this._sceneVids || new Set();
       this._sceneVids.add(v);
 
-      if ((this.state.playedScenes && this.state.playedScenes[0]) || this.state.isTouch) { if (!v._started) { v._started = true; v.play().catch(() => {}); } }
+      const vi = parseInt(v.getAttribute('data-scene-i') || '0', 10);
+      if ((this.state.playedScenes && this.state.playedScenes[vi]) || this.state.isTouch) { if (!v._started) { v._started = true; v.play().catch(() => {}); } }
     };
     const variant = this.props.heroVariant ?? 'solid';
     const base = [
       { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/slide-1.png', vid: 'assets/scene1-top-v2slim.mp4', thumb: 'assets/cmp-fi3u5e.png', left: 'assets/connect-left.png', right: 'assets/connect-right.png', ar: '1460 / 400',
         body: 'Отключайте монитор, колонки или консоль отдельно, не вынимая вилок из розеток. Или разделите сетап на игровые и периферийные устройства и управляйте группами оборудования.' },
-      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FS8E', img: 'assets/slide-2.png', thumb: 'assets/cmp-fs8e.png', left: 'assets/connect2-left.png', right: 'assets/connect2-right.png', ar: '1460 / 400',
+      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FS8E', img: 'assets/slide-2.png', thumb: 'assets/cmp-fs8e.png', left: 'assets/connect2-left.png', right: 'assets/connect2-right.png', ar: '1460 / 400', rich: true, vid: 'assets/scene1-top-v2slim.mp4',
         body: 'Подключите ПК или консоль, монитор, роутер, колонки и зарядные устройства в одном месте. Контроль правильного заземления — безопасность игрового места. Версии с USB и без USB.' },
-      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы и стриминг', model: 'TP-FS6E', img: 'assets/slide-3.png', thumb: 'assets/cmp-tpfs6e.png', left: 'assets/connect3-left.png', right: 'assets/connect3-right.png', ar: '1460 / 400',
+      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы\nи стриминг', model: 'TP-FS6E', img: 'assets/slide-3.png', thumb: 'assets/cmp-tpfs6e.png', left: 'assets/connect3-left.png', right: 'assets/connect3-right.png', ar: '1460 / 400', rich: true, vid: 'assets/scene1-top-v2slim.mp4',
         body: 'Больше розеток для расширенного сетапа. Для игровых ПК, нескольких мониторов, освещения, камер, микрофонов и сетевого оборудования. Световой индикатор показывает наличие заземления в розетке.' },
-      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VE5U5E-С', img: 'assets/slide-4.png', thumb: 'assets/cmp-tpve5u5e.png', left: 'assets/connect4-main.png', right: 'assets/connect4-detail.png', tower: true,
+      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VE5U5E-С', img: 'assets/slide-4.png', thumb: 'assets/cmp-tpve5u5e.png', left: 'assets/slide4-tower-main.png', right: 'assets/connect4-detail.png', tower: true,
         body: 'Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.' }
     ];
     const sceneAccents = [
-      [ { big: '5', label: 'выключателей' }, { big: 'Включайте', label: 'только то, что нужно' } ],
-      [ { pre: 'до', big: '6', label: 'устройств' }, { big: 'USB', label: 'версии с портами и без' } ],
-      [ { pre: 'до', big: '8', label: 'устройств' }, { big: 'LED', label: 'индикатор заземления' } ],
-      [ { big: '65 Вт', label: 'GaN для ноутбуков' }, { big: '20 Вт', label: 'быстрая зарядка' } ]
+      [ { parts: [{ t: '5 ' }, { t: 'выключателей', white: true }], big: '5 выключателей', label: 'Включайте только то, что нужно' }, { parts: [{ t: 'QC/PD', white: true }, { t: ' 20 Вт' }], big: 'QC/PD 20 Вт', label: 'Быстрая зарядка смартфона или геймпада' } ],
+      [ { big: '2 выключателя', label: 'Отдельное питание игрового и рабочего сетапа' }, { big: 'QC/PD 20 Вт', label: 'Геймпад снова готов к игре' } ],
+      [ { big: 'QC/PD 20 Вт', label: 'Быстрая зарядка смартфона без адаптера' }, { big: 'LED индикаторы', label: 'Контроль заземления и защиты одним взглядом' } ],
+      [ { pre: 'беспроводная зарядка', big: 'Qi 15 Вт', label: 'Положили смартфон — зарядка началась' }, { pre: 'быстрая зарядка', big: 'GaN 65 Вт', label: 'Зарядка ноутбуков, Steam Deck, Nintendo Switch' } ]
     ];
     const scenarios = base.map((s, i) => {
       const a = i === this.state.scenario;
@@ -1221,7 +1229,9 @@ class Component extends DCLogic {
       const s = x.s, i = x.i;
       const active = i === this.state.scenario;
       const played = !!this.state.playedScenes[i];
-      const devBase = 'width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);';
+      const rich = !!(s.vid || s.rich);
+      const devT = (d) => 'width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1)' + (d ? ' ' + d : '') + ';';
+      const devBase = devT('');
       return {
         idx: i,
         model: s.model,
@@ -1229,18 +1239,22 @@ class Component extends DCLogic {
         left: s.left,
         right: s.right,
         leftWrapStyle: 'width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;display:flex;align-items:stretch;justify-content:flex-end;gap:clamp(16px,1.4vw,28px)',
-        img1Style: 'height:100%;width:auto;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) .5s;transform:translateX(' + (played ? '0' : '-450%') + ')',
-        img2Style: 'height:100%;width:auto;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateX(' + (played ? '0' : '-320%') + ')',
+        img1Style: 'height:80%;width:auto;align-self:center;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.5s;transform:translateX(' + (played ? '0' : '-700%') + ')',
+        img2Style: 'height:80%;width:auto;align-self:center;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (played ? '0' : '-550%') + ')',
         vid: s.vid,
         noVid: !s.vid,
         overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
         rightStyle: devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')',
-        leftStyle: devBase + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
+        leftStyle: devT(rich && !s.vid ? '2s' : '') + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
+        titleWrapStyle: 'flex-shrink:0;width:360px' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 1s') : ''),
+        specsWrapStyle: 'flex-shrink:0;display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 3s') : ''),
         specs: (sceneAccents[i] || []).map((ac) => ({
           pre: ac.pre || '',
           big: ac.big,
           label: ac.label,
-          preStyle: 'font:400 18px Roboto,sans-serif;color:#8FA3A3;margin-bottom:2px' + (ac.pre ? '' : ';display:none')
+          bigParts: [{ t: ac.big, style: rich ? 'background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:pre' : 'color:#0F9F94;white-space:pre' }],
+          preStyle: 'font:400 18px Roboto,sans-serif;color:#8FA3A3;margin-bottom:2px' + (ac.pre ? '' : ';display:none'),
+          labelStyle: 'margin-top:6px;font:400 clamp(14px,min(.95vw,1.45vh),18px) Roboto,sans-serif;color:' + (rich ? '#86868b' : '#8FA3A3') + ';line-height:1.3'
         }))
       };
     });
@@ -1254,15 +1268,22 @@ class Component extends DCLogic {
       main: towerBase.left,
       detail: towerBase.right,
       overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (towerActive ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
-      mainStyle: 'width:min(460px,44vw);aspect-ratio:1 / 1;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
-      detailStyle: 'width:min(220px,17vw);aspect-ratio:1 / 1;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateX(' + (towerP ? '0' : '150%') + ')',
+      mainStyle: 'height:min(760px,46vw,58vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
+      detailWrapStyle: 'display:flex;align-items:flex-start;gap:clamp(20px,1.8vw,40px)',
+      img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
+      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.6s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
+      titleWrapStyle: 'flex-shrink:0;max-width:460px;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 1s',
+      specTextStyle: 'width:0;min-width:100%;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 3s',
       specs: (sceneAccents[towerIdx] || []).map((ac) => ({
         pre: ac.pre || '',
         big: ac.big,
         label: ac.label,
-        preStyle: 'font:400 18px Roboto,sans-serif;color:#8FA3A3;margin-bottom:2px' + (ac.pre ? '' : ';display:none')
+        bigParts: [{ t: ac.big, style: 'background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:pre' }],
+        preStyle: 'font:400 18px Roboto,sans-serif;color:#8FA3A3;margin-bottom:2px' + (ac.pre ? '' : ';display:none'),
+        labelStyle: 'margin-top:6px;font:400 clamp(14px,min(.95vw,1.45vh),18px) Roboto,sans-serif;color:#86868b;line-height:1.3'
       }))
     } : null;
+    if (towerOverlay) { towerOverlay.spec1 = towerOverlay.specs[0]; towerOverlay.spec2 = towerOverlay.specs[1]; }
     const scGrid = this.state.gw !== 'lg'
       ? 'position:relative;z-index:1;display:block;margin-top:24px'
       : 'position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:0;align-items:stretch';
@@ -1630,8 +1651,9 @@ class Component extends DCLogic {
       duoDevices,
       duoSelStyle,
       sceneVidRef: this._sceneVidRef,
-      slide1V2: (this.props.slide1Video ?? 'v2slim') !== 'v3slim',
+      slide1V2: (this.props.slide1Video ?? 'v2slim') !== 'v3slim' && (this.props.slide1Video ?? 'v2slim') !== 'v4slim',
       slide1V3: (this.props.slide1Video ?? 'v2slim') === 'v3slim',
+      slide1V4: (this.props.slide1Video ?? 'v2slim') === 'v4slim',
       heroImmersive: variant === 'immersive',
       heroColumns: variant === 'columns',
       heroSolid: variant !== 'columns' && variant !== 'immersive' && variant !== 'split' && variant !== 'cinema',
