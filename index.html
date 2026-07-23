@@ -92,6 +92,18 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 @keyframes agniMascotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
 @keyframes ringPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:.9;transform:translate(-50%,-50%) scale(1.06)}}
 @keyframes agniCtaSweep{0%{transform:translateX(-180%) skewX(-20deg)}100%{transform:translateX(360%) skewX(-20deg)}}
+@keyframes eventsMarqueeUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes eventsMarqueeDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.events-col-up{animation:eventsMarqueeUp 36s linear infinite}
+.events-col-down{animation:eventsMarqueeDown 42s linear infinite}
+.events-rail{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 88%,transparent 100%)}
+.events-rail > div{overflow:visible!important}
+.events-rail img{position:relative;z-index:1;transition:transform .35s ease,box-shadow .35s ease;transform-origin:center center;cursor:pointer;will-change:transform}
+.events-rail img:hover{transform:scale(1.06);z-index:5;box-shadow:0 18px 40px -16px rgba(0,0,0,.75)}
+.events-col-up:hover,.events-col-down:hover{animation-play-state:paused}
+#events-play-btn video,#events-vid{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:cover!important}
+.events-play:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(15,159,148,.22)!important;border-color:rgba(45,232,220,.7)!important}
+@media (prefers-reduced-motion:reduce){.events-col-up,.events-col-down{animation:none!important;transform:none!important}.events-rail img:hover{transform:none;box-shadow:none}}
 .hero-cta-big{position:relative;overflow:hidden;background:#0F9F94;color:#FFFFFF;transition:filter .2s,background .2s}
 .hero-cta-big:hover{filter:brightness(1.07)}
 .hero-cta-big::after{content:"";position:absolute;top:0;left:0;width:32%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-180%) skewX(-20deg);pointer-events:none;z-index:2}
@@ -111,6 +123,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
     <div style="{{ nav.links }}">
       <a href="#scenarios" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">Сценарии</a>
       <a href="#advantages" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">Преимущества</a>
+      <a href="#events" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">Ивенты</a>
       <a href="#guarantees" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">Гарантии</a>
       <a href="#compare" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">Сравнение</a>
       <a href="#faq" style="padding:10px 17px;border-radius:100px;font:500 16px Roboto,sans-serif" class="nav-link">FAQ</a>
@@ -128,6 +141,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <div class="liquid-glass" style="{{ nav.panelStyle }}">
     <a href="#scenarios" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">Сценарии</a>
     <a href="#advantages" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">Преимущества</a>
+    <a href="#events" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">Ивенты</a>
     <a href="#guarantees" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">Гарантии</a>
     <a href="#compare" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">Сравнение</a>
     <a href="#faq" onClick="{{ nav.close }}" style="padding:13px 18px;border-radius:18px;font:500 17px Roboto,sans-serif;color:rgba(255,255,255,.92)" style-hover="background:rgba(15,159,148,.1);color:#0F9F94">FAQ</a>
@@ -215,166 +229,6 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   </div>
   </sc-if>
 
-  <!-- COLUMNS VARIANT -->
-  <sc-if value="{{ heroColumns }}" hint-placeholder-val="{{ false }}">
-  <div style="position:relative;z-index:2;padding:22px 12px 12px">
-    <div style="{{ heroColInnerStyle }}">
-      <div style="{{ heroColVideoStyle }}">
-        <video id="hero-vid" src="assets/hero-vid_1.webm" autoplay="" muted="" loop="" playsinline="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-      </div>
-      <div style="{{ heroColRightStyle }}">
-        <div style="{{ heroColCardStyle }}">
-          <div style="{{ heroColTextStyle }}">
-            <div><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">Если</span> железо<br><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">стоит как</span> крыло<br>самолета</div>
-            <img src="assets/hero-img-1.png" alt="" style="{{ heroColImgStyle }}">
-            <div><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">нужен</span> защитный<br>сетевой фильтр<br><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">уровня</span> PRO</div>
-            <img src="assets/hero-img-2.png" alt="" style="{{ heroColImgStyle }}">
-          </div>
-        </div>
-        <a href="#compare" class="hero-col-cta btn7g" style="{{ heroColCtaStyle }}">
-          <span style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:28px 28px;animation:tileUp 1.8s linear infinite"></span>
-          <span class="sl" style="transform:rotate(0deg)"><span></span></span>
-          <span class="sl" style="transform:rotate(30deg)"><span style="animation-delay:-.12s"></span></span>
-          <span class="sl" style="transform:rotate(60deg)"><span style="animation-delay:-.3s"></span></span>
-          <span class="sl" style="transform:rotate(90deg)"><span style="animation-delay:-.2s"></span></span>
-          <span class="sl" style="transform:rotate(120deg)"><span style="animation-delay:-.4s"></span></span>
-          <span class="sl" style="transform:rotate(150deg)"><span style="animation-delay:-.08s"></span></span>
-          <span class="sl" style="transform:rotate(180deg)"><span style="animation-delay:-.25s"></span></span>
-          <span class="sl" style="transform:rotate(210deg)"><span style="animation-delay:-.35s"></span></span>
-          <span class="sl" style="transform:rotate(240deg)"><span style="animation-delay:-.15s"></span></span>
-          <span class="sl" style="transform:rotate(270deg)"><span style="animation-delay:-.45s"></span></span>
-          <span class="sl" style="transform:rotate(300deg)"><span style="animation-delay:-.28s"></span></span>
-          <span class="sl" style="transform:rotate(330deg)"><span style="animation-delay:-.05s"></span></span>
-          <span class="chest" style="position:absolute;left:36px;top:50%;margin-top:-13px;width:34px;height:26px;z-index:2">
-            <span class="cb cb1" style="position:absolute;left:10px;top:-4px;width:14px;height:14px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
-            <span class="cb cb2" style="position:absolute;left:12px;top:-4px;width:12px;height:12px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
-            <span class="cb cb3" style="position:absolute;left:8px;top:-4px;width:13px;height:13px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
-            <span style="position:absolute;bottom:0;left:0;width:34px;height:16px;background:#8C5A2B;border-radius:3px 3px 4px 4px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
-            <span style="position:absolute;bottom:6px;left:14px;width:6px;height:7px;background:#FFD84D;border-radius:1px"></span>
-            <span class="lid" style="position:absolute;top:0;left:0;width:34px;height:11px;background:#A96D36;border-radius:5px 5px 2px 2px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
-          </span>
-          <span class="chest" style="position:absolute;right:36px;top:50%;margin-top:-13px;width:34px;height:26px;z-index:2">
-            <span class="cb cb1" style="position:absolute;left:10px;top:-4px;width:14px;height:14px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18);animation-delay:.1s"></span>
-            <span class="cb cb2" style="position:absolute;left:12px;top:-4px;width:12px;height:12px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
-            <span class="cb cb3" style="position:absolute;left:8px;top:-4px;width:13px;height:13px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18);animation-delay:.4s"></span>
-            <span style="position:absolute;bottom:0;left:0;width:34px;height:16px;background:#8C5A2B;border-radius:3px 3px 4px 4px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
-            <span style="position:absolute;bottom:6px;left:14px;width:6px;height:7px;background:#FFD84D;border-radius:1px"></span>
-            <span class="lid" style="position:absolute;top:0;left:0;width:34px;height:11px;background:#A96D36;border-radius:5px 5px 2px 2px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
-          </span>
-          <span class="idle" style="position:absolute;left:96px;bottom:128px;width:38px;height:38px;background:#E8A33D;border-radius:5px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.22);color:#FFF8E7;font:800 24px 'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center;text-shadow:2px 2px 0 rgba(0,0,0,.35);animation:blockBump 4.5s linear infinite;z-index:2">?<span style="position:absolute;top:5px;left:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;top:5px;right:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;bottom:5px;left:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;bottom:5px;right:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span></span>
-          <span class="idle" style="position:absolute;left:105px;bottom:156px;width:18px;height:18px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18);animation:coinPop 4.5s linear infinite;z-index:2"></span>
-          <span style="position:absolute;left:30%;top:60%;font:800 26px 'JetBrains Mono',monospace;color:rgba(255,255,255,.42);animation:plusRise 3.1s ease-out infinite;animation-delay:-.8s">+1</span>
-          <span style="position:absolute;right:24%;top:56%;font:800 30px 'JetBrains Mono',monospace;color:rgba(255,255,255,.5);animation:plusRise 2.7s ease-out infinite;animation-delay:-1.9s">+1</span>
-          <span style="position:absolute;left:52%;top:52%;width:20px;height:20px;border-left:4px solid rgba(255,255,255,.32);border-top:4px solid rgba(255,255,255,.32);animation:lvlRise 2.9s linear infinite;animation-delay:-2.1s"></span>
-          <span style="position:absolute;right:12%;top:50%;width:24px;height:24px;border-left:5px solid rgba(255,255,255,.38);border-top:5px solid rgba(255,255,255,.38);animation:lvlRise 2.5s linear infinite;animation-delay:-1s"></span>
-          <span style="position:absolute;left:14%;top:34%;width:18px;height:18px;border-left:4px solid rgba(255,255,255,.3);border-top:4px solid rgba(255,255,255,.3);animation:lvlRise 3.3s linear infinite;animation-delay:-2.6s"></span>
-          <span style="position:absolute;left:40%;top:28%;width:22px;height:22px;border-left:5px solid rgba(255,255,255,.35);border-top:5px solid rgba(255,255,255,.35);animation:lvlRise 2.7s linear infinite;animation-delay:-.5s"></span>
-          <span style="position:absolute;right:34%;top:38%;width:16px;height:16px;border-left:4px solid rgba(255,255,255,.28);border-top:4px solid rgba(255,255,255,.28);animation:lvlRise 3.6s linear infinite;animation-delay:-1.6s"></span>
-          <span style="position:absolute;left:22%;top:30%;font:800 24px 'JetBrains Mono',monospace;color:rgba(255,255,255,.38);animation:plusRise 3.4s ease-out infinite;animation-delay:-2.4s">+1</span>
-          <span style="position:absolute;right:16%;top:26%;font:800 28px 'JetBrains Mono',monospace;color:rgba(255,255,255,.45);animation:plusRise 2.9s ease-out infinite;animation-delay:-1.2s">+1</span>
-          <span style="position:absolute;left:58%;top:36%;font:800 22px 'JetBrains Mono',monospace;color:rgba(255,255,255,.34);animation:plusRise 3.7s ease-out infinite;animation-delay:-3s">+1</span>
-          <span class="idle" style="position:absolute;left:-40px;bottom:14px;width:24px;height:38px;animation:heroRun 4.5s linear infinite;z-index:2">
-            <span style="position:absolute;top:0;left:3px;width:16px;height:6px;background:#2E4E9E;border-radius:3px 3px 0 0"></span>
-            <span style="position:absolute;top:4px;left:14px;width:9px;height:3px;background:#2E4E9E;border-radius:0 2px 2px 0"></span>
-            <span style="position:absolute;top:7px;left:4px;width:14px;height:9px;background:#F2C49B;border-radius:2px"></span>
-            <span style="position:absolute;top:9px;left:13px;width:3px;height:4px;background:#04110F;border-radius:1px"></span>
-            <span style="position:absolute;top:16px;left:3px;width:18px;height:8px;background:#B23A3A;border-radius:2px"></span>
-            <span style="position:absolute;top:21px;left:5px;width:14px;height:8px;background:#2E4E9E;border-radius:2px 2px 3px 3px"></span>
-            <span style="position:absolute;bottom:0;left:4px;width:6px;height:10px;background:#6B4423;border-radius:2px;animation:legStep .28s steps(2) infinite"></span>
-            <span style="position:absolute;bottom:0;right:5px;width:6px;height:10px;background:#6B4423;border-radius:2px;animation:legStep .28s steps(2) infinite;animation-delay:-.14s"></span>
-          </span>
-          <span style="position:relative;z-index:1">Прокачать<br>защиту сетапа</span>
-          <span class="idle" style="position:absolute;right:44px;top:26px;font:800 15px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#FFFFFF;background:#B23A3A;border-radius:6px;padding:3px 8px;animation:lvlPopSync 4.5s ease-in-out infinite">LVL UP!</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  </sc-if>
-
-  <!-- IMMERSIVE VARIANT -->
-  <sc-if value="{{ heroImmersive }}" hint-placeholder-val="{{ false }}">
-  <div style="position:relative;z-index:2;padding:0 12px 12px">
-    <div class="hero-frame" style="{{ heroFrameStyle }}">
-      <div style="{{ heroVideoBoxStyle }}">
-        <video id="hero-vid" src="assets/hero-vid_1.webm" autoplay="" muted="" loop="" playsinline="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div style="{{ heroDimStyle }}"></div>
-      </div>
-      <button type="button" onClick="{{ heroVidToggle }}" aria-label="Пауза / воспроизведение" style="{{ heroVidBtnStyle }}" style-hover="background:rgba(0,0,0,.6)"><i class="{{ heroVidIcon }}"></i></button>
-
-      <!-- fullscreen video modal -->
-      <div id="hero-modal" style="position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(2,6,7,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:48px">
-        <button id="hero-modal-close" aria-label="Закрыть" style="position:absolute;top:24px;right:28px;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#F0FAF9;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s" style-hover="background:rgba(255,255,255,.16)"><i class="ph ph-x"></i></button>
-        <video id="hero-vid-full" src="assets/hero-vid_1.webm" controls="" loop="" playsinline="" style="max-width:100%;max-height:100%;width:auto;height:auto;border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,.7)"></video>
-      </div>
-
-      <!-- headline + cta -->
-      <sc-if value="{{ heroMob }}" hint-placeholder-val="{{ false }}">
-      <div style="{{ heroContentStyle }}">
-        <h1 style="{{ heroH1Style }}">Если железо стоит как крыло самолета, нужен защитный сетевой фильтр уровня PRO</h1>
-        <a href="#compare" class="agni-cta-hero" style="{{ heroBtnStyle }}">Прокачать защиту сетапа</a>
-      </div>
-      </sc-if>
-      <sc-if value="{{ heroDesktop }}" hint-placeholder-val="{{ true }}">
-      <div style="{{ heroCenterColStyle }}">
-        <h1 style="{{ heroCenterH1Style }}"><span style="color:#6E6E6E;font-style:italic;padding-right:.16em">Если</span> железо <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">стоит как</span> крыло самолета, <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">нужен</span> защитный сетевой фильтр <span style="color:#6E6E6E;font-style:italic;padding-right:.16em">уровня</span> PRO</h1>
-        <a href="#compare" class="hero-cta-big" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;height:70px;min-width:360px;padding:0 34px;border-radius:16px;font:600 19px Roboto,sans-serif;text-decoration:none;white-space:nowrap"><span style="position:relative;z-index:1">Прокачать защиту сетапа</span></a>
-      </div>
-      </sc-if>
-    </div>
-  </div>
-  </sc-if>
-
-  <!-- SPLIT VARIANT -->
-  <sc-if value="{{ heroSplit }}" hint-placeholder-val="{{ false }}">
-  <div style="position:relative;z-index:2;max-width:1440px;margin:0 auto;padding:96px clamp(16px,4.2vw,32px) 60px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center">
-    <div>
-      <span style="display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:100px;border:1px solid rgba(15,159,148,.35);background:rgba(15,159,148,.06);font:600 11px 'JetBrains Mono',monospace;color:#0F9F94;letter-spacing:.24em;text-transform:uppercase">
-        <span style="width:6px;height:6px;border-radius:50%;background:#0F9F94;box-shadow:0 0 10px #0F9F94"></span>NEON-AGNI · ПИТАНИЕ ДЛЯ ГЕЙМЕРОВ
-      </span>
-      <h1 style="margin:26px 0 0;font:800 clamp(32px,3.8vw,52px)/1.06 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.4px">Когда апгрейд стоит как крыло самолета, железу нужна <span style="background:linear-gradient(120deg,#0F9F94,#8CFFF6);-webkit-background-clip:text;background-clip:text;color:transparent">нормальная защита</span></h1>
-      <div style="display:flex;gap:16px;margin-top:34px;flex-wrap:wrap">
-        <a href="#compare" style="display:inline-flex;align-items:center;gap:11px;height:56px;padding:0 30px;border-radius:14px;background:linear-gradient(135deg,#0F9F94,#12B7AC);color:#04201E;font:600 17px Roboto,sans-serif;box-shadow:0 0 30px rgba(15,159,148,.45)" style-hover="box-shadow:0 0 48px rgba(15,159,148,.8);transform:translateY(-2px)">Подобрать под свой сетап<i class="ph ph-arrow-right" style="font-size:18px"></i></a>
-        <a href="#hero-video2" style="display:inline-flex;align-items:center;gap:11px;height:56px;padding:0 26px;border-radius:14px;border:1px solid rgba(15,159,148,.3);background:rgba(255,255,255,.02);color:#E4F3F2;font:600 16px Roboto,sans-serif" style-hover="border-color:rgba(15,159,148,.7);background:rgba(15,159,148,.06)"><i class="ph-fill ph-play" style="font-size:16px;color:#0F9F94"></i>Смотреть видео</a>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:30px;flex-wrap:wrap">
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;border:1px solid rgba(15,159,148,.16);background:rgba(255,255,255,.02);font:500 12px Roboto,sans-serif;color:#C7D6D5"><i class="ph ph-lightning" style="color:#0F9F94;font-size:14px"></i>до 4000 Вт</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;border:1px solid rgba(15,159,148,.16);background:rgba(255,255,255,.02);font:500 12px Roboto,sans-serif;color:#C7D6D5"><i class="ph ph-pulse" style="color:#0F9F94;font-size:14px"></i>варисторная защита</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;border:1px solid rgba(15,159,148,.16);background:rgba(255,255,255,.02);font:500 12px Roboto,sans-serif;color:#C7D6D5"><i class="ph ph-shield-check" style="color:#0F9F94;font-size:14px"></i>заземление</span>
-      </div>
-    </div>
-    <!-- device panel -->
-    <div id="hero-video2" data-par="0.7" style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid rgba(15,159,148,.25);background:linear-gradient(160deg,#0C1618,#080F10);box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 60px rgba(15,159,148,.14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px">
-      <video src="assets/hero-video.webm" autoplay="" muted="" loop="" playsinline="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-      <div style="position:absolute;inset:0;background:rgba(0,0,0,.5)"></div>
-      <div style="position:absolute;top:0;left:0;width:100%;height:16%;z-index:2;pointer-events:none;backdrop-filter:blur(25px) saturate(1.5);-webkit-backdrop-filter:blur(25px) saturate(1.5);-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,#000 70%,transparent 100%)"></div>
-      <div style="position:absolute;bottom:0;left:0;width:100%;height:16%;z-index:2;pointer-events:none;backdrop-filter:blur(25px) saturate(1.5);-webkit-backdrop-filter:blur(25px) saturate(1.5);-webkit-mask-image:linear-gradient(to top,#000 70%,transparent 100%);mask-image:linear-gradient(to top,#000 70%,transparent 100%)"></div>
-    </div>
-  </div>
-  </sc-if>
-
-  <!-- CINEMA VARIANT -->
-  <sc-if value="{{ heroCinema }}" hint-placeholder-val="{{ false }}">
-  <div style="position:relative;z-index:2;width:100%;height:calc(100vh - 96px);min-height:560px;overflow:hidden">
-    <video id="hero-vid-cinema" src="assets/hero-agni.mp4" autoplay="" muted="" playsinline="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"></video>
-    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(115% 85% at 50% 44%,transparent 30%,rgba(0,0,0,.42) 72%,rgba(0,0,0,.82) 100%)"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,transparent 34%,transparent 54%,rgba(0,0,0,.74) 100%);pointer-events:none"></div>
-    <div style="position:absolute;left:0;right:0;bottom:clamp(32px,6vh,64px);z-index:2;padding:0 clamp(20px,5vw,40px)">
-      <div style="max-width:1600px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
-        <div style="max-width:620px">
-          <span style="display:block;margin:0 0 14px;font:600 18px Roboto,sans-serif;letter-spacing:.04em;color:#FFFFFF;text-shadow:0 2px 18px rgba(0,0,0,.6)">Сетевые фильтры Agni</span>
-          <h1 style="margin:0;font:700 clamp(28px,4vw,52px)/1.08 Montserrat,sans-serif;letter-spacing:-1.5px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none">Продуманная защита дорогих сетапов</h1>
-        </div>
-        <div style="flex-shrink:0;display:flex;align-items:center;gap:16px;padding:10px 10px 10px 22px;border-radius:100px;background:rgba(30,30,32,.72);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 16px 44px -18px rgba(0,0,0,.7)">
-          <div style="display:flex;flex-direction:column;line-height:1.15">
-            <span style="font:400 13px Roboto,sans-serif;color:#9FB2B1">от</span>
-            <span style="font:700 20px Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px">3 389 ₽</span>
-          </div>
-          <a href="#compare" style="display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;border-radius:100px;background:#0F9F94;color:#FFFFFF;font:600 16px Roboto,sans-serif;text-decoration:none;transition:background .2s" style-hover="background:#12B7AC">Подобрать сетевой фильтр</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  </sc-if>
 </section>
 
 <!-- ============ SCENARIOS ============ -->
@@ -383,14 +237,17 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <sc-if value="{{ scTablet }}" hint-placeholder-val="{{ false }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1vh,16px);padding-top:clamp(84px,13vh,140px);padding-bottom:clamp(88px,13vh,114px);pointer-events:none;z-index:2">
-      <h2 style="z-index:6;position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 style="{{ scHeadingStyleT }}">Один центр питания<br>для всего сетапа</h2>
       <div style="position:relative;height:min(40vh,380px);aspect-ratio:1463 / 570;flex-shrink:0">
         <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
           <sc-if value="{{ s.noVid }}" hint-placeholder-val="{{ true }}">
             <image-slot id="scene-imgt-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyleT }}" shape="rect" placeholder="Изображение сценария"></image-slot>
           </sc-if>
-          <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
-            <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video></sc-if>
+          <sc-if value="{{ s.vidOwn }}" hint-placeholder-val="{{ false }}">
+            <video class="scene-vid" data-src="{{ s.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video>
+          </sc-if>
+          <sc-if value="{{ s.vidSlide1 }}" hint-placeholder-val="{{ false }}">
+            <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video>
           </sc-if>
         </sc-for>
       </div>
@@ -442,19 +299,22 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <sc-if value="{{ scDesktop }}" hint-placeholder-val="{{ true }}">
   <div style="position:relative;z-index:1">
     <div style="position:sticky;top:clamp(52px,7vh,88px);height:calc(100vh - clamp(52px,7vh,88px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.4vh,40px);padding-top:clamp(96px,14vh,150px);padding-bottom:clamp(80px,11vh,118px);pointer-events:none;z-index:2">
-      <h2 id="sc-heading-d" style="z-index:6;position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;margin:0;text-align:center;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance;pointer-events:none">Один центр питания<br>для всего сетапа</h2>
+      <h2 id="sc-heading-d" style="{{ scHeadingStyle }}">Один центр питания<br>для всего сетапа</h2>
       <!-- SLIDES with two views: label left, devices slide in from both edges, specs right -->
       <sc-for list="{{ sceneOverlays }}" as="ov" hint-placeholder-count="1">
         <div style="{{ ov.overlayStyle }}">
-          <div style="width:100%;max-width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.8vh,26px)">
-            <div style="display:flex;align-items:center;justify-content:flex-end;gap:clamp(24px,3vw,64px)">
+          <div style="width:100%;max-width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px)">
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:clamp(14px,1.6vw,32px)">
               <div style="{{ ov.titleWrapStyle }}">
                 <div style="font:700 clamp(16px,min(1.1vw,1.7vh),22px) Montserrat,sans-serif;letter-spacing:-.3px;color:#F0FAF9">{{ ov.model }}</div>
                 <div style="margin-top:12px;white-space:pre-line;font:600 clamp(23px,min(1.7vw,2.5vh),32px)/1.18 Montserrat,sans-serif;letter-spacing:-.4px;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ ov.title }}</div>
               </div>
               <div style="{{ ov.rightStyle }}">
-                <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
-                  <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video></sc-if>
+                <sc-if value="{{ ov.vidOwn }}" hint-placeholder-val="{{ false }}">
+                  <video class="scene-vid" data-src="{{ ov.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video>
+                </sc-if>
+                <sc-if value="{{ ov.vidSlide1 }}" hint-placeholder-val="{{ false }}">
+                  <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video>
                 </sc-if>
                 <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="scene-view-r-{{ ov.idx }}" src="{{ ov.right }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
@@ -464,8 +324,13 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
             <div style="display:flex;align-items:center;justify-content:flex-start;gap:clamp(24px,3vw,64px)">
               <sc-if value="{{ ov.vid }}" hint-placeholder-val="{{ false }}">
                 <div style="{{ ov.leftWrapStyle }}">
-                  <img src="assets/scene1-left-usb.jpg" alt="" style="{{ ov.img1Style }}">
-                  <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="{{ ov.img2Style }}"></video>
+                  <img src="{{ ov.usbImg }}" alt="" style="{{ ov.img1Style }}" loading="lazy" decoding="async">
+                  <sc-if value="{{ ov.socketsVid }}" hint-placeholder-val="{{ false }}">
+                    <video class="scene-vid scene-vid-loop" data-src="{{ ov.socketsVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="{{ ov.img2Style }}"></video>
+                  </sc-if>
+                  <sc-if value="{{ ov.socketsImg }}" hint-placeholder-val="{{ false }}">
+                    <img src="{{ ov.socketsImg }}" alt="" style="{{ ov.img2Style }}" loading="lazy" decoding="async">
+                  </sc-if>
                 </div>
               </sc-if>
               <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
@@ -489,9 +354,9 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <!-- SLIDE 4 (tower): main rises from bottom, socket detail slides from the right -->
       <sc-if value="{{ towerOverlay }}" hint-placeholder-val="{{ false }}">
       <div style="{{ towerOverlay.overlayStyle }}">
-        <div style="width:100%;max-width:min(1500px,92vw);display:flex;align-items:center;justify-content:center;gap:clamp(66px,5.8vw,116px)">
+        <div style="width:100%;max-width:min(1600px,96vw);display:flex;align-items:center;justify-content:center;gap:clamp(28px,2.5vw,56px)">
           <div style="{{ towerOverlay.mainStyle }}">
-            <image-slot id="tower-main" src="{{ towerOverlay.main }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
+            <video class="scene-vid" data-src="{{ towerOverlay.mainVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block"></video>
           </div>
           <div style="flex:0 1 auto;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,2.6vh,30px)">
             <div style="{{ towerOverlay.titleWrapStyle }}">
@@ -501,7 +366,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
             <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,2.8vh,32px)">
             <div style="{{ towerOverlay.detailWrapStyle }}">
               <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.4vh,26px)">
-                <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="3" ref="{{ sceneVidRef }}" style="{{ towerOverlay.img1Style }}"></video>
+                <video class="scene-vid scene-vid-loop" data-src="{{ towerOverlay.detailVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="{{ towerOverlay.img1Style }}"></video>
                 <div style="{{ towerOverlay.specTextStyle }}">
                   <div style="{{ towerOverlay.spec1.preStyle }}">{{ towerOverlay.spec1.pre }}</div>
                   <div style="font:700 clamp(28px,min(4.4vw,3.9vh),50px)/1.12 Montserrat,sans-serif;letter-spacing:-1px"><sc-for list="{{ towerOverlay.spec1.bigParts }}" as="bp" hint-placeholder-count="1"><span style="{{ bp.style }}">{{ bp.t }}</span></sc-for></div>
@@ -509,7 +374,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
                 </div>
               </div>
               <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.4vh,26px)">
-                <video class="scene-vid scene-vid-loop" src="assets/scene1-left-sockets.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="3" ref="{{ sceneVidRef }}" style="{{ towerOverlay.img2Style }}"></video>
+                <img src="{{ towerOverlay.detailImg }}" alt="" style="{{ towerOverlay.img2Style }}" loading="lazy" decoding="async">
                 <div style="{{ towerOverlay.specTextStyle }}">
                   <div style="{{ towerOverlay.spec2.preStyle }}">{{ towerOverlay.spec2.pre }}</div>
                   <div style="font:700 clamp(28px,min(4.4vw,3.9vh),50px)/1.12 Montserrat,sans-serif;letter-spacing:-1px"><sc-for list="{{ towerOverlay.spec2.bigParts }}" as="bp" hint-placeholder-count="1"><span style="{{ bp.style }}">{{ bp.t }}</span></sc-for></div>
@@ -528,8 +393,11 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
             <sc-if value="{{ s.noVid }}" hint-placeholder-val="{{ true }}">
               <image-slot id="scene-img-{{ s.idx }}" src="{{ s.img }}" fit="contain" style="{{ s.imgStyle }}" shape="rect" placeholder="Изображение сценария"></image-slot>
             </sc-if>
-            <sc-if value="{{ s.vid }}" hint-placeholder-val="{{ false }}">
-              <sc-if value="{{ slide1V2 }}" hint-placeholder-val="{{ true }}"><video class="scene-vid" src="assets/scene1-top-v2slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V3 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v3slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if><sc-if value="{{ slide1V4 }}" hint-placeholder-val="{{ false }}"><video class="scene-vid" src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video></sc-if>
+            <sc-if value="{{ s.vidOwn }}" hint-placeholder-val="{{ false }}">
+              <video class="scene-vid" data-src="{{ s.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video>
+            </sc-if>
+            <sc-if value="{{ s.vidSlide1 }}" hint-placeholder-val="{{ false }}">
+              <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video>
             </sc-if>
           </sc-for>
         </div>
@@ -583,31 +451,14 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 </div>
 </div>
 
-<!-- ============ TRUST ============ -->
-<section id="trust-wall" style="display:none;position:relative;background:linear-gradient(180deg,#0B1719 0%,#060D0E 38%,#000000 100%);border-radius:clamp(32px,6vw,64px) clamp(32px,6vw,64px) 0 0;padding:80px 0 90px;overflow:hidden">
-  <div style="position:relative;max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.2vw,32px)">
-    <div style="position:relative;width:100%;height:clamp(560px,52vw,880px)">
-      <sc-for list="{{ wallThumbs }}" as="w" hint-placeholder-count="24">
-        <div style="{{ w.style }}" data-wall-speed="{{ w.speed }}" data-wall-hx="{{ w.hx }}"><image-slot id="{{ w.id }}" src="{{ w.img }}" fit="cover" style="width:100%;height:100%;background:transparent" shape="rect" placeholder=""></image-slot><div style="{{ w.dimStyle }}"></div></div>
-      </sc-for>
-      <div aria-hidden="true" style="{{ trustScrimStyle }}"></div>
-      <div style="{{ trustGroupStyle }}">
-        <img src="assets/mascot-thumbsup.png" alt="Маскот AGNI" style="{{ trustMascotStyle }}">
-        <span style="{{ trustNumStyle }}">80+</span>
-        <span style="{{ trustLabelStyle }}">ТЫСЯЧ<br>ОТЗЫВОВ</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ ADVANTAGES ============ -->
 <section id="advantages" style="position:relative;max-width:1440px;margin:0 auto;padding:72px clamp(16px,4.2vw,32px) 72px">
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;max-width:820px;margin:0 auto">
-    <h2 style="margin:0;font:700 clamp(24px,4.6vw,46px)/1.12 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1px;text-wrap:balance">Максимальная надёжность для дорогостоящей техники во всех моделях</h2>
+    <h2 style="{{ sectionH2Style }}">Максимальная надёжность для дорогостоящей техники во всех моделях</h2>
   </div>
   <div id="adv-grid" style="{{ advGrid }}">
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/nagruzka-mrb7l5q2.png&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/nagruzka-mrb7l5q2.webp&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-lightning" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">До 4000 Вт нагрузки</h3>
@@ -615,7 +466,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/peregruz-mrb6p36a.png&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/peregruz-mrb6p36a.webp&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-shield-warning" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">Защита от перегрузки и КЗ</h3>
@@ -623,7 +474,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position:absolute;inset:0;border-radius:inherit;background:url(assets/varistor.png) center/cover no-repeat;opacity:.55;-webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent 82%);mask-image:linear-gradient(to bottom,#000 25%,transparent 82%);pointer-events:none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;border-radius:inherit;background:url(assets/varistor.webp) center/cover no-repeat;opacity:.55;-webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent 82%);mask-image:linear-gradient(to bottom,#000 25%,transparent 82%);pointer-events:none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-pulse" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">Варисторная защита</h3>
@@ -631,7 +482,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/med3x15-mrb6z43x.png&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/med3x15-mrb6z43x.webp&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-plug" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">Кабель из чистой меди 3×1,5&nbsp;мм²</h3>
@@ -639,7 +490,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/fiksatsia-mrb7g0k7.png&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/fiksatsia-mrb7g0k7.webp&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-plugs-connected" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">Надёжная контактная группа</h3>
@@ -647,11 +498,57 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
     <div class="card-brd" data-tilt="" style="position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(125% 125% at 50% 42%,#04080A 32%,#101B1D 100%);min-height:250px;padding:30px;display:flex;flex-direction:column;transform-style:preserve-3d;transform:rotateX(0deg) rotateY(0deg);transition:transform .18s ease-out,border-color .25s,box-shadow .25s" style-hover="border-color:rgba(45,232,220,.4)">
-      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/zazemlenie-mrb70cww.png&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; background: url(&quot;assets/zazemlenie-mrb70cww.webp&quot;) center / cover no-repeat; opacity: .55; -webkit-mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); mask-image: linear-gradient(to bottom,#000 25%,transparent 82%); pointer-events: none"></div><div style="position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 72% -55%,rgba(255,255,255,.06) 0%,transparent 40%),radial-gradient(circle at 33% 140%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at -8% 0%,rgba(255,255,255,.05) 0%,transparent 35%),radial-gradient(circle at 106% 74%,rgba(255,255,255,.05) 0%,transparent 30%),radial-gradient(ellipse 200% 300% at -25% -40%,rgba(45,232,220,.4) 0%,transparent 40%);box-shadow:inset 0 0 30px rgba(255,255,255,.05);pointer-events:none"></div>
       <i class="ph ph-shield-check" style="position:relative;font-size:38px;color:#2DE8DC;filter:drop-shadow(0 0 16px rgba(45,232,220,.55))"></i>
       <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font:600 20px Montserrat,sans-serif;color:#F0FAF9">Настоящее заземление</h3>
         <p style="margin:0;font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Для безопасной работы ПК, мониторов, консолей и другой чувствительной электроники.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section id="events" style="position:relative;z-index:2;isolation:isolate;max-width:1440px;margin:0 auto;padding:72px clamp(16px,4.2vw,32px) 72px;overflow:hidden;background:#000">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;max-width:900px;margin:0 auto">
+    <h2 style="{{ sectionH2Style }}">AGNI — защищает тысячи каток каждый день</h2>
+  </div>
+  <div style="{{ eventsGrid }}">
+    <div id="events-play-btn" role="button" tabindex="0" aria-label="Смотреть видео" style="position:relative;width:100%;height:{{ eventsMediaH }};border-radius:24px;overflow:hidden;border:none;outline:none;background:#0A1214;cursor:pointer;isolation:isolate">
+      <video id="events-vid" data-src="assets/Sponsor_Agni_4K.webm" muted="" loop="" playsinline="" preload="none" style="position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:cover;pointer-events:none;display:block"></video>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,transparent 32%,transparent 62%,rgba(0,0,0,.45) 100%);pointer-events:none;z-index:1"></div>
+      <span style="position:absolute;top:18px;left:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:100px;background:rgba(10,18,20,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);font:600 13px Roboto,sans-serif;color:#F0FAF9;letter-spacing:.02em">
+        <span style="width:7px;height:7px;border-radius:50%;background:#0F9F94;box-shadow:0 0 10px rgba(15,159,148,.8)"></span>Игромир
+      </span>
+      <span class="events-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(15,159,148,.14);border:1px solid rgba(45,232,220,.45);color:#2DE8DC;font-size:28px;transition:transform .25s ease,background .2s,border-color .2s;pointer-events:none"><i class="ph-fill ph-play" style="margin-left:3px"></i></span>
+    </div>
+    <div class="events-rail" style="{{ eventsRailStyle }}">
+      <div style="position:relative;height:100%;overflow:visible;border-radius:18px;min-height:0">
+        <div class="events-col-up" style="display:flex;flex-direction:column;gap:14px;will-change:transform">
+          <sc-for list="{{ eventsColA }}" as="p" hint-placeholder-count="6">
+            <img src="{{ p.src }}" alt="" style="{{ p.style }}" loading="lazy" decoding="async">
+          </sc-for>
+        </div>
+      </div>
+      <div style="position:relative;height:100%;overflow:visible;border-radius:18px;min-height:0">
+        <div class="events-col-down" style="display:flex;flex-direction:column;gap:14px;will-change:transform">
+          <sc-for list="{{ eventsColB }}" as="p" hint-placeholder-count="6">
+            <img src="{{ p.src }}" alt="" style="{{ p.style }}" loading="lazy" decoding="async">
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="events-modal" style="position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:#000;padding:0">
+    <div id="events-player" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000">
+      <button type="button" id="events-modal-close" aria-label="Закрыть" style="position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F0FAF9;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="ph ph-x"></i></button>
+      <video id="events-vid-full" data-src="assets/Sponsor_Agni_4K.webm" playsinline="" preload="none" style="width:100%;height:100%;max-width:100vw;max-height:100vh;object-fit:contain;display:block;background:#000"></video>
+      <div id="events-controls" style="position:absolute;left:0;right:0;bottom:0;z-index:4;padding:18px clamp(16px,3vw,28px) max(18px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));display:flex;align-items:center;gap:14px">
+        <button type="button" id="events-pp" aria-label="Пауза" style="flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i id="events-pp-icon" class="ph-fill ph-pause"></i></button>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+          <input id="events-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Прогресс" style="width:100%;accent-color:#0F9F94;cursor:pointer;height:6px">
+          <div style="display:flex;justify-content:space-between;font:500 12px Roboto,sans-serif;color:rgba(255,255,255,.72)"><span id="events-tcur">0:00</span><span id="events-tdur">0:00</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -687,11 +584,11 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <!-- Соответствие стандартам -->
       <div style="{{ bento.c3 }}">
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
-          <img src="assets/std-gost.svg" alt="ГОСТ" style="height:31px;width:auto;display:block;opacity:.9">
-          <img src="assets/std-eac.svg" alt="ЕАС" style="height:31px;width:auto;display:block;opacity:.9">
-          <img src="assets/std-rohs.svg" alt="RoHS" style="height:31px;width:auto;display:block;opacity:.9">
-          <img src="assets/std-ce.svg" alt="CE" style="height:31px;width:auto;display:block;opacity:.9">
-          <img src="assets/std-fcc.svg" alt="FC" style="height:31px;width:auto;display:block;opacity:.9">
+          <img src="assets/std-gost.svg" alt="ГОСТ" style="height:31px;width:auto;display:block;opacity:.9" loading="lazy" decoding="async">
+          <img src="assets/std-eac.svg" alt="ЕАС" style="height:31px;width:auto;display:block;opacity:.9" loading="lazy" decoding="async">
+          <img src="assets/std-rohs.svg" alt="RoHS" style="height:31px;width:auto;display:block;opacity:.9" loading="lazy" decoding="async">
+          <img src="assets/std-ce.svg" alt="CE" style="height:31px;width:auto;display:block;opacity:.9" loading="lazy" decoding="async">
+          <img src="assets/std-fcc.svg" alt="FC" style="height:31px;width:auto;display:block;opacity:.9" loading="lazy" decoding="async">
         </div>
         <span style="font:600 20px Montserrat,sans-serif;color:#F0FAF9">Соответствие стандартам</span>
         <span style="font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Российские и международные нормы безопасности.</span>
@@ -709,7 +606,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 <!-- ============ COMPARE ============ -->
 <section id="compare" style="position:relative;max-width:1440px;margin:0 auto;padding:clamp(40px,8vw,72px) clamp(16px,4.2vw,32px) 72px">
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:820px;margin:0 auto">
-    <h2 style="margin:0;font:700 clamp(24px,4.6vw,46px)/1.12 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1px">Найди фильтр под свой сетап</h2>
+    <h2 style="{{ sectionH2Style }}">Найди фильтр под свой сетап</h2>
     <sc-if value="{{ cmpHint }}" hint-placeholder-val="{{ false }}">
       <span style="display:inline-flex;align-items:center;gap:8px;font:500 13px Roboto,sans-serif;color:#5E7574"><i class="ph ph-arrows-horizontal" style="font-size:16px;color:#0F9F94"></i>Листайте, чтобы сравнить модели</span>
     </sc-if>
@@ -851,7 +748,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <div aria-hidden="true" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);width:100%;max-width:1440px;padding:0 clamp(16px,4.2vw,32px);pointer-events:none"><svg viewBox="0 0 1200 220" width="100%" style="display:block"><text x="600" y="178" text-anchor="middle" textLength="1120" lengthAdjust="spacingAndGlyphs" font-family="Montserrat,sans-serif" font-weight="800" font-size="200" fill="rgba(45,232,220,.07)">ВОПРОСЫ</text></svg></div>
   <div style="position:relative;max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.2vw,32px)">
   <div style="display:flex;flex-direction:column;gap:14px;text-align:center;align-items:center">
-    <h2 style="margin:0;font:700 clamp(24px,4.6vw,46px)/1.12 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1px">Сетевой фильтр для игрового ПК</h2>
+    <h2 style="{{ sectionH2Style }}">Сетевой фильтр для игрового ПК</h2>
     <p style="margin:6px 0 0;font:400 clamp(15px,1.6vw,18px)/1.55 Roboto,sans-serif;color:#9FB2B1;max-width:600px">Заземление, защита от скачков напряжения, отличие от удлинителя — коротко о главном.</p>
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:24px;margin-top:44px;align-items:flex-start">
@@ -868,11 +765,11 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
     </div>
     <aside style="{{ faqAsideStyle }}">
       <div style="{{ faqCardStyle }}">
-        <img src="assets/mascot-wave.png" alt="Маскот AGNI" style="{{ faqMascotStyle }}">
+        <img src="assets/faq-pic.webp" alt="" style="{{ faqMascotStyle }}" loading="lazy" decoding="async">
         <div style="{{ faqTextStyle }}">
-          <h3 style="position:relative;margin:0;font:600 20px/1.4 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.5px">Собери питание сетапа<br>как надо</h3>
-          <p style="position:relative;margin:0;font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Подбери мощность, количество розеток и USB под свою технику за пару минут.</p>
-          <a href="#compare" class="buy-btn" style="position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;border-radius:13px;font:600 17px Roboto,sans-serif">Подобрать под свой сетап</a>
+          <h3 style="position:relative;margin:0;font:600 20px/1.4 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.5px">Собери питание для своего сетапа</h3>
+          <p style="position:relative;margin:0;font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Сравни сетевые фильтры для ПК по мощности, количеству розеток и USB-портов</p>
+          <a href="#compare" class="buy-btn" style="position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;border-radius:13px;font:600 17px Roboto,sans-serif">Подобрать</a>
         </div>
       </div>
     </aside>
@@ -911,15 +808,26 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;columns&quot;,&quot;immersive&quot;,&quot;cinema&quot;,&quot;split&quot;],&quot;default&quot;:&quot;solid&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slide1Video&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;v2slim&quot;,&quot;v3slim&quot;,&quot;v4slim&quot;],&quot;default&quot;:&quot;v4slim&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920}}">
 class Component extends DCLogic {
   state = { scenario: 0, compare: 0, gw: 'lg', navOpen: false, cmpA: 0, cmpB: 6, triA: 0, triB: 2, triC: 6, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, heroVidPaused: false, playedScenes: {} };
+
+  _armSceneVid(v) {
+    if (!v || v._started) return;
+    const ds = v.getAttribute('data-src');
+    if (ds && !v.getAttribute('src')) {
+      v.setAttribute('src', ds);
+      try { v.load(); } catch (e) {}
+    }
+    v._started = true;
+    v.play().catch(() => {});
+  }
 
   componentDidUpdate() {
     if (this.state.playedScenes && this._sceneVids) {
       this._sceneVids.forEach((v) => {
         const i = parseInt(v.getAttribute('data-scene-i') || '0', 10);
-        if (this.state.playedScenes[i] && !v._started) { v._started = true; v.play().catch(() => {}); }
+        if (this.state.playedScenes[i]) this._armSceneVid(v);
       });
     }
   }
@@ -994,31 +902,6 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onNavScroll, { passive: true });
 
-    // TRUST wall parallax: vertical on scroll, horizontal on cursor
-    this._wallMx = 0;
-    this._applyWall = () => {
-      const sec = document.getElementById('trust-wall');
-      if (!sec) return;
-      const r = sec.getBoundingClientRect();
-      const off = (r.top + r.height / 2) - window.innerHeight / 2;
-      const mx = this._wallMx;
-      const els = sec.querySelectorAll('[data-wall-speed]');
-      for (let i = 0; i < els.length; i++) {
-        const sp = parseFloat(els[i].getAttribute('data-wall-speed')) || 0;
-        const hx = parseFloat(els[i].getAttribute('data-wall-hx')) || 0;
-        els[i].style.transform = 'translate(calc(-50% + ' + (mx * hx).toFixed(1) + 'px), calc(-50% + ' + (-off * sp).toFixed(1) + 'px))';
-      }
-    };
-    this._onWallScroll = this._applyWall;
-    this._onWallMouse = (e) => {
-      this._wallMx = (e.clientX / window.innerWidth - 0.5) * 2;
-      if (this._wallRAF) return;
-      this._wallRAF = requestAnimationFrame(() => { this._wallRAF = null; this._applyWall(); });
-    };
-    window.addEventListener('scroll', this._onWallScroll, { passive: true });
-    window.addEventListener('mousemove', this._onWallMouse, { passive: true });
-    this._applyWall();
-
     // close custom compare dropdowns on outside click
     this._onDocDown = (e) => {
       if (this.state.triOpen && !(e.target.closest && e.target.closest('[data-tri-dd]'))) {
@@ -1073,6 +956,149 @@ class Component extends DCLogic {
     if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     this._heroEsc = (e) => { if (e.key === 'Escape') closeModal(); };
     window.addEventListener('keydown', this._heroEsc);
+
+    // events video: muted loop + click opens fullscreen-like player with controls
+    const eVid = document.getElementById('events-vid');
+    const eBtn = document.getElementById('events-play-btn');
+    const eModal = document.getElementById('events-modal');
+    const ePlayer = document.getElementById('events-player');
+    const eFull = document.getElementById('events-vid-full');
+    const eClose = document.getElementById('events-modal-close');
+    const ePp = document.getElementById('events-pp');
+    const ePpIcon = document.getElementById('events-pp-icon');
+    const eSeek = document.getElementById('events-seek');
+    const eTcur = document.getElementById('events-tcur');
+    const eTdur = document.getElementById('events-tdur');
+    let eSeeking = false;
+    const fmtTime = (s) => {
+      if (!isFinite(s) || s < 0) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
+    };
+    const syncPpIcon = () => {
+      if (!ePpIcon || !eFull) return;
+      const paused = eFull.paused;
+      ePpIcon.className = paused ? 'ph-fill ph-play' : 'ph-fill ph-pause';
+      if (ePp) ePp.setAttribute('aria-label', paused ? 'Воспроизвести' : 'Пауза');
+    };
+    const syncSeek = () => {
+      if (!eFull || !eSeek || eSeeking) return;
+      const d = eFull.duration || 0;
+      const t = eFull.currentTime || 0;
+      eSeek.value = d ? String(Math.round((t / d) * 1000)) : '0';
+      if (eTcur) eTcur.textContent = fmtTime(t);
+      if (eTdur) eTdur.textContent = fmtTime(d);
+    };
+    const loadEventsPreview = () => {
+      if (!eVid || eVid.dataset.loaded === '1') return;
+      const src = eVid.getAttribute('data-src');
+      if (!src) return;
+      eVid.src = src;
+      eVid.dataset.loaded = '1';
+      eVid.muted = true;
+      eVid.loop = true;
+      eVid.play().catch(() => {});
+      if (eFull && !eFull.getAttribute('src')) eFull.src = src;
+    };
+    const ensureEventsFull = () => {
+      if (!eFull) return;
+      const src = eFull.getAttribute('data-src')
+        || (eVid && eVid.getAttribute('data-src'))
+        || 'assets/Sponsor_Agni_4K.webm';
+      if (!eFull.getAttribute('src')) eFull.src = src;
+    };
+    if (eVid) {
+      eVid.muted = true;
+      eVid.loop = true;
+      const eventsSection = document.getElementById('events');
+      if (eventsSection && 'IntersectionObserver' in window) {
+        this._eventsIO = new IntersectionObserver((entries) => {
+          if (entries.some((en) => en.isIntersecting)) {
+            loadEventsPreview();
+            this._eventsIO.disconnect();
+            this._eventsIO = null;
+          }
+        }, { rootMargin: '240px 0px' });
+        this._eventsIO.observe(eventsSection);
+      } else {
+        loadEventsPreview();
+      }
+    }
+    if (eFull) {
+      eFull.loop = true;
+      eFull.addEventListener('timeupdate', syncSeek);
+      eFull.addEventListener('loadedmetadata', syncSeek);
+      eFull.addEventListener('play', syncPpIcon);
+      eFull.addEventListener('pause', syncPpIcon);
+      eFull.addEventListener('click', () => {
+        if (eFull.paused) eFull.play().catch(() => {});
+        else eFull.pause();
+      });
+    }
+    if (ePp) ePp.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!eFull) return;
+      if (eFull.paused) eFull.play().catch(() => {});
+      else eFull.pause();
+    });
+    if (eSeek) {
+      eSeek.addEventListener('pointerdown', () => { eSeeking = true; });
+      eSeek.addEventListener('pointerup', () => { eSeeking = false; syncSeek(); });
+      eSeek.addEventListener('input', () => {
+        if (!eFull || !eFull.duration) return;
+        eFull.currentTime = (parseInt(eSeek.value, 10) / 1000) * eFull.duration;
+        if (eTcur) eTcur.textContent = fmtTime(eFull.currentTime);
+      });
+    }
+    const openEventsModal = () => {
+      if (!eModal) return;
+      eModal.style.display = 'flex';
+      document.documentElement.style.overflow = 'hidden';
+      const fsTarget = ePlayer || eModal;
+      const req = fsTarget.requestFullscreen || fsTarget.webkitRequestFullscreen || fsTarget.msRequestFullscreen;
+      if (req) { try { req.call(fsTarget); } catch (err) {} }
+      if (eFull) {
+        ensureEventsFull();
+        eFull.muted = false;
+        eFull.currentTime = eVid ? eVid.currentTime : 0;
+        eFull.play().catch(() => {});
+        syncPpIcon();
+        syncSeek();
+      }
+    };
+    const closeEventsModal = () => {
+      if (!eModal) return;
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        const ex = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+        if (ex) { try { ex.call(document); } catch (err) {} }
+      }
+      eModal.style.display = 'none';
+      document.documentElement.style.overflow = '';
+      if (eFull) eFull.pause();
+      if (eVid) { loadEventsPreview(); eVid.play().catch(() => {}); }
+    };
+    this._eventsFsChange = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement && eModal && eModal.style.display !== 'none') closeEventsModal();
+    };
+    document.addEventListener('fullscreenchange', this._eventsFsChange);
+    document.addEventListener('webkitfullscreenchange', this._eventsFsChange);
+    if (eBtn) {
+      eBtn.addEventListener('click', openEventsModal);
+      eBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEventsModal(); }
+      });
+    }
+    if (eClose) eClose.addEventListener('click', (e) => { e.stopPropagation(); closeEventsModal(); });
+    if (eModal) eModal.addEventListener('click', (e) => { if (e.target === eModal) closeEventsModal(); });
+    this._eventsEsc = (e) => {
+      if (e.key === 'Escape') closeEventsModal();
+      if (e.key === ' ' && eModal && eModal.style.display !== 'none' && e.target === document.body) {
+        e.preventDefault();
+        if (eFull) { if (eFull.paused) eFull.play().catch(() => {}); else eFull.pause(); }
+      }
+    };
+    window.addEventListener('keydown', this._eventsEsc);
 
     // SCENARIOS: scroll-driven active item — pick the one whose center is nearest the viewport center
     this._sceneScroll = () => {
@@ -1141,15 +1167,19 @@ class Component extends DCLogic {
     window.removeEventListener('mousemove', this._onMove);
     if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this._onNavScroll) window.removeEventListener('scroll', this._onNavScroll);
-    if (this._onWallScroll) window.removeEventListener('scroll', this._onWallScroll);
-    if (this._onWallMouse) window.removeEventListener('mousemove', this._onWallMouse);
     if (this._onDocDown) document.removeEventListener('mousedown', this._onDocDown);
     if (this._heroEsc) window.removeEventListener('keydown', this._heroEsc);
+    if (this._eventsEsc) window.removeEventListener('keydown', this._eventsEsc);
     if (this._sceneScroll) window.removeEventListener('scroll', this._sceneScroll);
     if (this._connectIO) this._connectIO.disconnect();
+    if (this._eventsIO) this._eventsIO.disconnect();
     if (this._heroFsChange) {
       document.removeEventListener('fullscreenchange', this._heroFsChange);
       document.removeEventListener('webkitfullscreenchange', this._heroFsChange);
+    }
+    if (this._eventsFsChange) {
+      document.removeEventListener('fullscreenchange', this._eventsFsChange);
+      document.removeEventListener('webkitfullscreenchange', this._eventsFsChange);
     }
     if (this._tiltRAF) cancelAnimationFrame(this._tiltRAF);
   }
@@ -1170,17 +1200,17 @@ class Component extends DCLogic {
       this._sceneVids.add(v);
 
       const vi = parseInt(v.getAttribute('data-scene-i') || '0', 10);
-      if ((this.state.playedScenes && this.state.playedScenes[vi]) || this.state.isTouch) { if (!v._started) { v._started = true; v.play().catch(() => {}); } }
+      if ((this.state.playedScenes && this.state.playedScenes[vi]) || this.state.isTouch) this._armSceneVid(v);
     };
-    const variant = this.props.heroVariant ?? 'solid';
+    const variant = 'solid';
     const base = [
-      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/slide-1.png', vid: 'assets/scene1-top-v2slim.mp4', thumb: 'assets/cmp-fi3u5e.png', left: 'assets/connect-left.png', right: 'assets/connect-right.png', ar: '1460 / 400',
+      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/1slide-preview.webp', vid: 'assets/scene1-top-v4slim.mp4', thumb: 'assets/1slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400',
         body: 'Отключайте монитор, колонки или консоль отдельно, не вынимая вилок из розеток. Или разделите сетап на игровые и периферийные устройства и управляйте группами оборудования.' },
-      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FS8E', img: 'assets/slide-2.png', thumb: 'assets/cmp-fs8e.png', left: 'assets/connect2-left.png', right: 'assets/connect2-right.png', ar: '1460 / 400', rich: true, vid: 'assets/scene1-top-v2slim.mp4',
+      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FO4U10E-C', img: 'assets/2slide-preview.webp', thumb: 'assets/2slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/scene2-top-v1slim.mp4',
         body: 'Подключите ПК или консоль, монитор, роутер, колонки и зарядные устройства в одном месте. Контроль правильного заземления — безопасность игрового места. Версии с USB и без USB.' },
-      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы\nи стриминг', model: 'TP-FS6E', img: 'assets/slide-3.png', thumb: 'assets/cmp-tpfs6e.png', left: 'assets/connect3-left.png', right: 'assets/connect3-right.png', ar: '1460 / 400', rich: true, vid: 'assets/scene1-top-v2slim.mp4',
+      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы\nи стриминг', model: 'TP-FS6E', img: 'assets/3slide-preview.webp', thumb: 'assets/3slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/FS4U6E-C.mp4',
         body: 'Больше розеток для расширенного сетапа. Для игровых ПК, нескольких мониторов, освещения, камер, микрофонов и сетевого оборудования. Световой индикатор показывает наличие заземления в розетке.' },
-      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VE5U5E-С', img: 'assets/slide-4.png', thumb: 'assets/cmp-tpve5u5e.png', left: 'assets/slide4-tower-main.png', right: 'assets/connect4-detail.png', tower: true,
+      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VE5U5E-С', img: 'assets/4slide-preview.webp', thumb: 'assets/4slide-preview.webp', left: 'tower', right: 'tower', tower: true,
         body: 'Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.' }
     ];
     const sceneAccents = [
@@ -1215,6 +1245,8 @@ class Component extends DCLogic {
         imgStyle: 'position:absolute;inset:0;width:100%;height:100%;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:' + (this.state.isTouch ? 'none' : (a ? 'auto' : 'none')),
         imgStyleT: 'position:absolute;inset:0;width:100%;height:100%;opacity:' + (a ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
         vid: s.vid,
+        vidSlide1: i === 0 ? s.vid : '',
+        vidOwn: i > 0 ? s.vid : '',
         noVid: !s.vid,
         vidStyle: 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
         vidStyleT: 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:' + (a ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
@@ -1238,15 +1270,20 @@ class Component extends DCLogic {
         title: s.title,
         left: s.left,
         right: s.right,
-        leftWrapStyle: 'width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;display:flex;align-items:stretch;justify-content:flex-end;gap:clamp(16px,1.4vw,28px)',
-        img1Style: 'height:80%;width:auto;align-self:center;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.5s;transform:translateX(' + (played ? '0' : '-700%') + ')',
-        img2Style: 'height:80%;width:auto;align-self:center;border-radius:clamp(24px,2.4vw,60px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (played ? '0' : '-550%') + ')',
+        usbImg: i === 2 ? 'assets/scene3-left-usb.webp' : (i === 1 ? 'assets/scene2-left-usb.webp' : 'assets/scene1-left-usb.webp'),
+        socketsVid: i === 2 ? '' : (i === 1 ? 'assets/scene2-left-sockets.mp4' : 'assets/scene1-left-sockets.mp4'),
+        socketsImg: i === 2 ? 'assets/3slide-left_2.webp' : '',
+        leftWrapStyle: 'width:min(1480px,58vw);flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(16px,1.4vw,28px);height:min(230px,21vh)',
+        img1Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.5s;transform:translateX(' + (played ? '0' : '-700%') + ')',
+        img2Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (played ? '0' : '-550%') + ')',
         vid: s.vid,
+        vidSlide1: i === 0 ? s.vid : '',
+        vidOwn: i > 0 ? s.vid : '',
         noVid: !s.vid,
-        overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
+        overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(72px,10vh,120px) 0 clamp(72px,9vh,110px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
         rightStyle: devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')',
         leftStyle: devT(rich && !s.vid ? '2s' : '') + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
-        titleWrapStyle: 'flex-shrink:0;width:360px' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 1s') : ''),
+        titleWrapStyle: 'flex-shrink:0;max-width:min(320px,28vw);text-align:right' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 1s') : ''),
         specsWrapStyle: 'flex-shrink:0;display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 3s') : ''),
         specs: (sceneAccents[i] || []).map((ac) => ({
           pre: ac.pre || '',
@@ -1265,13 +1302,14 @@ class Component extends DCLogic {
     const towerOverlay = towerBase ? {
       model: towerBase.model,
       title: towerBase.title,
-      main: towerBase.left,
-      detail: towerBase.right,
+      mainVid: 'assets/VG6U12E-C-W_v1.mp4',
+      detailVid: 'assets/4slide-left.mp4',
+      detailImg: 'assets/4slide-left_2.webp',
       overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (towerActive ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
-      mainStyle: 'height:min(760px,46vw,58vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
+      mainStyle: 'height:min(920px,58vw,74vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
       detailWrapStyle: 'display:flex;align-items:flex-start;gap:clamp(20px,1.8vw,40px)',
       img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
-      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.6s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
+      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.6s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
       titleWrapStyle: 'flex-shrink:0;max-width:460px;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 1s',
       specTextStyle: 'width:0;min-width:100%;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 3s',
       specs: (sceneAccents[towerIdx] || []).map((ac) => ({
@@ -1323,25 +1361,6 @@ class Component extends DCLogic {
     ];
     const faqs = faqData.map((f, i) => ({ q: f[0], a: f[1], open: i === 0 }));
 
-    // TRUST wall — scattered device tiles around the headline
-    const wallImgs = ['assets/review1.jpg','assets/review2.jpg','assets/review3.jpg','assets/review4.jpg','assets/review5.jpg','assets/review6.jpg','assets/review7.jpg','assets/review8.jpg','assets/review9.jpg','assets/review10.jpg','assets/review11.jpg','assets/review12.jpg','assets/review13.jpg','assets/review14.jpg','assets/review15.jpg','assets/review16.jpg','assets/review17.jpg','assets/review18.jpg','assets/review19.jpg','assets/review20.jpg'];
-    const wallGrads = ['linear-gradient(145deg,#12403E,#0A211F)','linear-gradient(145deg,#3A2350,#1A1030)','linear-gradient(145deg,#0F3A52,#08202E)','linear-gradient(145deg,#43213A,#1F0F1C)','linear-gradient(145deg,#17402A,#0B2016)','linear-gradient(145deg,#3F3416,#1E190B)','linear-gradient(145deg,#123B3A,#0A1F1E)','linear-gradient(145deg,#2A2350,#140F2C)'];
-    const wallPos = [[7,16,240],[22,33,210],[5,47,252],[15,61,222],[26,75,236],[10,87,208],[30,52,244],[40,9,226],[55,20,214],[48,30,238],[65,12,230],[70,52,246],[89,32,212],[60,45,246],[83,48,220],[92,66,238],[78,77,256],[90,88,214],[45,85,242],[60,80,228]];
-    const wallThumbs = wallPos.map((p, i) => {
-      const bright = (i % 3 !== 0);
-      const speed = bright ? 0.08 : 0.035;
-      const hx = bright ? 22 : -13;
-      const asp = (i === 7 || i >= 11) ? '60/31' : '3/2';
-      return {
-        id: 'wall-' + i,
-        img: wallImgs[i % wallImgs.length],
-        speed: speed,
-        hx: hx,
-        dimStyle: 'position:absolute;inset:0;pointer-events:none;background:' + (bright ? 'transparent' : 'rgba(6,13,14,.6)'),
-        style: 'position:absolute;left:' + p[0] + '%;top:' + p[1] + '%;width:clamp(148px,' + (p[2] / 14.4).toFixed(2) + 'vw,' + p[2] + 'px);aspect-ratio:' + asp + ';transform:translate(-50%,-50%);border-radius:16px;overflow:hidden;pointer-events:none;background:' + wallGrads[i % wallGrads.length] + ';box-shadow:0 16px 38px -14px rgba(0,0,0,.7);will-change:transform;transition:transform .28s ease-out'
-      };
-    });
-
     // COMPARE — compact model cards
     const compareDefs = [
       { icon: 'ph-plugs', label: 'Количество розеток', vals: ['5', '10', '6', '6', '8', '8', '5', '12', '12'] },
@@ -1376,6 +1395,25 @@ class Component extends DCLogic {
 
     const advCols = gw === 'lg' ? 3 : (gw === 'md' ? 2 : 1);
     const advGrid = 'display:grid;grid-template-columns:repeat(' + advCols + ',1fr);gap:20px;margin-top:56px;perspective:1400px';
+    const eventsMediaH = 'clamp(280px,32vw,520px)';
+    const eventsGrid = 'display:grid;grid-template-columns:' + (gw === 'lg' ? 'minmax(0,1.15fr) minmax(0,0.85fr)' : '1fr') + ';gap:clamp(14px,1.8vw,22px);margin-top:48px;align-items:start';
+    const eventsRailStyle = 'position:relative;width:100%;height:' + eventsMediaH + ';overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:12px;box-sizing:border-box;min-height:0';
+    const mkEventShot = (src, tall) => ({
+      src: src,
+      style: 'width:100%;aspect-ratio:' + (tall ? '3/4' : '4/3') + ';object-fit:cover;border-radius:18px;display:block;background:#101B1D;flex-shrink:0'
+    });
+    const eventsColABase = [
+      mkEventShot('assets/DSC05411.webp', false),
+      mkEventShot('assets/DSC06202.webp', true),
+      mkEventShot('assets/DSC06221.webp', false)
+    ];
+    const eventsColBBase = [
+      mkEventShot('assets/DSC05767.webp', false),
+      mkEventShot('assets/DSC05938.webp', false),
+      mkEventShot('assets/DSC06299.webp', false)
+    ];
+    const eventsColA = eventsColABase.concat(eventsColABase);
+    const eventsColB = eventsColBBase.concat(eventsColBBase);
 
     // compare: 3-col selectable comparison on desktop, carousel on tablet, duo on phone
     const cmpCarousel = gw === 'md';
@@ -1387,10 +1425,13 @@ class Component extends DCLogic {
     const cmpCards = false;
     const cmpHint = false;
     const cmpA = this.state.cmpA, cmpB = this.state.cmpB;
+    const sectionH2Style = 'margin:0;font:700 clamp(26px,min(4.8vw,5.2vh),58px)/1.04 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1.5px;text-wrap:balance';
+    const scHeadingStyle = 'z-index:6;position:absolute;top:clamp(10px,2vh,24px);left:0;right:0;text-align:center;pointer-events:none;' + sectionH2Style;
+    const scHeadingStyleT = 'z-index:6;position:absolute;top:clamp(8px,1.6vh,20px);left:0;right:0;text-align:center;pointer-events:none;' + sectionH2Style;
     const bd = '1px solid rgba(255,61,154,.12)';
     const two = gw !== 'sm';
     const g = {
-      title: 'margin:0;font:700 clamp(24px,4.6vw,46px)/1.12 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-1px',
+      title: sectionH2Style,
       outer: 'position:relative;display:grid;grid-template-columns:' + (gw === 'lg' ? '340px 1px 1fr' : '1fr')
         + ';border-radius:24px;border:1px solid rgba(255,61,154,.28);background:linear-gradient(160deg,#1B0D24,#120819);overflow:hidden;box-shadow:0 40px 90px -40px rgba(255,61,154,.35);margin-top:' + (gw === 'sm' ? '32px' : '48px'),
       hero: 'position:relative;overflow:hidden;padding:' + (gw === 'sm' ? '40px 26px' : '44px 34px') + ';display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;background:radial-gradient(120% 100% at 50% 0%,rgba(255,61,154,.1),transparent 60%)',
@@ -1425,15 +1466,15 @@ class Component extends DCLogic {
     };
 
     const compareModels = [
-      { name: 'TP-FI3U5E-C', price: '3 742 ₽', img: 'assets/cmp-fi3u5e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fi3u5e-c-2m-black/' },
-      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/cmp-fo4u10e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
-      { name: 'TP-FS6E', price: '3 389 ₽', img: 'assets/cmp-tpfs6e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs6e-2m-black/' },
-      { name: 'TP-FS4U6E-C', price: '3 743 ₽', img: 'assets/cmp-fs4u6e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u6e-c-2m-black/' },
-      { name: 'TP-FS8E', price: '3 573 ₽', img: 'assets/cmp-fs8e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/TP-FS8E-3m-black/' },
-      { name: 'TP-FS4U8E-PD', price: '3 743 ₽', img: 'assets/cmp-fs4u8e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u8e-pd-2m-black/' },
-      { name: 'TP-VE5U5E-С', price: '5 375 ₽', img: 'assets/cmp-tpve5u5e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-ve5u5e-c-2m-black/' },
-      { name: 'TP-VG6U12E-C-W black', price: '8 545 ₽', img: 'assets/cmp-vg6u12e.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-black/' },
-      { name: 'TP-VG6U12E-C-W grey-white', price: '8 545 ₽', img: 'assets/cmp-vg6u12e-gw.png', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-grey-white/' }
+      { name: 'TP-FI3U5E-C', price: '3 742 ₽', img: 'assets/cmp-fi3u5e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fi3u5e-c-2m-black/' },
+      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/cmp-fo4u10e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
+      { name: 'TP-FS6E', price: '3 389 ₽', img: 'assets/cmp-tpfs6e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs6e-2m-black/' },
+      { name: 'TP-FS4U6E-C', price: '3 743 ₽', img: 'assets/cmp-fs4u6e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u6e-c-2m-black/' },
+      { name: 'TP-FS8E', price: '3 573 ₽', img: 'assets/cmp-fs8e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/TP-FS8E-3m-black/' },
+      { name: 'TP-FS4U8E-PD', price: '3 743 ₽', img: 'assets/cmp-fs4u8e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u8e-pd-2m-black/' },
+      { name: 'TP-VE5U5E-С', price: '5 375 ₽', img: 'assets/cmp-tpve5u5e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-ve5u5e-c-2m-black/' },
+      { name: 'TP-VG6U12E-C-W black', price: '8 545 ₽', img: 'assets/cmp-vg6u12e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-black/' },
+      { name: 'TP-VG6U12E-C-W grey-white', price: '8 545 ₽', img: 'assets/cmp-vg6u12e-gw.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-grey-white/' }
     ].map((m, mi) => Object.assign({}, m, {
       idx: mi,
       cardStyle: 'display:flex;flex-direction:column;border-radius:20px;background:radial-gradient(125% 125% at 50% 0%,#101B1D,#05090A 70%);padding:24px' + cmpCardExtra,
@@ -1592,27 +1633,17 @@ class Component extends DCLogic {
     const heroPart2Style = 'margin:0;text-align:left;' + heroGradFont;
     const heroCtaWrapStyle = 'z-index:3;pointer-events:auto;display:inline-flex;align-items:center;gap:18px;padding:10px 10px 10px 26px;border-radius:100px;background:rgba(18,22,24,.4);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 16px 44px -18px rgba(0,0,0,.7)';
 
-    const trustMob = this.state.gw === 'sm';
-    const trustScrimStyle = trustMob
-      ? 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:2;pointer-events:none;background:radial-gradient(96% 34% at 50% 50%,rgba(6,13,14,.98) 0%,rgba(6,13,14,.93) 48%,rgba(6,13,14,.58) 70%,transparent 88%)'
-      : 'position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(46% 42% at 55% 50%,rgba(6,13,14,.95) 0%,rgba(6,13,14,.82) 38%,rgba(6,13,14,.4) 60%,transparent 76%)';
-    const trustMascotStyle = 'position:relative;z-index:2;height:auto;align-self:flex-end;flex-shrink:0;filter:drop-shadow(0 22px 40px rgba(0,0,0,.55));animation:agniMascotFloat 8s ease-in-out infinite;'
-      + (trustMob
-        ? 'width:clamp(92px,25vw,150px);margin-right:-30px;margin-bottom:52px'
-        : 'width:clamp(160px,20vw,300px);margin-right:clamp(-108px,-6.8vw,-58px);margin-bottom:90px');
-    const trustNumStyle = 'position:relative;z-index:1;letter-spacing:-4px;background:linear-gradient(120deg,#0F9F94,#8CFFF6);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 70px rgba(15,159,148,.5));'
-      + (trustMob ? 'font:800 clamp(50px,16vw,86px)/0.86 Montserrat,sans-serif' : 'font:800 clamp(64px,11vw,172px)/0.86 Montserrat,sans-serif');
-    const trustLabelStyle = 'color:#F0FAF9;letter-spacing:-1px;'
-      + (trustMob ? 'margin-left:9px;font:800 clamp(17px,5.6vw,30px)/0.98 Montserrat,sans-serif' : 'margin-left:clamp(14px,1.6vw,26px);font:800 clamp(24px,4.2vw,62px)/0.98 Montserrat,sans-serif');
-    const trustGroupStyle = 'position:absolute;top:50%;left:50%;z-index:3;display:flex;align-items:center;gap:0;pointer-events:none;transform:translate(' + (trustMob ? '-55%' : '-50%') + ',-50%)';
     const faqFull = this.state.gw !== 'lg';
     const faqWide = this.state.gw === 'md';
+    const faqDesk = this.state.gw === 'lg';
     const faqAsideStyle = faqFull
       ? 'flex:1 1 100%;max-width:none;align-self:stretch'
       : 'position:sticky;top:96px;flex:1 1 280px;max-width:360px;align-self:flex-start';
-    const faqCardStyle = 'position:relative;overflow:hidden;border-radius:20px;background:radial-gradient(130% 120% at 50% 0%,rgba(15,159,148,.16),rgba(10,26,28,.55) 62%);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:flex;' + (faqWide ? 'flex-direction:row;align-items:center;gap:32px;padding:30px 40px;text-align:left' : 'flex-direction:column;align-items:center;gap:16px;padding:30px 28px;text-align:center');
-    const faqMascotStyle = 'position:relative;height:auto;flex-shrink:0;filter:drop-shadow(0 14px 26px rgba(0,0,0,.5));animation:agniMascotFloat 8s ease-in-out infinite;width:' + (faqWide ? '230px' : (this.state.gw === 'sm' ? '200px' : '336px'));
-    const faqTextStyle = 'display:flex;flex-direction:column;gap:14px;' + (faqWide ? 'align-items:flex-start;flex:1;min-width:0' : 'align-items:center;width:100%');
+    const faqCardStyle = 'position:relative;overflow:hidden;border-radius:20px;background:radial-gradient(130% 120% at 50% 0%,rgba(15,159,148,.16),rgba(10,26,28,.55) 62%);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:flex;' + (faqWide ? 'flex-direction:row;align-items:center;gap:32px;padding:30px 40px;text-align:left' : (faqDesk ? 'flex-direction:column;align-items:stretch;gap:16px;padding:0 0 28px;text-align:center' : 'flex-direction:column;align-items:center;gap:16px;padding:30px 28px;text-align:center'));
+    const faqMascotStyle = faqDesk
+      ? 'position:relative;display:block;width:100%;height:auto;flex-shrink:0;object-fit:cover'
+      : 'position:relative;height:auto;flex-shrink:0;filter:drop-shadow(0 14px 26px rgba(0,0,0,.5));width:' + (faqWide ? '230px' : '200px');
+    const faqTextStyle = 'display:flex;flex-direction:column;gap:14px;box-sizing:border-box;' + (faqWide ? 'align-items:flex-start;flex:1;min-width:0' : (faqDesk ? 'align-items:center;width:100%;padding:0 28px' : 'align-items:center;width:100%'));
     const footerGridStyle = 'max-width:1440px;margin:0 auto;padding:56px clamp(16px,4.2vw,32px) 0;display:grid;gap:' + (this.state.gw === 'lg' ? '40px' : '34px 24px') + ';grid-template-columns:' + (this.state.gw === 'lg' ? '1.5fr 1fr 1.15fr 1.3fr 1fr' : (this.state.gw === 'md' ? 'repeat(3,minmax(0,1fr))' : 'repeat(2,minmax(0,1fr))'));
     const footerBrandStyle = 'display:flex;flex-direction:column;gap:16px' + (this.state.gw !== 'lg' ? ';grid-column:1 / -1' : '');
 
@@ -1621,6 +1652,14 @@ class Component extends DCLogic {
       bento,
       nav,
       advGrid,
+      eventsGrid,
+      eventsRailStyle,
+      eventsMediaH,
+      eventsColA,
+      eventsColB,
+      sectionH2Style,
+      scHeadingStyle,
+      scHeadingStyleT,
       cmpWrap,
       cmpHint,
       cmpCards,
@@ -1651,12 +1690,12 @@ class Component extends DCLogic {
       duoDevices,
       duoSelStyle,
       sceneVidRef: this._sceneVidRef,
-      slide1V2: (this.props.slide1Video ?? 'v2slim') !== 'v3slim' && (this.props.slide1Video ?? 'v2slim') !== 'v4slim',
-      slide1V3: (this.props.slide1Video ?? 'v2slim') === 'v3slim',
-      slide1V4: (this.props.slide1Video ?? 'v2slim') === 'v4slim',
-      heroImmersive: variant === 'immersive',
-      heroColumns: variant === 'columns',
-      heroSolid: variant !== 'columns' && variant !== 'immersive' && variant !== 'split' && variant !== 'cinema',
+      slide1V2: false,
+      slide1V3: false,
+      slide1V4: true,
+      heroImmersive: false,
+      heroColumns: false,
+      heroSolid: true,
       heroSolidCardStyle: heroMob
         ? 'background:#0D0D0D;border-radius:24px;padding:24px;display:flex;flex-direction:column'
         : 'min-height:0;overflow:hidden;background:#0D0D0D;border-radius:clamp(24px,5vw,100px);padding:clamp(30px,min(3vw,4vh),60px);display:flex;flex-direction:column',
@@ -1681,8 +1720,8 @@ class Component extends DCLogic {
       heroColCtaStyle: heroMob
         ? 'position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0F9F94;color:#FFFFFF;border-radius:24px;padding:22px 24px;font:800 22px/1.15 Montserrat,sans-serif;letter-spacing:-.5px;text-decoration:none;text-align:center'
         : 'position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;height:clamp(96px,min(10.2vw,20vh),260px);background:#0F9F94;color:#FFFFFF;border-radius:clamp(24px,5vw,100px);padding:0 clamp(30px,3vw,60px);font:700 clamp(18px,min(2.05vw,3.2vh),52px)/1.15 Montserrat,sans-serif;letter-spacing:-.5px;text-decoration:none;text-align:center',
-      heroSplit: variant === 'split',
-      heroCinema: variant === 'cinema',
+      heroSplit: false,
+      heroCinema: false,
       heroFrameStyle,
       heroVideoBoxStyle,
       heroDimStyle,
@@ -1699,11 +1738,6 @@ class Component extends DCLogic {
       heroH1Style,
       heroSubStyle,
       heroBtnStyle,
-      trustScrimStyle,
-      trustMascotStyle,
-      trustNumStyle,
-      trustLabelStyle,
-      trustGroupStyle,
       faqAsideStyle,
       faqCardStyle,
       faqMascotStyle,
@@ -1722,7 +1756,6 @@ class Component extends DCLogic {
       scMobile,
       scTablet,
       scDesktop,
-      wallThumbs: (this.state.gw === 'sm') ? wallThumbs.filter((_, i) => i % 2 === 0 || i === 1 || i === 7 || i === 11 || i === 17) : wallThumbs,
       current: base[this.state.scenario],
       compareModels,
       faqs
