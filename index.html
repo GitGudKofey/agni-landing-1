@@ -247,7 +247,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
             <video class="scene-vid" data-src="{{ s.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video>
           </sc-if>
           <sc-if value="{{ s.vidSlide1 }}" hint-placeholder-val="{{ false }}">
-            <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video>
+            <video class="scene-vid" data-src="assets/scene1-top-v1short.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyleT }}"></video>
           </sc-if>
         </sc-for>
       </div>
@@ -314,7 +314,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
                   <video class="scene-vid" data-src="{{ ov.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video>
                 </sc-if>
                 <sc-if value="{{ ov.vidSlide1 }}" hint-placeholder-val="{{ false }}">
-                  <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video>
+                  <video class="scene-vid" data-src="assets/scene1-top-v1short.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video>
                 </sc-if>
                 <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="scene-view-r-{{ ov.idx }}" src="{{ ov.right }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
@@ -397,7 +397,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
               <video class="scene-vid" data-src="{{ s.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video>
             </sc-if>
             <sc-if value="{{ s.vidSlide1 }}" hint-placeholder-val="{{ false }}">
-              <video class="scene-vid" data-src="assets/scene1-top-v4slim.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video>
+              <video class="scene-vid" data-src="assets/scene1-top-v1short.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ s.idx }}" ref="{{ sceneVidRef }}" style="{{ s.vidStyle }}"></video>
             </sc-if>
           </sc-for>
         </div>
@@ -767,8 +767,8 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <div style="{{ faqCardStyle }}">
         <img src="assets/faq-pic.webp" alt="" style="{{ faqMascotStyle }}" loading="lazy" decoding="async">
         <div style="{{ faqTextStyle }}">
-          <h3 style="position:relative;margin:0;font:600 20px/1.4 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.5px">Собери питание для своего сетапа</h3>
-          <p style="position:relative;margin:0;font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Сравни сетевые фильтры для ПК по мощности, количеству розеток и USB-портов</p>
+          <h3 style="position:relative;margin:0;font:600 20px/1.4 Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.5px">Собери питание<br>для своего сетапа</h3>
+          <p style="position:relative;margin:0;font:400 16px/1.6 Roboto,sans-serif;color:#8FA3A3">Сравни сетевые фильтры для ПК по мощности, количеству розеток<br>и USB разъемов</p>
           <a href="#compare" class="buy-btn" style="position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;border-radius:13px;font:600 17px Roboto,sans-serif">Подобрать</a>
         </div>
       </div>
@@ -810,7 +810,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920}}">
 class Component extends DCLogic {
-  state = { scenario: 0, compare: 0, gw: 'lg', navOpen: false, cmpA: 0, cmpB: 6, triA: 0, triB: 2, triC: 6, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, heroVidPaused: false, playedScenes: {} };
+  state = { scenario: 0, compare: 0, gw: 'lg', navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, heroVidPaused: false, playedScenes: {} };
 
   _armSceneVid(v) {
     if (!v || v._started) return;
@@ -1204,7 +1204,7 @@ class Component extends DCLogic {
     };
     const variant = 'solid';
     const base = [
-      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/1slide-preview.webp', vid: 'assets/scene1-top-v4slim.mp4', thumb: 'assets/1slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400',
+      { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/1slide-preview.webp', vid: 'assets/scene1-top-v1short.mp4', thumb: 'assets/1slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400',
         body: 'Отключайте монитор, колонки или консоль отдельно, не вынимая вилок из розеток. Или разделите сетап на игровые и периферийные устройства и управляйте группами оборудования.' },
       { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FO4U10E-C', img: 'assets/2slide-preview.webp', thumb: 'assets/2slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/scene2-top-v1slim.mp4',
         body: 'Подключите ПК или консоль, монитор, роутер, колонки и зарядные устройства в одном месте. Контроль правильного заземления — безопасность игрового места. Версии с USB и без USB.' },
@@ -1281,7 +1281,9 @@ class Component extends DCLogic {
         vidOwn: i > 0 ? s.vid : '',
         noVid: !s.vid,
         overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(72px,10vh,120px) 0 clamp(72px,9vh,110px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
-        rightStyle: devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')',
+        rightStyle: i === 0
+          ? ('width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;will-change:opacity;opacity:' + (played ? '1' : '0') + ';transition:opacity 1.4s ease')
+          : (devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')'),
         leftStyle: devT(rich && !s.vid ? '2s' : '') + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
         titleWrapStyle: 'flex-shrink:0;max-width:min(320px,28vw);text-align:right' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 1s') : ''),
         specsWrapStyle: 'flex-shrink:0;display:flex;flex-direction:column;gap:clamp(20px,3vh,34px)' + (rich ? (';opacity:' + (played ? '1' : '0') + ';transition:opacity .9s ease 3s') : ''),
@@ -1304,7 +1306,7 @@ class Component extends DCLogic {
       title: towerBase.title,
       mainVid: 'assets/VG6U12E-C-W_v1.mp4',
       detailVid: 'assets/4slide-left.mp4',
-      detailImg: 'assets/4slide-left_2.webp',
+      detailImg: 'assets/4slide-left_2.png',
       overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (towerActive ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
       mainStyle: 'height:min(920px,58vw,74vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
       detailWrapStyle: 'display:flex;align-items:flex-start;gap:clamp(20px,1.8vw,40px)',
@@ -1363,14 +1365,14 @@ class Component extends DCLogic {
 
     // COMPARE — compact model cards
     const compareDefs = [
-      { icon: 'ph-plugs', label: 'Количество розеток', vals: ['5', '10', '6', '6', '8', '8', '5', '12', '12'] },
-      { icon: 'ph-lightning', label: 'Номинальная суммарная мощность', vals: ['4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт'] },
-      { icon: 'ph-gauge', label: 'Ток нагрузки', vals: ['16 А', '16 А', '16 А', '16 А', '16 А', '16 А', '16 А', '16 А', '16 А'] },
-      { icon: 'ph-usb', label: 'USB Type A', vals: ['2', '3', '—', '3', '—', '3', '2', '3', '3'] },
-      { icon: 'ph-usb', label: 'USB Type C', vals: ['1', '1', '—', '1', '—', '1', '3', '2', '2'] },
-      { icon: 'ph-plug-charging', label: 'Общая мощность USB разъёмов', vals: ['5 Вт / 20 Вт', '5 Вт / 20 Вт', '—', '5 Вт / 20 Вт', '—', '5 Вт / 20 Вт', '18 Вт / 65 Вт', '5 Вт / 65 Вт GaN / 15 Вт беспроводная зарядка', '5 Вт / 65 Вт GaN / 15 Вт беспроводная зарядка'] },
-      { icon: 'ph-ruler', label: 'Длина кабеля', vals: ['2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м', '2 м', '2 м'] },
-      { icon: 'ph-cube', label: 'Габариты', vals: ['320×76×40 мм', '330×108×42 мм', '236×101×40 мм', '236×101×40 мм', '280×101×39 мм', '280×101×40 мм', '91.5×91.5×109 мм', '125×125×200 мм', '125×125×200 мм'] }
+      { icon: 'ph-plugs', label: 'Количество розеток', vals: ['5', '6', '10', '12'] },
+      { icon: 'ph-lightning', label: 'Номинальная суммарная мощность', vals: ['4000 Вт', '4000 Вт', '4000 Вт', '4000 Вт'] },
+      { icon: 'ph-gauge', label: 'Ток нагрузки', vals: ['16 А', '16 А', '16 А', '16 А'] },
+      { icon: 'ph-usb', label: 'USB Type A', vals: ['2', '3', '3', '3'] },
+      { icon: 'ph-usb', label: 'USB Type C', vals: ['1', '1', '1', '2'] },
+      { icon: 'ph-plug-charging', label: 'Общая мощность USB разъёмов', vals: ['5 Вт / 20 Вт', '5 Вт / 20 Вт', '5 Вт / 20 Вт', '5 Вт / 65 Вт GaN / 15 Вт беспроводная зарядка'] },
+      { icon: 'ph-ruler', label: 'Длина кабеля', vals: ['2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м / 3 м / 5 м', '2 м'] },
+      { icon: 'ph-cube', label: 'Габариты', vals: ['320×76×40 мм', '236×101×40 мм', '330×108×42 мм', '125×125×200 мм'] }
     ];
     const keyIdx = [0, 1, 5, 6];
 
@@ -1467,13 +1469,8 @@ class Component extends DCLogic {
 
     const compareModels = [
       { name: 'TP-FI3U5E-C', price: '3 742 ₽', img: 'assets/cmp-fi3u5e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fi3u5e-c-2m-black/' },
-      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/cmp-fo4u10e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
-      { name: 'TP-FS6E', price: '3 389 ₽', img: 'assets/cmp-tpfs6e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs6e-2m-black/' },
       { name: 'TP-FS4U6E-C', price: '3 743 ₽', img: 'assets/cmp-fs4u6e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u6e-c-2m-black/' },
-      { name: 'TP-FS8E', price: '3 573 ₽', img: 'assets/cmp-fs8e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/TP-FS8E-3m-black/' },
-      { name: 'TP-FS4U8E-PD', price: '3 743 ₽', img: 'assets/cmp-fs4u8e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u8e-pd-2m-black/' },
-      { name: 'TP-VE5U5E-С', price: '5 375 ₽', img: 'assets/cmp-tpve5u5e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-ve5u5e-c-2m-black/' },
-      { name: 'TP-VG6U12E-C-W black', price: '8 545 ₽', img: 'assets/cmp-vg6u12e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-black/' },
+      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/cmp-fo4u10e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
       { name: 'TP-VG6U12E-C-W grey-white', price: '8 545 ₽', img: 'assets/cmp-vg6u12e-gw.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-grey-white/' }
     ].map((m, mi) => Object.assign({}, m, {
       idx: mi,
