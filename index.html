@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1206,11 +1206,11 @@ class Component extends DCLogic {
     const base = [
       { n: '01', icon: 'ph-sliders-horizontal', tag: 'групповое питание', title: 'Умное управление игровым сетапом', model: 'TP-FI3U5E-C', img: 'assets/1slide-preview.webp', vid: 'assets/scene1-top-v1short.mp4', thumb: 'assets/1slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400',
         body: 'Отключайте монитор, колонки или консоль отдельно, не вынимая вилок из розеток. Или разделите сетап на игровые и периферийные устройства и управляйте группами оборудования.' },
-      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FO4U10E-C', img: 'assets/2slide-preview.webp', thumb: 'assets/2slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/scene2-top-v1slim.mp4',
+      { n: '02', icon: 'ph-game-controller', tag: 'до 6 устройств', title: 'Игровые и консольные сетапы', model: 'TP-FO4U10E-C', img: 'assets/2slide-preview.webp', thumb: 'assets/2slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/scene2-top-v1short.mp4',
         body: 'Подключите ПК или консоль, монитор, роутер, колонки и зарядные устройства в одном месте. Контроль правильного заземления — безопасность игрового места. Версии с USB и без USB.' },
-      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы\nи стриминг', model: 'TP-FS6E', img: 'assets/3slide-preview.webp', thumb: 'assets/3slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/FS4U6E-C.mp4',
+      { n: '03', icon: 'ph-broadcast', tag: 'до 8 устройств', title: 'Мощные сетапы\nи стриминг', model: 'TP-FS6E', img: 'assets/3slide-preview.webp', thumb: 'assets/3slide-preview.webp', left: 'dual', right: 'dual', ar: '1460 / 400', rich: true, vid: 'assets/scene3-top-v1short.mp4',
         body: 'Больше розеток для расширенного сетапа. Для игровых ПК, нескольких мониторов, освещения, камер, микрофонов и сетевого оборудования. Световой индикатор показывает наличие заземления в розетке.' },
-      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VE5U5E-С', img: 'assets/4slide-preview.webp', thumb: 'assets/4slide-preview.webp', left: 'tower', right: 'tower', tower: true,
+      { n: '04', icon: 'ph-plug-charging', tag: '65 Вт GaN', title: 'Вертикальные станции питания', model: 'TP-VG6U12E-C-W', img: 'assets/4slide-preview.webp', thumb: 'assets/4slide-preview.webp', left: 'tower', right: 'tower', tower: true,
         body: 'Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.' }
     ];
     const sceneAccents = [
@@ -1274,14 +1274,14 @@ class Component extends DCLogic {
         socketsVid: i === 2 ? '' : (i === 1 ? 'assets/scene2-left-sockets.mp4' : 'assets/scene1-left-sockets.mp4'),
         socketsImg: i === 2 ? 'assets/3slide-left_2.webp' : '',
         leftWrapStyle: 'width:min(1480px,58vw);flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(16px,1.4vw,28px);height:min(230px,21vh)',
-        img1Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.5s;transform:translateX(' + (played ? '0' : '-700%') + ')',
-        img2Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (played ? '0' : '-550%') + ')',
+        img1Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.75s;transform:translateX(' + (played ? '0' : '-700%') + ')',
+        img2Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (played ? '0' : '-550%') + ')',
         vid: s.vid,
         vidSlide1: i === 0 ? s.vid : '',
         vidOwn: i > 0 ? s.vid : '',
         noVid: !s.vid,
         overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(72px,10vh,120px) 0 clamp(72px,9vh,110px);opacity:' + (active ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
-        rightStyle: i === 0
+        rightStyle: i < 3
           ? ('width:min(1480px,58vw);aspect-ratio:' + s.ar + ';flex-shrink:0;will-change:opacity;opacity:' + (played ? '1' : '0') + ';transition:opacity 1.4s ease')
           : (devBase + 'transform:translateX(' + (played ? '0' : '126%') + ')'),
         leftStyle: devT(rich && !s.vid ? '2s' : '') + 'transform:translateX(' + (played ? '0' : '-126%') + ')',
@@ -1304,14 +1304,14 @@ class Component extends DCLogic {
     const towerOverlay = towerBase ? {
       model: towerBase.model,
       title: towerBase.title,
-      mainVid: 'assets/VG6U12E-C-W_v1.mp4',
+      mainVid: 'assets/scene4-top-v1short.mp4',
       detailVid: 'assets/4slide-left.mp4',
-      detailImg: 'assets/4slide-left_2.png',
+      detailImg: 'assets/4slide-left_2.webp',
       overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (towerActive ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
-      mainStyle: 'height:min(920px,58vw,74vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1);transform:translateY(' + (towerP ? '0' : '120%') + ')',
+      mainStyle: 'height:min(920px,58vw,74vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:opacity;opacity:' + (towerP ? '1' : '0') + ';transition:opacity 1.4s ease',
       detailWrapStyle: 'display:flex;align-items:flex-start;gap:clamp(20px,1.8vw,40px)',
-      img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
-      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 3.4s cubic-bezier(.16,1,.3,1) 2.6s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
+      img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
+      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.8s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
       titleWrapStyle: 'flex-shrink:0;max-width:460px;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 1s',
       specTextStyle: 'width:0;min-width:100%;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 3s',
       specs: (sceneAccents[towerIdx] || []).map((ac) => ({
@@ -1406,13 +1406,13 @@ class Component extends DCLogic {
     });
     const eventsColABase = [
       mkEventShot('assets/DSC05411.webp', false),
-      mkEventShot('assets/DSC06202.webp', true),
-      mkEventShot('assets/DSC06221.webp', false)
+      mkEventShot('assets/DSC06236.webp', true),
+      mkEventShot('assets/DSC05976.webp', false)
     ];
     const eventsColBBase = [
-      mkEventShot('assets/DSC05767.webp', false),
       mkEventShot('assets/DSC05938.webp', false),
-      mkEventShot('assets/DSC06299.webp', false)
+      mkEventShot('assets/DSC06299.webp', false),
+      mkEventShot('assets/DSC06456.webp', true)
     ];
     const eventsColA = eventsColABase.concat(eventsColABase);
     const eventsColB = eventsColBBase.concat(eventsColBBase);
@@ -1468,10 +1468,10 @@ class Component extends DCLogic {
     };
 
     const compareModels = [
-      { name: 'TP-FI3U5E-C', price: '3 742 ₽', img: 'assets/cmp-fi3u5e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fi3u5e-c-2m-black/' },
-      { name: 'TP-FS4U6E-C', price: '3 743 ₽', img: 'assets/cmp-fs4u6e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u6e-c-2m-black/' },
-      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/cmp-fo4u10e.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
-      { name: 'TP-VG6U12E-C-W grey-white', price: '8 545 ₽', img: 'assets/cmp-vg6u12e-gw.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-grey-white/' }
+      { name: 'TP-FI3U5E-C', price: '3 742 ₽', img: 'assets/TP-FI3U5E-C.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fi3u5e-c-2m-black/' },
+      { name: 'TP-FS4U6E-C', price: '3 743 ₽', img: 'assets/TP-FS4U6E-C.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fs4u6e-c-2m-black/' },
+      { name: 'TP-FO4U10E-C', price: '4 355 ₽', img: 'assets/TP-FO4U10E-C.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/tp-fo4u10e-c-2m-black/' },
+      { name: 'VG6U12E-C-W', price: '8 545 ₽', img: 'assets/VG6U12E-C-W.webp', url: 'https://agni-tech.ru/catalog/setevye-filtrs-bashni/tp-vg6u12e-c-w-2m-grey-white/' }
     ].map((m, mi) => Object.assign({}, m, {
       idx: mi,
       cardStyle: 'display:flex;flex-direction:column;border-radius:20px;background:radial-gradient(125% 125% at 50% 0%,#101B1D,#05090A 70%);padding:24px' + cmpCardExtra,
