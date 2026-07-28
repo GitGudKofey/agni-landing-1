@@ -886,7 +886,6 @@ class Component extends DCLogic {
         if (this.state.playedScenes[i]) this._armSceneVid(v);
       });
     }
-    if (this._syncScChrome) this._syncScChrome();
   }
 
   componentDidMount() {
@@ -905,59 +904,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('mousemove', this._onMove);
 
-    // sm CTA: VV-pinned while sticky stuck; only at exit (top leaves stick band) ride sticky bottom
-    this._syncScChrome = () => {
-      const el = document.getElementById('sc-chrome-t');
-      if (!el) return;
-      if (this.state.gw !== 'sm') {
-        el.style.position = '';
-        el.style.top = '';
-        el.style.bottom = '';
-        el.style.left = '';
-        el.style.right = '';
-        el.style.visibility = '';
-        el.style.transform = '';
-        return;
-      }
-      const sticky = document.getElementById('sc-sticky-t');
-      if (!sticky) return;
-      const vv = window.visualViewport;
-      const ctaH = 48;
-      const pad = 10;
-      const offsetTop = vv ? vv.offsetTop : 0;
-      const height = vv ? vv.height : window.innerHeight;
-      const vvBottom = offsetTop + height;
-      const sr = sticky.getBoundingClientRect();
-      const stickyTopTarget = Math.min(88, Math.max(52, window.innerHeight * 0.07));
-      // modes by sticky.top only — never mix with sticky.bottom vs vv (causes Chrome jitter)
-      const notEntered = sr.top > stickyTopTarget + 6;
-      const releasing = sr.top < stickyTopTarget - 10;
-
-      el.style.position = 'fixed';
-      el.style.bottom = 'auto';
-      el.style.left = '12px';
-      el.style.right = '12px';
-      el.style.zIndex = '20';
-      el.style.transform = 'translateZ(0)';
-
-      if (notEntered) {
-        el.style.visibility = 'hidden';
-        return;
-      }
-      if (releasing) {
-        const releaseTop = Math.round(sr.bottom - ctaH - pad);
-        el.style.top = releaseTop + 'px';
-        el.style.visibility = (sr.bottom > offsetTop + 8) ? 'visible' : 'hidden';
-        return;
-      }
-      // stuck: always pin to visible viewport bottom (reacts to Chrome bar show/hide)
-      const nextTop = Math.round(vvBottom - ctaH - pad);
-      if (el.dataset.ctaTop !== String(nextTop)) {
-        el.dataset.ctaTop = String(nextTop);
-        el.style.top = nextTop + 'px';
-      }
-      el.style.visibility = 'visible';
-    };
+    // width + height bands (gh); CTA position is fully CSS-driven (dvh + absolute), no JS repositioning
     this._onResize = () => {
       const w = window.innerWidth;
       const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
@@ -971,22 +918,12 @@ class Component extends DCLogic {
       }
       if (gh !== this.state.gh) patch.gh = gh;
       if (Object.keys(patch).length) this.setState(patch);
-      this._syncScChrome();
-    };
-    this._onVvScroll = () => {
-      if (this._vvRaf) return;
-      this._vvRaf = requestAnimationFrame(() => {
-        this._vvRaf = 0;
-        this._syncScChrome();
-      });
     };
     this._onResize();
     window.addEventListener('resize', this._onResize);
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', this._onResize);
-      window.visualViewport.addEventListener('scroll', this._onVvScroll, { passive: true });
     }
-    window.addEventListener('scroll', this._onVvScroll, { passive: true });
 
     // hide navbar on scroll-down, reveal on scroll-up
     this._lastNavY = window.scrollY;
@@ -1285,11 +1222,8 @@ class Component extends DCLogic {
       window.removeEventListener('resize', this._onResize);
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', this._onResize);
-        if (this._onVvScroll) window.visualViewport.removeEventListener('scroll', this._onVvScroll);
       }
     }
-    if (this._onVvScroll) window.removeEventListener('scroll', this._onVvScroll);
-    if (this._vvRaf) cancelAnimationFrame(this._vvRaf);
     if (this._onNavScroll) window.removeEventListener('scroll', this._onNavScroll);
     if (this._onDocDown) document.removeEventListener('mousedown', this._onDocDown);
     if (this._eventsEsc) window.removeEventListener('keydown', this._eventsEsc);
@@ -1596,12 +1530,12 @@ class Component extends DCLogic {
     const scTextBoxStyleT = 'display:none';
     const scAccentMedia = (scMd || scPhone) && !scShort;
     const scShowDots = !scPhone;
-    // sticky: phone reserves CTA only; sm CTA is position:fixed to visualViewport (see _syncScChrome)
+    // sticky: phone uses 100dvh so the pad follows browser-chrome show/hide natively (no JS); CTA is absolute inside it
     const scStickyPadStyleT = scPhone
-      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
+      ? ('position:sticky;top:clamp(52px,7dvh,88px);height:calc(100dvh - clamp(52px,7dvh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(70px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
       : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
     const scChromeStyleT = scPhone
-      ? 'position:fixed;left:12px;right:12px;bottom:10px;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none;transform:translateZ(0)'
+      ? 'position:absolute;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none'
       : 'position:absolute;bottom:max(12px,env(safe-area-inset-bottom,0px));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none';
     const scDotsWrapStyleT = scPhone
       ? 'display:none'
