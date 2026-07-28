@@ -297,6 +297,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </sc-if>
       </div>
       <div style="{{ scChromeStyleT }}">
+        <sc-if value="{{ scShowDots }}" hint-placeholder-val="{{ true }}">
         <div style="{{ scDotsWrapStyleT }}">
           <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
             <button type="button" onClick="{{ s.dotClick }}" title="{{ s.title }}" aria-label="{{ s.title }}" style="{{ s.dotStyle }}" style-hover="opacity:1;background:rgba(255,255,255,.1)">
@@ -304,6 +305,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
             </button>
           </sc-for>
         </div>
+        </sc-if>
         <a href="#compare" style="{{ scCtaStyleT }}" style-hover="background:rgba(26,36,37,.9)">
           <span style="{{ scCtaLabelStyleT }}">Сравнить фильтры</span>
           <span style="{{ scCtaIconStyleT }}"><i class="ph ph-arrow-right"></i></span>
@@ -562,7 +564,10 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
   </div>
-  <div id="events-modal" style="position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:#000;padding:0">
+</section>
+
+<!-- Events fullscreen player — outside #events (isolation/overflow) so it stacks above header -->
+  <div id="events-modal" style="position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:#000;padding:0">
     <div id="events-player" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000">
       <button type="button" id="events-modal-close" aria-label="Закрыть" style="position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F0FAF9;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="ph ph-x"></i></button>
       <video id="events-vid-full" data-src="assets/Sponsor_Agni_4K.webm" playsinline="" preload="none" style="width:100%;height:100%;max-width:100vw;max-height:100vh;object-fit:contain;display:block;background:#000"></video>
@@ -575,7 +580,6 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </div>
     </div>
   </div>
-</section>
 
 <!-- ============ GUARANTEES ============ -->
 <section id="guarantees" style="{{ guaranteesSectionStyle }}">
@@ -806,7 +810,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920}}">
 class Component extends DCLogic {
-  state = { scenario: 0, gw: 'lg', gh: 'comfy', navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, playedScenes: {} };
+  state = { scenario: 0, gw: 'lg', gh: 'comfy', vvBottom: 0, navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, playedScenes: {} };
 
   _prepSceneVid(v) {
     if (!v || v._agniVidReady) return;
@@ -900,7 +904,13 @@ class Component extends DCLogic {
     };
     window.addEventListener('mousemove', this._onMove);
 
-    // width + height bands (gh: comfy ≥740 / short <740 / tight <640 — visualViewport when available)
+    // width + height bands + visualViewport bottom inset (browser chrome under sticky CTA)
+    this._syncVvBottom = () => {
+      const vv = window.visualViewport;
+      let b = 0;
+      if (vv) b = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+      if (b !== this.state.vvBottom) this.setState({ vvBottom: b });
+    };
     this._onResize = () => {
       const w = window.innerWidth;
       const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
@@ -913,11 +923,25 @@ class Component extends DCLogic {
         patch.navOpen = gw === 'lg' ? false : this.state.navOpen;
       }
       if (gh !== this.state.gh) patch.gh = gh;
+      const vv = window.visualViewport;
+      let b = 0;
+      if (vv) b = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+      if (b !== this.state.vvBottom) patch.vvBottom = b;
       if (Object.keys(patch).length) this.setState(patch);
+    };
+    this._onVvScroll = () => {
+      if (this._vvRaf) return;
+      this._vvRaf = requestAnimationFrame(() => {
+        this._vvRaf = 0;
+        this._syncVvBottom();
+      });
     };
     this._onResize();
     window.addEventListener('resize', this._onResize);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', this._onResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', this._onResize);
+      window.visualViewport.addEventListener('scroll', this._onVvScroll, { passive: true });
+    }
 
     // hide navbar on scroll-down, reveal on scroll-up
     this._lastNavY = window.scrollY;
@@ -1074,6 +1098,13 @@ class Component extends DCLogic {
       if (!eModal) return;
       eModal.style.display = 'flex';
       document.documentElement.style.overflow = 'hidden';
+      const header = document.getElementById('site-header');
+      if (header) {
+        header.style.transform = 'translateY(-160%)';
+        header.style.opacity = '0';
+        header.style.pointerEvents = 'none';
+        header.setAttribute('aria-hidden', 'true');
+      }
       const fsTarget = ePlayer || eModal;
       const req = fsTarget.requestFullscreen || fsTarget.webkitRequestFullscreen || fsTarget.msRequestFullscreen;
       if (req) { try { req.call(fsTarget); } catch (err) {} }
@@ -1096,6 +1127,13 @@ class Component extends DCLogic {
       }
       eModal.style.display = 'none';
       document.documentElement.style.overflow = '';
+      const header = document.getElementById('site-header');
+      if (header) {
+        header.style.transform = '';
+        header.style.opacity = '';
+        header.style.pointerEvents = '';
+        header.removeAttribute('aria-hidden');
+      }
       if (eFull) eFull.pause();
       if (eVid) { loadEventsPreview(); eVid.play().catch(() => {}); }
     };
@@ -1200,8 +1238,12 @@ class Component extends DCLogic {
     window.removeEventListener('mousemove', this._onMove);
     if (this._onResize) {
       window.removeEventListener('resize', this._onResize);
-      if (window.visualViewport) window.visualViewport.removeEventListener('resize', this._onResize);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', this._onResize);
+        if (this._onVvScroll) window.visualViewport.removeEventListener('scroll', this._onVvScroll);
+      }
     }
+    if (this._vvRaf) cancelAnimationFrame(this._vvRaf);
     if (this._onNavScroll) window.removeEventListener('scroll', this._onNavScroll);
     if (this._onDocDown) document.removeEventListener('mousedown', this._onDocDown);
     if (this._eventsEsc) window.removeEventListener('keydown', this._eventsEsc);
@@ -1507,15 +1549,17 @@ class Component extends DCLogic {
       : ('position:relative;width:100%;max-width:780px;min-height:' + (scTight ? '140px' : (scShort ? '180px' : '300px')) + ';flex-shrink:0');
     const scTextBoxStyleT = 'display:none';
     const scAccentMedia = (scMd || scPhone) && !scShort;
-    // sticky height tracks visual viewport; padding-bottom reserves dots+CTA so they don't stack over specs
+    const scShowDots = !scPhone;
+    const vvBottom = Math.max(0, this.state.vvBottom || 0);
+    // sticky: phone reserves CTA only; bottom follows visualViewport browser chrome
     const scStickyPadStyleT = scPhone
-      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(' + (scTight ? '68px' : (scShort ? '76px' : '92px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
-      : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
+      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(' + (56 + vvBottom) + 'px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
+      : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + ' + vvBottom + 'px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
     const scChromeStyleT = scPhone
-      ? 'position:absolute;bottom:max(8px,env(safe-area-inset-bottom,0px));left:12px;right:12px;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none'
-      : 'position:absolute;bottom:max(12px,env(safe-area-inset-bottom,0px));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none';
+      ? ('position:absolute;bottom:calc(' + vvBottom + 'px + max(8px,env(safe-area-inset-bottom,0px)));left:12px;right:12px;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none;transition:bottom .2s ease')
+      : ('position:absolute;bottom:calc(' + vvBottom + 'px + max(12px,env(safe-area-inset-bottom,0px)));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none;transition:bottom .2s ease');
     const scDotsWrapStyleT = scPhone
-      ? 'pointer-events:auto;height:48px;display:flex;align-items:center;gap:8px;padding:0 2px;border-radius:100px;background:transparent'
+      ? 'display:none'
       : 'pointer-events:auto;height:56px;display:flex;align-items:center;gap:10px;padding:0 4px;border-radius:100px;background:transparent';
     const scCtaStyleT = scPhone
       ? 'pointer-events:auto;height:48px;display:inline-flex;align-items:center;gap:12px;padding:0 6px 0 20px;border-radius:100px;background:rgba(30,30,32,.7);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);text-decoration:none;box-shadow:0 16px 40px -18px rgba(0,0,0,.55);transition:background .2s ease'
@@ -1885,6 +1929,7 @@ class Component extends DCLogic {
       scCtaStyleT,
       scCtaLabelStyleT,
       scCtaIconStyleT,
+      scShowDots,
       cmpDuo,
       cmpTrio,
       triSelStyle,
