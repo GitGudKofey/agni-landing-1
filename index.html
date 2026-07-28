@@ -209,7 +209,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <section id="scenarios" style="position:relative;max-width:1440px;margin:0 auto;padding:clamp(56px,8vh,88px) clamp(16px,4.2vw,32px) 40px">
   <sc-if value="{{ scTablet }}" hint-placeholder-val="{{ false }}">
   <div style="position:relative;z-index:1">
-    <div style="{{ scStickyPadStyleT }}">
+    <div id="sc-sticky-t" style="{{ scStickyPadStyleT }}">
       <h2 style="{{ scHeadingStyleT }}">Один центр питания<br>для всего сетапа</h2>
       <div style="{{ scMainRowStyleT }}">
       <div style="{{ scStackLayerStyleT }}">
@@ -905,7 +905,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('mousemove', this._onMove);
 
-    // sm CTA: pin to bottom of visualViewport (Chrome/Safari browser chrome)
+    // sm CTA: pin to bottom of visualViewport; show only when sticky is stuck (like desktop)
     this._syncScChrome = () => {
       const el = document.getElementById('sc-chrome-t');
       if (!el) return;
@@ -932,11 +932,17 @@ class Component extends DCLogic {
       el.style.right = '12px';
       el.style.zIndex = '20';
       el.style.transform = 'translateZ(0)';
+      const sticky = document.getElementById('sc-sticky-t');
       const sec = document.getElementById('scenarios');
-      if (sec) {
-        const r = sec.getBoundingClientRect();
-        const visible = r.bottom > offsetTop + 80 && r.top < offsetTop + height - 24;
-        el.style.visibility = visible ? 'visible' : 'hidden';
+      if (sticky && sec) {
+        const sr = sticky.getBoundingClientRect();
+        const secR = sec.getBoundingClientRect();
+        // sticky top ≈ clamp(52px, 7svh, 88px) — treat as stuck when latched near that band
+        const stickyTopTarget = Math.min(88, Math.max(52, window.innerHeight * 0.07));
+        const stuck = sr.top <= stickyTopTarget + 4;
+        // still inside scenarios (not scrolled past)
+        const inSection = secR.bottom > offsetTop + height * 0.35;
+        el.style.visibility = (stuck && inSection) ? 'visible' : 'hidden';
       }
     };
     this._onResize = () => {
