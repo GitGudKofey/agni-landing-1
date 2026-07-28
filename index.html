@@ -264,7 +264,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <sc-if value="{{ towerOverlay }}" hint-placeholder-val="{{ false }}">
       <div style="{{ towerOverlay.mdLayerStyle }}">
         <div style="{{ towerOverlay.mdMainStyle }}">
-          <video class="scene-vid" data-src="{{ towerOverlay.mainVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block"></video>
+          <video class="scene-vid" data-src="{{ towerOverlay.mainVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block;pointer-events:none"></video>
         </div>
         <div style="{{ towerOverlay.mdSideStyle }}">
           <div style="{{ towerOverlay.mdTitleWrapStyle }}">
@@ -274,7 +274,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
           <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2.2vh,22px)">
             <div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">
               <div style="{{ towerOverlay.mdDetailWrap1 }}">
-                <video class="scene-vid scene-vid-loop" data-src="{{ towerOverlay.detailVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+                <video class="scene-vid scene-vid-loop" data-src="{{ towerOverlay.detailVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none"></video>
               </div>
               <div style="{{ towerOverlay.mdSpecStyle }}">
                 <div style="{{ towerOverlay.spec1.mdPreStyle }}">{{ towerOverlay.spec1.pre }}</div>
@@ -334,10 +334,10 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
               </div>
               <div style="{{ ov.rightStyle }}">
                 <sc-if value="{{ ov.vidOwn }}" hint-placeholder-val="{{ false }}">
-                  <video class="scene-vid" data-src="{{ ov.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block"></video>
+                  <video class="scene-vid" data-src="{{ ov.vidOwn }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;pointer-events:none"></video>
                 </sc-if>
                 <sc-if value="{{ ov.vidSlide1 }}" hint-placeholder-val="{{ false }}">
-                  <video class="scene-vid" data-src="{{ ov.vidSlide1 }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center"></video>
+                  <video class="scene-vid" data-src="{{ ov.vidSlide1 }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="{{ ov.idx }}" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:left center;display:block;transform:scale(1.1);transform-origin:left center;pointer-events:none"></video>
                 </sc-if>
                 <sc-if value="{{ ov.noVid }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="scene-view-r-{{ ov.idx }}" src="{{ ov.right }}" fit="contain" style="width:100%;height:100%;background:transparent" shape="rect" placeholder="Изображение устройства"></image-slot>
@@ -379,7 +379,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       <div style="{{ towerOverlay.overlayStyle }}">
         <div style="width:100%;max-width:min(1600px,96vw);display:flex;align-items:center;justify-content:center;gap:clamp(28px,2.5vw,56px)">
           <div style="{{ towerOverlay.mainStyle }}">
-            <video class="scene-vid" data-src="{{ towerOverlay.mainVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block"></video>
+            <video class="scene-vid" data-src="{{ towerOverlay.mainVid }}" muted="{{ true }}" playsinline="{{ true }}" preload="none" data-scene-i="3" ref="{{ sceneVidRef }}" style="width:100%;height:100%;object-fit:contain;object-position:center center;display:block;pointer-events:none"></video>
           </div>
           <div style="flex:0 1 auto;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,2.6vh,30px)">
             <div style="{{ towerOverlay.titleWrapStyle }}">
@@ -808,15 +808,71 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 class Component extends DCLogic {
   state = { scenario: 0, gw: 'lg', gh: 'comfy', navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, playedScenes: {} };
 
+  _prepSceneVid(v) {
+    if (!v || v._agniVidReady) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
+    v.setAttribute('disablepictureinpicture', '');
+    v.removeAttribute('controls');
+    v.controls = false;
+    try { v.disablePictureInPicture = true; } catch (e) {}
+    v.style.pointerEvents = 'none';
+    const exitFs = () => {
+      try {
+        if (v.webkitDisplayingFullscreen && v.webkitExitFullscreen) v.webkitExitFullscreen();
+        if (document.fullscreenElement === v && document.exitFullscreen) document.exitFullscreen();
+      } catch (err) {}
+    };
+    v.addEventListener('webkitbeginfullscreen', (e) => { e.preventDefault(); exitFs(); });
+    v.addEventListener('fullscreenchange', exitFs);
+    v._agniVidReady = true;
+  }
+
   _armSceneVid(v) {
-    if (!v || v._started) return;
+    if (!v) return;
+    this._prepSceneVid(v);
     const ds = v.getAttribute('data-src');
     if (ds && !v.getAttribute('src')) {
       v.setAttribute('src', ds);
       try { v.load(); } catch (e) {}
     }
-    v._started = true;
-    v.play().catch(() => {});
+    // main scene clips: play once, freeze on last frame when revisiting
+    const isLoop = v.classList.contains('scene-vid-loop') || v.loop;
+    if (!isLoop) {
+      if (v._done || v.ended) {
+        try {
+          if (v.duration && isFinite(v.duration)) v.currentTime = v.duration;
+        } catch (e) {}
+        return;
+      }
+      if (!v._endedBound) {
+        v._endedBound = true;
+        v.addEventListener('ended', () => {
+          v._done = true;
+          v._playing = false;
+          try { v.pause(); } catch (e) {}
+        });
+      }
+    }
+    if (v._playing && !v.paused) return;
+    const kick = () => {
+      if (!isLoop && (v._done || v.ended)) return;
+      v.muted = true;
+      const p = v.play();
+      if (p && typeof p.then === 'function') {
+        p.then(() => { v._playing = true; }).catch(() => {});
+      }
+    };
+    kick();
+    if (!v._armRetry) {
+      v._armRetry = true;
+      v.addEventListener('loadeddata', kick, { once: true });
+      setTimeout(kick, 280);
+    }
   }
 
   componentDidUpdate() {
@@ -849,7 +905,8 @@ class Component extends DCLogic {
       const w = window.innerWidth;
       const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
       const gw = w >= 1100 ? 'lg' : (w >= 640 ? 'md' : 'sm');
-      const gh = h < 640 ? 'tight' : (h < 740 ? 'short' : 'comfy');
+      // visualViewport: browser chrome often leaves ~650–780 on phones
+      const gh = h < 660 ? 'tight' : (h < 760 ? 'short' : 'comfy');
       const patch = {};
       if (gw !== this.state.gw) {
         patch.gw = gw;
@@ -1023,6 +1080,8 @@ class Component extends DCLogic {
       if (eFull) {
         ensureEventsFull();
         eFull.muted = false;
+        eFull.volume = 1;
+        eFull.removeAttribute('muted');
         eFull.currentTime = eVid ? eVid.currentTime : 0;
         eFull.play().catch(() => {});
         syncPpIcon();
@@ -1078,14 +1137,26 @@ class Component extends DCLogic {
       });
       const updates = {};
       if (best !== this.state.scenario) updates.scenario = best;
-      // SLIDES with two views: play the slide-in once, when the slide is nearly centered
-      if (bestEl && bestEl.getAttribute('data-has-views') === '1' && !this.state.playedScenes[best] && bestDist < window.innerHeight * 0.75) {
+      // arm once when slide is near viewport center (touch: slightly wider gate)
+      if (bestEl && !this.state.playedScenes[best] && bestDist < window.innerHeight * 0.9) {
         updates.playedScenes = Object.assign({}, this.state.playedScenes, { [best]: true });
       }
       if (Object.keys(updates).length) this.setState(updates);
     };
     window.addEventListener('scroll', this._sceneScroll, { passive: true });
     this._sceneScroll();
+
+    // iOS/Android: muted autoplay often needs a touch kick after scroll-arm
+    if (this._isTouch && !this._touchVidArm) {
+      this._touchVidArm = (e) => {
+        if (!this._sceneVids || !this.state.playedScenes) return;
+        this._sceneVids.forEach((v) => {
+          const i = parseInt(v.getAttribute('data-scene-i') || '0', 10);
+          if (this.state.playedScenes[i]) this._armSceneVid(v);
+        });
+      };
+      document.addEventListener('touchstart', this._touchVidArm, { passive: true });
+    }
 
     // SLIDES with two views: slide-in trigger handled inside _sceneScroll (per-slide, once)
 
@@ -1135,6 +1206,7 @@ class Component extends DCLogic {
     if (this._onDocDown) document.removeEventListener('mousedown', this._onDocDown);
     if (this._eventsEsc) window.removeEventListener('keydown', this._eventsEsc);
     if (this._sceneScroll) window.removeEventListener('scroll', this._sceneScroll);
+    if (this._touchVidArm) document.removeEventListener('touchstart', this._touchVidArm);
     if (this._connectIO) this._connectIO.disconnect();
     if (this._eventsIO) this._eventsIO.disconnect();
     if (this._eventsFsChange) {
@@ -1149,18 +1221,20 @@ class Component extends DCLogic {
     if (!el) return;
     const r = el.getBoundingClientRect();
     const target = window.scrollY + r.top - (window.innerHeight / 2 - r.height / 2);
+    const playedScenes = Object.assign({}, this.state.playedScenes, { [i]: true });
+    this.setState({ scenario: i, playedScenes: playedScenes });
     window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
   }
 
   renderVals() {
     if (!this._sceneVidRef) this._sceneVidRef = (v) => {
       if (!v) return;
-      v.muted = true; v.loop = v.classList.contains('scene-vid-loop');
+      v.loop = v.classList.contains('scene-vid-loop');
+      this._prepSceneVid(v);
       this._sceneVids = this._sceneVids || new Set();
       this._sceneVids.add(v);
 
       const vi = parseInt(v.getAttribute('data-scene-i') || '0', 10);
-      // same as desktop: arm only after scroll "interaction zone" sets playedScenes
       if (this.state.playedScenes && this.state.playedScenes[vi]) this._armSceneVid(v);
     };
     const variant = 'solid';
@@ -1180,12 +1254,12 @@ class Component extends DCLogic {
       [ { big: 'QC/PD 20 Вт', label: 'Быстрая зарядка смартфона без адаптера' }, { big: 'LED индикаторы', label: 'Контроль заземления и защиты одним взглядом' } ],
       [ { pre: 'беспроводная зарядка', big: 'Qi 15 Вт', label: 'Положили смартфон — зарядка началась' }, { pre: 'быстрая зарядка', big: 'GaN 65 Вт', label: 'Зарядка ноутбуков, Steam Deck, Nintendo Switch' } ]
     ];
-    // phone + height band: short/tight hide secondary media; md keeps media
+    // phone/tablet + height band: short/tight hide secondary media on sm and md
     const scPhoneEarly = this.state.gw === 'sm';
     const scMdEarly = this.state.gw === 'md';
-    const scShortEarly = scPhoneEarly && (this.state.gh === 'short' || this.state.gh === 'tight');
-    const scTightEarly = scPhoneEarly && this.state.gh === 'tight';
-    const phoneVidH = scTightEarly ? 'min(32svh,240px)' : (scShortEarly ? 'min(36svh,270px)' : 'min(40svh,300px)');
+    const scShortEarly = (scPhoneEarly || scMdEarly) && (this.state.gh === 'short' || this.state.gh === 'tight');
+    const scTightEarly = (scPhoneEarly || scMdEarly) && this.state.gh === 'tight';
+    const phoneVidH = (scPhoneEarly && scTightEarly) ? 'min(30svh,220px)' : ((scPhoneEarly && scShortEarly) ? 'min(34svh,250px)' : 'min(38svh,280px)');
     const phoneVidW = 'min(100%,360px)';
     // per-breakpoint asset suffix: lg = no suffix; md/sm = _md / _sm
     const bp = scPhoneEarly ? 'sm' : (scMdEarly ? 'md' : 'lg');
@@ -1204,8 +1278,9 @@ class Component extends DCLogic {
         { kind: 'vid', src: aBp('scene2-left-sockets', '.mp4') }
       ],
       [
+        // md/sm: wide USB crop (3slide-left_2_md source) — NOT tall scene3-left-usb (lg overlay only)
         { kind: 'img', src: left2Img(3) },
-        { kind: 'img', src: left2Img(3) }
+        { kind: 'img', src: aLg('3slide-left_2', '.webp') }
       ],
       [
         { kind: 'vid', src: aBp('4slide-left', '.mp4') },
@@ -1230,8 +1305,8 @@ class Component extends DCLogic {
           ? sceneAccents[i][1 - ai]
           : ac;
         const towerMd = !!(scMdEarly && s.tower);
-        // show accent media on md (dual only) and sm when height is comfy; md tower uses overlay
-        const showDet = !!(det && ((scPhoneEarly && !towerMd && !scShortEarly) || (scMdEarly && !s.tower)));
+        // show accent media on md/sm when height is comfy; md tower uses overlay
+        const showDet = !!(det && !scShortEarly && ((scPhoneEarly && !towerMd) || (scMdEarly && !s.tower)));
         const bigCore = scPhoneEarly
           ? 'font:700 clamp(17px,4.6vw,22px)/1.12 Montserrat,sans-serif;letter-spacing:-.7px;white-space:normal;text-wrap:balance;background:linear-gradient(100deg,#FFFFFF 18%,#5FE0D2 58%,#0F9F94 100%);-webkit-background-clip:text;background-clip:text;color:transparent'
           : (useGrad
@@ -1255,12 +1330,12 @@ class Component extends DCLogic {
           mediaSrc: det ? det.src : '',
           // vid/img: equal column width, natural AR scale (no cover crop); sm slightly tighter
           mediaWrapStyleT: (showDet && det.kind === 'vid')
-            ? 'width:100%;border-radius:' + (scPhoneEarly ? '12px' : 'clamp(14px,1.6vw,22px)') + ';overflow:hidden;margin:0 0 ' + (scPhoneEarly ? '10px' : '14px') + mediaEnter
+            ? 'width:100%;border-radius:' + (scPhoneEarly ? '12px' : 'clamp(14px,1.6vw,22px)') + ';overflow:hidden;margin:0 0 ' + (scPhoneEarly ? '10px' : '14px') + ';pointer-events:none' + mediaEnter
             : '',
           mediaStyleT: (showDet && (det.kind === 'vid' || det.kind === 'img'))
             ? (det.kind === 'vid'
-              ? 'width:100%;height:auto;display:block;object-fit:contain'
-              : 'width:100%;height:auto;object-fit:contain;border-radius:' + (scPhoneEarly ? '12px' : 'clamp(14px,1.6vw,22px)') + ';display:block;margin:0 0 ' + (scPhoneEarly ? '10px' : '14px') + mediaEnter)
+              ? 'width:100%;height:auto;display:block;object-fit:contain;pointer-events:none'
+              : 'width:100%;height:auto;object-fit:contain;border-radius:' + (scPhoneEarly ? '12px' : 'clamp(14px,1.6vw,22px)') + ';display:block;margin:0 0 ' + (scPhoneEarly ? '10px' : '14px') + ';pointer-events:none' + mediaEnter)
             : '',
           colStyleT: scPhoneEarly
             ? 'display:flex;flex-direction:column;align-items:center;text-align:center;box-sizing:border-box;flex:1 1 calc(50% - 14px);min-width:0;max-width:calc(50% - 8px);padding:0 8px'
@@ -1323,7 +1398,7 @@ class Component extends DCLogic {
         accentStyle: 'position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);opacity:' + (a && !s.left ? '1' : '0') + ';display:flex;flex-direction:column;gap:clamp(20px,3vh,34px);text-align:left;' + xf,
         accentStyleT: towerMdSlide
           ? ('position:absolute;left:0;right:0;top:0;opacity:0;pointer-events:none;' + xf)
-          : ('position:absolute;left:0;right:0;top:0;opacity:' + (a ? '1' : '0') + ';display:flex;flex-direction:row;flex-wrap:wrap;justify-content:' + (scPhoneEarly ? 'space-between' : 'center') + ';align-items:flex-start;gap:' + (scPhoneEarly ? 'clamp(12px,3.5vw,22px) clamp(16px,5vw,28px)' : 'clamp(28px,4vw,56px)') + ';text-align:center;box-sizing:border-box;' + (scPhoneEarly ? 'padding:0 2px;' : '') + xf),
+          : ('position:absolute;left:0;right:0;top:0;opacity:' + (a ? '1' : '0') + ';display:flex;flex-direction:row;flex-wrap:wrap;justify-content:' + (scPhoneEarly ? 'space-between' : 'center') + ';align-items:flex-start;gap:' + (scPhoneEarly ? 'clamp(12px,3.5vw,22px) clamp(16px,5vw,28px)' : 'clamp(28px,4vw,56px)') + ';text-align:center;box-sizing:border-box;pointer-events:none;' + (scPhoneEarly ? 'padding:0 2px;' : '') + xf),
         modelStyle: scPhoneEarly
           ? 'width:100%;font:700 14px Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px;margin:0'
           : 'width:100%;font:700 clamp(16px,1.5vw,20px) Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px;margin:0',
@@ -1348,8 +1423,8 @@ class Component extends DCLogic {
         socketsVid: i === 2 ? '' : (i === 1 ? aBp('scene2-left-sockets', '.mp4') : aBp('scene1-left-sockets', '.mp4')),
         socketsImg: i === 2 ? (bp === 'lg' ? 'assets/3slide-left_2.webp' : left2Img(3)) : '',
         leftWrapStyle: 'width:min(1480px,58vw);flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(16px,1.4vw,28px);height:min(230px,21vh)',
-        img1Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.75s;transform:translateX(' + (played ? '0' : '-700%') + ')',
-        img2Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (played ? '0' : '-550%') + ')',
+        img1Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);pointer-events:none;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.75s;transform:translateX(' + (played ? '0' : '-700%') + ')',
+        img2Style: 'height:100%;width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;pointer-events:none;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (played ? '0' : '-550%') + ')',
         vid: s.vid,
         vidSlide1: i === 0 ? s.vid : '',
         vidOwn: i > 0 ? s.vid : '',
@@ -1384,8 +1459,8 @@ class Component extends DCLogic {
       overlayStyle: 'position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;z-index:5;display:flex;align-items:center;justify-content:center;padding:clamp(96px,14vh,150px) 0 clamp(96px,12vh,140px);opacity:' + (towerActive ? '1' : '0') + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
       mainStyle: 'height:min(920px,58vw,74vh);aspect-ratio:740 / 1150;flex-shrink:0;will-change:opacity;opacity:' + (towerP ? '1' : '0') + ';transition:opacity 1.4s ease',
       detailWrapStyle: 'display:flex;align-items:flex-start;gap:clamp(20px,1.8vw,40px)',
-      img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
-      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.8s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
+      img1Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);pointer-events:none;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.4s;transform:translateX(' + (towerP ? '0' : '460%') + ')',
+      img2Style: 'height:min(230px,21vh);width:auto;border-radius:clamp(16px,1.4vw,28px);object-fit:contain;display:block;pointer-events:none;will-change:transform;transition:transform 2.4s cubic-bezier(.16,1,.3,1) 1.8s;transform:translateX(' + (towerP ? '0' : '300%') + ')',
       titleWrapStyle: 'flex-shrink:0;max-width:460px;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 1s',
       specTextStyle: 'width:0;min-width:100%;opacity:' + (towerP ? '1' : '0') + ';transition:opacity .9s ease 3s',
       // md: separate absolute layer — fade only, timings = desktop tower
@@ -1420,24 +1495,25 @@ class Component extends DCLogic {
       ? 'position:relative;display:block;width:100%;max-width:1080px;flex:1;min-height:0;align-self:stretch'
       : ('display:flex;flex-direction:column;align-items:center;width:100%;gap:' + (scPhone ? 'clamp(4px,.8vh,8px)' : 'clamp(12px,1.6vh,18px)'));
     const scStackLayerStyleT = scMd
-      ? ('position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,1.6vh,18px);padding-bottom:clamp(64px,9vh,88px);box-sizing:border-box;opacity:' + (scMdTower ? '0' : '1') + ';transition:opacity .4s ease;pointer-events:none')
+      ? ('position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,1.6vh,18px);padding-bottom:clamp(72px,10vh,100px);box-sizing:border-box;opacity:' + (scMdTower ? '0' : '1') + ';transition:opacity .4s ease;pointer-events:none')
       : 'display:contents';
-    const scShort = scPhone && (this.state.gh === 'short' || this.state.gh === 'tight');
-    const scTight = scPhone && this.state.gh === 'tight';
+    const scShort = (scPhone || scMd) && (this.state.gh === 'short' || this.state.gh === 'tight');
+    const scTight = (scPhone || scMd) && this.state.gh === 'tight';
     const scVidBoxStyleT = scPhone
       ? ('position:relative;height:' + phoneVidH + ';width:' + phoneVidW + ';flex-shrink:0;margin:0 auto;overflow:hidden')
       : 'position:relative;width:min(100%,980px);aspect-ratio:1463 / 570;height:auto;flex-shrink:0;margin:0 auto';
     const scAccentBoxStyleT = scPhone
-      ? ('position:relative;width:100%;max-width:540px;min-height:' + (scTight ? '96px' : (scShort ? '120px' : '220px')) + ';flex-shrink:0')
-      : 'position:relative;width:100%;max-width:780px;min-height:300px;flex-shrink:0';
+      ? ('position:relative;width:100%;max-width:540px;min-height:' + (scTight ? '88px' : (scShort ? '108px' : '200px')) + ';flex-shrink:0')
+      : ('position:relative;width:100%;max-width:780px;min-height:' + (scTight ? '140px' : (scShort ? '180px' : '300px')) + ';flex-shrink:0');
     const scTextBoxStyleT = 'display:none';
-    const scAccentMedia = scMd || (scPhone && !scShort);
+    const scAccentMedia = (scMd || scPhone) && !scShort;
+    // sticky height tracks visual viewport; padding-bottom reserves dots+CTA so they don't stack over specs
     const scStickyPadStyleT = scPhone
-      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(48px,6svh,64px)' : (scShort ? 'clamp(56px,7svh,72px)' : 'clamp(64px,8svh,84px)')) + ';padding-bottom:' + (scTight ? 'clamp(44px,6svh,60px)' : (scShort ? 'clamp(48px,7svh,68px)' : 'clamp(48px,7svh,72px)')) + ';pointer-events:none;z-index:2')
-      : 'position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:clamp(12px,1.6vh,18px);padding-top:clamp(100px,12.5vh,132px);padding-bottom:clamp(72px,9.5vh,96px);pointer-events:none;z-index:2';
+      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(' + (scTight ? '68px' : (scShort ? '76px' : '92px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
+      : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
     const scChromeStyleT = scPhone
-      ? ('position:absolute;bottom:' + (scTight ? '8px' : 'clamp(12px,2vh,20px)') + ';left:12px;right:12px;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none')
-      : 'position:absolute;bottom:clamp(16px,2.4vh,26px);left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none';
+      ? 'position:absolute;bottom:max(8px,env(safe-area-inset-bottom,0px));left:12px;right:12px;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none'
+      : 'position:absolute;bottom:max(12px,env(safe-area-inset-bottom,0px));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none';
     const scDotsWrapStyleT = scPhone
       ? 'pointer-events:auto;height:48px;display:flex;align-items:center;gap:8px;padding:0 2px;border-radius:100px;background:transparent'
       : 'pointer-events:auto;height:56px;display:flex;align-items:center;gap:10px;padding:0 4px;border-radius:100px;background:transparent';
