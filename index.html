@@ -905,7 +905,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('mousemove', this._onMove);
 
-    // sm CTA: pin to bottom of visualViewport; show only when sticky is stuck (like desktop)
+    // sm CTA: pin to visualViewport while sticky is stuck; at section end follow sticky bottom (desktop-like endpoint)
     this._syncScChrome = () => {
       const el = document.getElementById('sc-chrome-t');
       if (!el) return;
@@ -924,26 +924,33 @@ class Component extends DCLogic {
       const pad = 10;
       const offsetTop = vv ? vv.offsetTop : 0;
       const height = vv ? vv.height : window.innerHeight;
-      const top = Math.round(offsetTop + height - ctaH - pad);
+      const vvBottom = offsetTop + height;
       el.style.position = 'fixed';
-      el.style.top = top + 'px';
       el.style.bottom = 'auto';
       el.style.left = '12px';
       el.style.right = '12px';
       el.style.zIndex = '20';
       el.style.transform = 'translateZ(0)';
       const sticky = document.getElementById('sc-sticky-t');
-      const sec = document.getElementById('scenarios');
-      if (sticky && sec) {
-        const sr = sticky.getBoundingClientRect();
-        const secR = sec.getBoundingClientRect();
-        // sticky top ≈ clamp(52px, 7svh, 88px) — treat as stuck when latched near that band
-        const stickyTopTarget = Math.min(88, Math.max(52, window.innerHeight * 0.07));
-        const stuck = sr.top <= stickyTopTarget + 4;
-        // still inside scenarios (not scrolled past)
-        const inSection = secR.bottom > offsetTop + height * 0.35;
-        el.style.visibility = (stuck && inSection) ? 'visible' : 'hidden';
+      if (!sticky) return;
+      const sr = sticky.getBoundingClientRect();
+      const stickyTopTarget = Math.min(88, Math.max(52, window.innerHeight * 0.07));
+      const entered = sr.top <= stickyTopTarget + 4;
+      // sticky still covers the visible bottom — pin to visualViewport
+      const coveringBottom = sr.bottom >= vvBottom - 2;
+      if (!entered) {
+        el.style.visibility = 'hidden';
+        return;
       }
+      if (coveringBottom) {
+        el.style.top = Math.round(vvBottom - ctaH - pad) + 'px';
+        el.style.visibility = 'visible';
+        return;
+      }
+      // endpoint: sticky releasing — CTA rides sticky bottom out of view
+      const releaseTop = Math.round(sr.bottom - ctaH - pad);
+      el.style.top = releaseTop + 'px';
+      el.style.visibility = (sr.bottom > offsetTop + 8) ? 'visible' : 'hidden';
     };
     this._onResize = () => {
       const w = window.innerWidth;
