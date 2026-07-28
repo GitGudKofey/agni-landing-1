@@ -1419,9 +1419,11 @@ class Component extends DCLogic {
           ? 'position:absolute;left:50%;top:50%;width:' + phoneVidH + ';height:' + phoneVidW + ';width:100cqh;height:100cqw;max-width:none;object-fit:contain;object-position:center center;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'
           : 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'),
         accentStyle: 'position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);opacity:' + (a && !s.left ? '1' : '0') + ';display:flex;flex-direction:column;gap:clamp(20px,3vh,34px);text-align:left;' + xf,
+        // grid-stack (not position:absolute): parent's grid track auto-sizes to the tallest slide's real content,
+        // so wrapped 2-line labels can never overflow past the card into the CTA zone below
         accentStyleT: towerMdSlide
-          ? ('position:absolute;left:0;right:0;top:0;opacity:0;pointer-events:none;' + xf)
-          : ('position:absolute;left:0;right:0;top:0;opacity:' + (a ? '1' : '0') + ';display:flex;flex-direction:row;flex-wrap:wrap;justify-content:' + (scPhoneEarly ? 'space-between' : 'center') + ';align-items:flex-start;gap:' + (scPhoneEarly ? 'clamp(12px,3.5vw,22px) clamp(16px,5vw,28px)' : 'clamp(28px,4vw,56px)') + ';text-align:center;box-sizing:border-box;pointer-events:none;' + (scPhoneEarly ? 'padding:0 2px;' : '') + xf),
+          ? ('grid-area:1/1;width:100%;opacity:0;pointer-events:none;' + xf)
+          : ('grid-area:1/1;width:100%;opacity:' + (a ? '1' : '0') + ';display:flex;flex-direction:row;flex-wrap:wrap;justify-content:' + (scPhoneEarly ? 'space-between' : 'center') + ';align-items:flex-start;gap:' + (scPhoneEarly ? 'clamp(12px,3.5vw,22px) clamp(16px,5vw,28px)' : 'clamp(28px,4vw,56px)') + ';text-align:center;box-sizing:border-box;pointer-events:none;' + (scPhoneEarly ? 'padding:0 2px;' : '') + xf),
         modelStyle: scPhoneEarly
           ? 'width:100%;font:700 14px Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px;margin:0'
           : 'width:100%;font:700 clamp(16px,1.5vw,20px) Montserrat,sans-serif;color:#F0FAF9;letter-spacing:-.3px;margin:0',
@@ -1526,9 +1528,11 @@ class Component extends DCLogic {
     const scVidBoxStyleT = scPhone
       ? ('position:relative;flex:1 1 0;min-height:' + phoneVidH + ';width:' + phoneVidW + ';container-type:size;margin:0 auto;overflow:hidden')
       : 'position:relative;width:min(100%,980px);aspect-ratio:1463 / 570;height:auto;flex-shrink:0;margin:0 auto';
+    // grid (not position:relative + absolute children): track height = tallest slide's real content, so nothing
+    // can silently overflow past the card; min-height is just the pre-layout floor while all slides are equally tall
     const scAccentBoxStyleT = scPhone
-      ? ('position:relative;width:100%;max-width:540px;min-height:' + (scTight ? '88px' : (scShort ? '108px' : '200px')) + ';flex-shrink:0')
-      : ('position:relative;width:100%;max-width:780px;min-height:' + (scTight ? '140px' : (scShort ? '180px' : '300px')) + ';flex-shrink:0');
+      ? ('display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:540px;min-height:' + (scTight ? '88px' : (scShort ? '108px' : '200px')) + ';flex-shrink:0')
+      : ('display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:780px;min-height:' + (scTight ? '140px' : (scShort ? '180px' : '300px')) + ';flex-shrink:0');
     const scTextBoxStyleT = 'display:none';
     const scAccentMedia = (scMd || scPhone) && !scShort;
     const scShowDots = !scPhone;
