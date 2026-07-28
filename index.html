@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGNI — сетевые фильтры для игровых сетапов</title>
+<meta name="description" content="Сетевые фильтры AGNI для игровых сетапов: защита от перегрузки и КЗ, варисторная защита, заземление, до 4000 Вт нагрузки. Подбери фильтр под свой ПК, консоль и периферию.">
+<link rel="canonical" href="https://agni-tech.ru/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AGNI">
+<meta property="og:title" content="AGNI — сетевые фильтры для игровых сетапов">
+<meta property="og:description" content="Защита от перегрузки и КЗ, варисторная защита, заземление, до 4000 Вт нагрузки. Подбери сетевой фильтр под свой сетап.">
+<meta property="og:url" content="https://agni-tech.ru/">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AGNI — сетевые фильтры для игровых сетапов">
+<meta name="twitter:description" content="Защита от перегрузки и КЗ, варисторная защита, заземление, до 4000 Вт нагрузки. Подбери сетевой фильтр под свой сетап.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="ph-cube" viewBox="0 0 256 256"><path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/></symbol>
+  <symbol id="ph-gauge" viewBox="0 0 256 256"><path d="M207.06,72.67A111.24,111.24,0,0,0,128,40h-.4C66.07,40.21,16,91,16,153.13V176a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V152A111.25,111.25,0,0,0,207.06,72.67ZM224,176H119.71l54.76-75.3a8,8,0,0,0-12.94-9.42L99.92,176H32V153.13c0-3.08.15-6.12.43-9.13H56a8,8,0,0,0,0-16H35.27c10.32-38.86,44-68.24,84.73-71.66V80a8,8,0,0,0,16,0V56.33A96.14,96.14,0,0,1,221,128H200a8,8,0,0,0,0,16h23.67c.21,2.65.33,5.31.33,8Z"/></symbol>
+  <symbol id="ph-play-fill" viewBox="0 0 256 256"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></symbol>
+  <symbol id="ph-plugs" viewBox="0 0 256 256"><path d="M149.66,138.34a8,8,0,0,0-11.32,0L120,156.69,99.31,136l18.35-18.34a8,8,0,0,0-11.32-11.32L88,124.69,69.66,106.34a8,8,0,0,0-11.32,11.32L64.69,124,41.37,147.31a32,32,0,0,0,0,45.26l5.38,5.37-28.41,28.4a8,8,0,0,0,11.32,11.32l28.4-28.41,5.37,5.38a32,32,0,0,0,45.26,0L132,191.31l6.34,6.35a8,8,0,0,0,11.32-11.32L131.31,168l18.35-18.34A8,8,0,0,0,149.66,138.34Zm-52.29,65a16,16,0,0,1-22.62,0L52.69,181.25a16,16,0,0,1,0-22.62L76,135.31,120.69,180Zm140.29-185a8,8,0,0,0-11.32,0l-28.4,28.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L124,64.69l-6.34-6.35a8,8,0,0,0-11.32,11.32l80,80a8,8,0,0,0,11.32-11.32L191.31,132l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,28.41-28.4A8,8,0,0,0,237.66,18.34Zm-34.35,79L180,120.69,135.31,76l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,203.31,97.37Z"/></symbol>
+  <symbol id="ph-arrow-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol>
+  <symbol id="ph-game-controller" viewBox="0 0 256 256"><path d="M176,112H152a8,8,0,0,1,0-16h24a8,8,0,0,1,0,16ZM104,96H96V88a8,8,0,0,0-16,0v8H72a8,8,0,0,0,0,16h8v8a8,8,0,0,0,16,0v-8h8a8,8,0,0,0,0-16ZM241.48,200.65a36,36,0,0,1-54.94,4.81c-.12-.12-.24-.24-.35-.37L146.48,160h-37L69.81,205.09l-.35.37A36.08,36.08,0,0,1,44,216,36,36,0,0,1,8.56,173.75a.68.68,0,0,1,0-.14L24.93,89.52A59.88,59.88,0,0,1,83.89,40H172a60.08,60.08,0,0,1,59,49.25c0,.06,0,.12,0,.18l16.37,84.17a.68.68,0,0,1,0,.14A35.74,35.74,0,0,1,241.48,200.65ZM172,144a44,44,0,0,0,0-88H83.89A43.9,43.9,0,0,0,40.68,92.37l0,.13L24.3,176.59A20,20,0,0,0,58,194.3l41.92-47.59a8,8,0,0,1,6-2.71Zm59.7,32.59-8.74-45A60,60,0,0,1,172,160h-4.2L198,194.31a20.09,20.09,0,0,0,17.46,5.39,20,20,0,0,0,16.23-23.11Z"/></symbol>
+  <symbol id="ph-usb" viewBox="0 0 256 256"><path d="M252.44,121.34l-48-32A8,8,0,0,0,192,96v24H72V72h33a32,32,0,1,0,0-16H72A16,16,0,0,0,56,72v48H8a8,8,0,0,0,0,16H56v48a16,16,0,0,0,16,16h32v8a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16H120a16,16,0,0,0-16,16v8H72V136H192v24a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM136,48a16,16,0,1,1-16,16A16,16,0,0,1,136,48ZM120,176h32v32H120Zm88-30.95V111l25.58,17Z"/></symbol>
+  <symbol id="ph-pulse" viewBox="0 0 256 256"><path d="M240,128a8,8,0,0,1-8,8H204.94l-37.78,75.58A8,8,0,0,1,160,216h-.4a8,8,0,0,1-7.08-5.14L95.35,60.76,63.28,131.31A8,8,0,0,1,56,136H24a8,8,0,0,1,0-16H50.85L88.72,36.69a8,8,0,0,1,14.76.46l57.51,151,31.85-63.71A8,8,0,0,1,200,120h32A8,8,0,0,1,240,128Z"/></symbol>
+  <symbol id="ph-list" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
+  <symbol id="ph-shield-check" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+  <symbol id="ph-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+  <symbol id="ph-pause-fill" viewBox="0 0 256 256"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></symbol>
+  <symbol id="ph-plugs-connected" viewBox="0 0 256 256"><path d="M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z"/></symbol>
+  <symbol id="ph-broadcast" viewBox="0 0 256 256"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm73.71,7.14a80,80,0,0,1-14.08,22.2,8,8,0,0,1-11.92-10.67,63.95,63.95,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67,80.08,80.08,0,0,1,14.08,84.47ZM69,103.09a64,64,0,0,0,11.26,67.58,8,8,0,0,1-11.92,10.67,79.93,79.93,0,0,1,0-106.67A8,8,0,1,1,80.29,85.34,63.77,63.77,0,0,0,69,103.09ZM248,128a119.58,119.58,0,0,1-34.29,84,8,8,0,1,1-11.42-11.2,103.9,103.9,0,0,0,0-145.56A8,8,0,1,1,213.71,44,119.58,119.58,0,0,1,248,128ZM53.71,200.78A8,8,0,1,1,42.29,212a119.87,119.87,0,0,1,0-168,8,8,0,1,1,11.42,11.2,103.9,103.9,0,0,0,0,145.56Z"/></symbol>
+  <symbol id="ph-caret-down" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="ph-lightning" viewBox="0 0 256 256"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></symbol>
+  <symbol id="ph-shield-warning" viewBox="0 0 256 256"><path d="M120,136V96a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,48a12,12,0,1,0-12-12A12,12,0,0,0,128,184ZM224,56v56c0,52.72-25.52,84.67-46.93,102.19-23.06,18.86-46,25.27-47,25.53a8,8,0,0,1-4.2,0c-1-.26-23.91-6.67-47-25.53C57.52,196.67,32,164.72,32,112V56A16,16,0,0,1,48,40H208A16,16,0,0,1,224,56Zm-16,0L48,56l0,56c0,37.3,13.82,67.51,41.07,89.81A128.25,128.25,0,0,0,128,223.62a129.3,129.3,0,0,0,39.41-22.2C194.34,179.16,208,149.07,208,112Z"/></symbol>
+  <symbol id="ph-ruler" viewBox="0 0 256 256"><path d="M235.32,73.37,182.63,20.69a16,16,0,0,0-22.63,0L20.68,160a16,16,0,0,0,0,22.63l52.69,52.68a16,16,0,0,0,22.63,0L235.32,96A16,16,0,0,0,235.32,73.37ZM84.68,224,32,171.31l32-32,26.34,26.35a8,8,0,0,0,11.32-11.32L75.31,128,96,107.31l26.34,26.35a8,8,0,0,0,11.32-11.32L107.31,96,128,75.31l26.34,26.35a8,8,0,0,0,11.32-11.32L139.31,64l32-32L224,84.69Z"/></symbol>
+  <symbol id="ph-sliders-horizontal" viewBox="0 0 256 256"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></symbol>
+  <symbol id="ph-plug" viewBox="0 0 256 256"><path d="M237.66,66.34a8,8,0,0,0-11.32,0L192,100.69,155.31,64l34.35-34.34a8,8,0,1,0-11.32-11.32L144,52.69,117.66,26.34a8,8,0,0,0-11.32,11.32L112.69,44l-53,53a40,40,0,0,0,0,56.57l15.71,15.71L26.34,218.34a8,8,0,0,0,11.32,11.32l49.09-49.09,15.71,15.71a40,40,0,0,0,56.57,0l53-53,6.34,6.35a8,8,0,0,0,11.32-11.32L203.31,112l34.35-34.34A8,8,0,0,0,237.66,66.34ZM147.72,185a24,24,0,0,1-33.95,0L71,142.23a24,24,0,0,1,0-33.95l53-53L200.69,132Z"/></symbol>
+  <symbol id="ph-plug-charging" viewBox="0 0 256 256"><path d="M224,56H176V16a8,8,0,0,0-16,0V56H96V16a8,8,0,0,0-16,0V56H32.55C26.28,56,24,60.78,24,64a8,8,0,0,0,8,8H48v88a40,40,0,0,0,40,40h32v40a8,8,0,0,0,16,0V200h32a40,40,0,0,0,40-40V72h16a8,8,0,0,0,0-16ZM168,184H88a24,24,0,0,1-24-24V72H192v88A24,24,0,0,1,168,184Zm-17.42-60.56a8,8,0,0,1,.91,7.37l-12,32a8,8,0,0,1-15-5.62l8-21.19H112a8,8,0,0,1-7.49-10.81l12-32a8,8,0,1,1,15,5.62l-8,21.19H144A8,8,0,0,1,150.58,123.44Z"/></symbol>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="site-header">
+  <nav class="liquid-glass site-nav">
+    <a href="#top" data-nav-close class="nav-logo">
+      <svg width="52" height="31" viewBox="0 0 77 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M52.6531 13.7018H57.6011V14.6809V15.6593C58.3935 14.8762 60.7684 13.1151 64.1335 13.1151C67.8941 13.1151 70.8635 16.6384 70.8635 20.1616V34.6467H66.1128V21.1407C66.1128 19.966 65.3213 17.6169 61.758 17.6169C58.7891 17.6169 57.7995 20.1616 57.7995 21.336V34.6467H52.6531V13.7018ZM0 34.6467L16.0333 0H16.8252L32.4628 34.6467H26.9203L23.5553 26.8174H8.90725L5.34472 34.6467H0ZM21.5756 21.9234H11.0849L16.4296 11.157L21.5756 21.9234ZM46.5164 16.2467V13.7018H51.2672V36.9958C51.2672 41.1065 47.9835 46 41.1722 46C33.6504 46 30.681 39.9323 30.681 37.3874H35.8274C35.8274 39.149 37.4115 41.8893 41.1722 41.8893C44.8177 41.8893 46.7143 38.5621 46.7143 36.9958V32.2977C46.7143 32.2977 43.3545 35.2342 39.3907 35.2342C34.4421 35.2342 30.0875 30.7319 30.0875 24.6641C30.0875 18.2042 34.046 13.3103 39.3907 13.3103C43.7454 13.3103 45.6587 15.2025 46.5164 16.2467ZM35.0361 24.2725C35.0361 20.7486 36.4214 17.6169 40.7761 17.6169C45.1307 17.6169 46.7143 20.9449 46.7143 24.2725C46.7143 28.1874 44.7351 31.1234 40.7761 31.1234C36.8175 31.1234 35.0361 28.1874 35.0361 24.2725ZM70.8635 11.9402V11.0423H30.0875V11.9402H70.8635ZM77 10.1786C77 8.80836 76.0104 7.82948 74.6246 7.82948C73.2389 7.82948 72.2493 8.80836 72.2493 10.1786C72.2493 11.549 73.2389 12.5276 74.6246 12.5276C76.0104 12.5276 77 11.549 77 10.1786ZM72.4471 34.6467V13.8977H76.8018V34.6467H72.4471Z" fill="#F0FAF9"></path></svg>
+    </a>
+    <div class="nav-links">
+      <a href="#scenarios" class="nav-link">Сценарии</a>
+      <a href="#advantages" class="nav-link">Преимущества</a>
+      <a href="#events" class="nav-link">Ивенты</a>
+      <a href="#guarantees" class="nav-link">Гарантии</a>
+      <a href="#compare" class="nav-link">Сравнение</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#compare" class="nav-cta">Подобрать фильтр<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></a>
+    </div>
+    <button type="button" id="nav-burger" class="nav-burger" aria-label="Меню" aria-expanded="false" data-nav-toggle>
+      <svg id="nav-burger-icon" class="icon"><use href="#ph-list"></use></svg>
+    </button>
+  </nav>
+  <div class="liquid-glass nav-drawer">
+    <a href="#scenarios" data-nav-close class="nav-drawer-link">Сценарии</a>
+    <a href="#advantages" data-nav-close class="nav-drawer-link">Преимущества</a>
+    <a href="#events" data-nav-close class="nav-drawer-link">Ивенты</a>
+    <a href="#guarantees" data-nav-close class="nav-drawer-link">Гарантии</a>
+    <a href="#compare" data-nav-close class="nav-drawer-link">Сравнение</a>
+    <a href="#faq" data-nav-close class="nav-drawer-link">FAQ</a>
+    <a href="#compare" data-nav-close class="nav-cta nav-cta--drawer">Подобрать фильтр<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg></a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<!-- Hero + Scenarios share a sticky stack -->
+<div class="hero-sc-stack">
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-wrap">
+  <div class="hero-inner">
+    <div class="hero-video-col">
+      <video id="hero-vid-solid" preload="none" muted loop playsinline></video>
+    </div>
+    <div class="hero-card">
+      <div class="hero-heading hero-heading--desk" aria-hidden="false">
+        <em>Если</em> железо<br><em>стоит как</em> крыло<br>самолета<br><em>нужен</em> защитный<br>сетевой фильтр<br><em>уровня</em> PRO
+      </div>
+      <div class="hero-heading hero-heading--mob">
+        <em>Если</em> железо <em>стоит как</em> крыло самолета <em>нужен</em> защитный сетевой фильтр <em>уровня</em> PRO
+      </div>
+      <a href="#compare" class="hero-cta btn7g hero-col-cta">
+        <span class="tiles"></span>
+        <span class="sl" style="transform:rotate(0deg)"><span></span></span>
+        <span class="sl" style="transform:rotate(30deg)"><span style="animation-delay:-.12s"></span></span>
+        <span class="sl" style="transform:rotate(60deg)"><span style="animation-delay:-.3s"></span></span>
+        <span class="sl" style="transform:rotate(90deg)"><span style="animation-delay:-.2s"></span></span>
+        <span class="sl" style="transform:rotate(120deg)"><span style="animation-delay:-.4s"></span></span>
+        <span class="sl" style="transform:rotate(150deg)"><span style="animation-delay:-.08s"></span></span>
+        <span class="sl" style="transform:rotate(180deg)"><span style="animation-delay:-.25s"></span></span>
+        <span class="sl" style="transform:rotate(210deg)"><span style="animation-delay:-.35s"></span></span>
+        <span class="sl" style="transform:rotate(240deg)"><span style="animation-delay:-.15s"></span></span>
+        <span class="sl" style="transform:rotate(270deg)"><span style="animation-delay:-.45s"></span></span>
+        <span class="sl" style="transform:rotate(300deg)"><span style="animation-delay:-.28s"></span></span>
+        <span class="sl" style="transform:rotate(330deg)"><span style="animation-delay:-.05s"></span></span>
+        <span class="chest" style="position:absolute;left:36px;top:50%;margin-top:-13px;width:34px;height:26px;z-index:2">
+          <span class="cb cb1" style="position:absolute;left:10px;top:-4px;width:14px;height:14px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
+          <span class="cb cb2" style="position:absolute;left:12px;top:-4px;width:12px;height:12px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
+          <span class="cb cb3" style="position:absolute;left:8px;top:-4px;width:13px;height:13px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
+          <span style="position:absolute;bottom:0;left:0;width:34px;height:16px;background:#8C5A2B;border-radius:3px 3px 4px 4px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
+          <span style="position:absolute;bottom:6px;left:14px;width:6px;height:7px;background:#FFD84D;border-radius:1px"></span>
+          <span class="lid" style="position:absolute;top:0;left:0;width:34px;height:11px;background:#A96D36;border-radius:5px 5px 2px 2px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
+        </span>
+        <span class="chest" style="position:absolute;right:36px;top:50%;margin-top:-13px;width:34px;height:26px;z-index:2">
+          <span class="cb cb1" style="position:absolute;left:10px;top:-4px;width:14px;height:14px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18);animation-delay:.1s"></span>
+          <span class="cb cb2" style="position:absolute;left:12px;top:-4px;width:12px;height:12px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)"></span>
+          <span class="cb cb3" style="position:absolute;left:8px;top:-4px;width:13px;height:13px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18);animation-delay:.4s"></span>
+          <span style="position:absolute;bottom:0;left:0;width:34px;height:16px;background:#8C5A2B;border-radius:3px 3px 4px 4px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
+          <span style="position:absolute;bottom:6px;left:14px;width:6px;height:7px;background:#FFD84D;border-radius:1px"></span>
+          <span class="lid" style="position:absolute;top:0;left:0;width:34px;height:11px;background:#A96D36;border-radius:5px 5px 2px 2px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.22)"></span>
+        </span>
+        <span class="idle" style="position:absolute;left:96px;bottom:128px;width:38px;height:38px;background:#E8A33D;border-radius:5px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.22);color:#FFF8E7;font:800 24px Montserrat,sans-serif;display:flex;align-items:center;justify-content:center;text-shadow:2px 2px 0 rgba(0,0,0,.35);animation:blockBump 4.5s linear infinite;z-index:2">?<span style="position:absolute;top:5px;left:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;top:5px;right:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;bottom:5px;left:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span><span style="position:absolute;bottom:5px;right:5px;width:4px;height:4px;background:rgba(0,0,0,.35);border-radius:1px"></span></span>
+        <span class="idle" style="position:absolute;left:105px;bottom:156px;width:18px;height:18px;border-radius:50%;background:#FFD84D;box-shadow:inset 0 0 0 3px rgba(0,0,0,.18);animation:coinPop 4.5s linear infinite;z-index:2"></span>
+        <span style="position:absolute;left:30%;top:60%;font:800 26px Montserrat,sans-serif;color:rgba(255,255,255,.42);animation:plusRise 3.1s ease-out infinite;animation-delay:-.8s">+1</span>
+        <span style="position:absolute;right:24%;top:56%;font:800 30px Montserrat,sans-serif;color:rgba(255,255,255,.5);animation:plusRise 2.7s ease-out infinite;animation-delay:-1.9s">+1</span>
+        <span style="position:absolute;left:52%;top:52%;width:20px;height:20px;border-left:4px solid rgba(255,255,255,.32);border-top:4px solid rgba(255,255,255,.32);animation:lvlRise 2.9s linear infinite;animation-delay:-2.1s"></span>
+        <span style="position:absolute;right:12%;top:50%;width:24px;height:24px;border-left:5px solid rgba(255,255,255,.38);border-top:5px solid rgba(255,255,255,.38);animation:lvlRise 2.5s linear infinite;animation-delay:-1s"></span>
+        <span style="position:absolute;left:14%;top:34%;width:18px;height:18px;border-left:4px solid rgba(255,255,255,.3);border-top:4px solid rgba(255,255,255,.3);animation:lvlRise 3.3s linear infinite;animation-delay:-2.6s"></span>
+        <span style="position:absolute;left:40%;top:28%;width:22px;height:22px;border-left:5px solid rgba(255,255,255,.35);border-top:5px solid rgba(255,255,255,.35);animation:lvlRise 2.7s linear infinite;animation-delay:-.5s"></span>
+        <span style="position:absolute;right:34%;top:38%;width:16px;height:16px;border-left:4px solid rgba(255,255,255,.28);border-top:4px solid rgba(255,255,255,.28);animation:lvlRise 3.6s linear infinite;animation-delay:-1.6s"></span>
+        <span style="position:absolute;left:22%;top:30%;font:800 24px Montserrat,sans-serif;color:rgba(255,255,255,.38);animation:plusRise 3.4s ease-out infinite;animation-delay:-2.4s">+1</span>
+        <span style="position:absolute;right:16%;top:26%;font:800 28px Montserrat,sans-serif;color:rgba(255,255,255,.45);animation:plusRise 2.9s ease-out infinite;animation-delay:-1.2s">+1</span>
+        <span style="position:absolute;left:58%;top:36%;font:800 22px Montserrat,sans-serif;color:rgba(255,255,255,.34);animation:plusRise 3.7s ease-out infinite;animation-delay:-3s">+1</span>
+        <span class="idle" style="position:absolute;left:-40px;bottom:14px;width:24px;height:38px;animation:heroRun 4.5s linear infinite;z-index:2">
+          <span style="position:absolute;top:0;left:3px;width:16px;height:6px;background:#2E4E9E;border-radius:3px 3px 0 0"></span>
+          <span style="position:absolute;top:4px;left:14px;width:9px;height:3px;background:#2E4E9E;border-radius:0 2px 2px 0"></span>
+          <span style="position:absolute;top:7px;left:4px;width:14px;height:9px;background:#F2C49B;border-radius:2px"></span>
+          <span style="position:absolute;top:9px;left:13px;width:3px;height:4px;background:#04110F;border-radius:1px"></span>
+          <span style="position:absolute;top:16px;left:3px;width:18px;height:8px;background:#B23A3A;border-radius:2px"></span>
+          <span style="position:absolute;top:21px;left:5px;width:14px;height:8px;background:#2E4E9E;border-radius:2px 2px 3px 3px"></span>
+          <span style="position:absolute;bottom:0;left:4px;width:6px;height:10px;background:#6B4423;border-radius:2px;animation:legStep .28s steps(2) infinite"></span>
+          <span style="position:absolute;bottom:0;right:5px;width:6px;height:10px;background:#6B4423;border-radius:2px;animation:legStep .28s steps(2) infinite;animation-delay:-.14s"></span>
+        </span>
+        <span class="hero-cta-label">Прокачать<br>защиту сетапа</span>
+        <span class="idle lvlup">LVL UP!</span>
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<!-- Built by js/app.js from AGNI_DATA.scenarioBase — lg dual/tower overlays + md/sm sticky pad -->
+<div class="scenarios-shell">
+<section id="scenarios" class="scenarios-section">
+  <div id="scenarios-root"></div>
+</section>
+</div>
+</div><!-- /.hero-sc-stack -->
+
+<!-- ============ ADVANTAGES ============ -->
+<section id="advantages" class="adv-section">
+  <div class="section-head">
+    <h2 class="section-h2">Максимальная надёжность для дорогостоящей техники во всех моделях</h2>
+  </div>
+  <div id="adv-grid" class="adv-grid">
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="nagruzka-mrb7l5q2" style="background-image:url('assets/nagruzka-mrb7l5q2.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-lightning"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">До 4000 Вт нагрузки</h3>
+        <p class="adv-card__body">Подключай всё необходимое одновременно без риска перегрузки.</p>
+      </div>
+    </div>
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="peregruz-mrb6p36a" style="background-image:url('assets/peregruz-mrb6p36a.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-shield-warning"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">Защита от перегрузки и КЗ</h3>
+        <p class="adv-card__body">Фильтр защищает оборудование, а не просто занимает место под столом.</p>
+      </div>
+    </div>
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="varistor" style="background-image:url('assets/varistor.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-pulse"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">Варисторная защита</h3>
+        <p class="adv-card__body">Помогает защитить чувствительную технику от вредоносных импульсных скачков.</p>
+      </div>
+    </div>
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="med3x15-mrb6z43x" style="background-image:url('assets/med3x15-mrb6z43x.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-plug"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">Кабель из чистой меди 3×1,5&nbsp;мм²</h3>
+        <p class="adv-card__body">Стабильная работа под высокой нагрузкой и запас прочности для мощного оборудования.</p>
+      </div>
+    </div>
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="fiksatsia-mrb7g0k7" style="background-image:url('assets/fiksatsia-mrb7g0k7.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-plugs-connected"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">Надёжная контактная группа</h3>
+        <p class="adv-card__body">Плотная фиксация вилки без люфта и искрения при подключении.</p>
+      </div>
+    </div>
+    <div class="card-brd adv-card" data-tilt>
+      <div class="adv-card__photo" data-adv-stem="zazemlenie-mrb70cww" style="background-image:url('assets/zazemlenie-mrb70cww.webp')" aria-hidden="true"></div>
+      <div class="adv-card__glow" aria-hidden="true"></div>
+      <svg class="icon adv-card__icon"><use href="#ph-shield-check"></use></svg>
+      <div class="adv-card__text">
+        <h3 class="adv-card__title">Настоящее заземление</h3>
+        <p class="adv-card__body">Для безопасной работы ПК, мониторов, консолей и другой чувствительной электроники.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section id="events" class="events-section">
+  <div class="section-head section-head--wide">
+    <h2 class="section-h2">AGNI — защищает тысячи каток каждый день</h2>
+  </div>
+  <div class="events-grid">
+    <button type="button" id="events-play-btn" class="events-play-btn" aria-label="Смотреть видео">
+      <video id="events-vid" data-src="assets/Sponsor_Agni_4K.webm" muted loop playsinline preload="none"></video>
+      <div class="events-play-btn__gradient" aria-hidden="true"></div>
+      <span class="events-play-btn__badge"><span class="events-play-btn__dot"></span>Игромир</span>
+      <span class="events-play"><svg class="icon"><use href="#ph-play-fill"></use></svg></span>
+    </button>
+    <div class="events-rail">
+      <div class="events-rail-col">
+        <div id="events-col-a" class="events-col-up"></div>
+      </div>
+      <div class="events-rail-col">
+        <div id="events-col-b" class="events-col-down"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Events fullscreen player -->
+<div id="events-modal" class="events-modal">
+  <div id="events-player" class="events-player">
+    <button type="button" id="events-modal-close" class="events-modal-close" aria-label="Закрыть"><svg class="icon"><use href="#ph-x"></use></svg></button>
+    <video id="events-vid-full" data-src="assets/Sponsor_Agni_4K.webm" data-src-mp4="assets/Sponsor_Agni_4K.mp4" playsinline preload="none"></video>
+    <div id="events-controls" class="events-controls">
+      <button type="button" id="events-pp" class="events-pp" aria-label="Пауза"><svg id="events-pp-icon" class="icon"><use href="#ph-pause-fill"></use></svg></button>
+      <div class="events-seek-wrap">
+        <input id="events-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Прогресс">
+        <div class="events-time-row"><span id="events-tcur">0:00</span><span id="events-tdur">0:00</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GUARANTEES ============ -->
+<section id="guarantees" class="guarantees-section">
+  <div class="section-watermark" aria-hidden="true">
+    <svg viewBox="0 0 1200 220" width="100%" style="display:block"><text x="600" y="178" text-anchor="middle" textLength="1120" lengthAdjust="spacingAndGlyphs" font-family="Montserrat,sans-serif" font-weight="800" font-size="200" fill="rgba(45,232,220,.07)">ГАРАНТИИ</text></svg>
+  </div>
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-h2">Сделано для техники,<br>которую жалко потерять</h2>
+    </div>
+    <div class="bento-grid">
+      <!-- HERO: 100% застраховано -->
+      <div class="bento-card bento-hero">
+        <div class="bento-hero__ring" aria-hidden="true"></div>
+        <span class="gstat gstat--hero">100%</span>
+        <span class="card-title">Застраховано</span>
+        <span class="card-body bento-hero__body">Ущерб технике по вине фильтра возмещает страховая.</span>
+      </div>
+      <!-- 1,5 года -->
+      <div class="bento-card bento-c1">
+        <span class="gstat">1,5 года</span>
+        <span class="card-title">Гарантия</span>
+        <span class="card-body">Служба поддержки поможет с любым вопросом эксплуатации.</span>
+      </div>
+      <!-- 0,26% -->
+      <div class="bento-card bento-c2">
+        <span class="gstat">0,26%</span>
+        <span class="card-title">Уровень брака</span>
+        <span class="card-body">Контроль качества перед каждой поставкой.</span>
+      </div>
+      <!-- Соответствие стандартам -->
+      <div class="bento-card bento-c3">
+        <div class="bento-standards">
+          <img src="assets/std-gost.svg" alt="ГОСТ" loading="lazy" decoding="async">
+          <img src="assets/std-eac.svg" alt="ЕАС" loading="lazy" decoding="async">
+          <img src="assets/std-rohs.svg" alt="RoHS" loading="lazy" decoding="async">
+          <img src="assets/std-ce.svg" alt="CE" loading="lazy" decoding="async">
+          <img src="assets/std-fcc.svg" alt="FC" loading="lazy" decoding="async">
+        </div>
+        <span class="card-title">Соответствие стандартам</span>
+        <span class="card-body">Российские и международные нормы безопасности.</span>
+      </div>
+      <!-- Разработано в России -->
+      <div class="bento-card bento-c4">
+        <div class="bento-flag-wrap"><span class="bento-flag"></span></div>
+        <span class="card-title">Разработано в России</span>
+        <span class="card-body">Вся схемотехника создана российскими инженерами.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section id="compare" class="compare-section">
+  <div class="section-head">
+    <h2 class="section-h2">Найди фильтр под свой сетап</h2>
+  </div>
+  <div id="compare-root" class="compare-root"></div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="faq-section">
+  <div class="section-watermark" aria-hidden="true">
+    <svg viewBox="0 0 1200 220" width="100%" style="display:block"><text x="600" y="178" text-anchor="middle" textLength="1120" lengthAdjust="spacingAndGlyphs" font-family="Montserrat,sans-serif" font-weight="800" font-size="200" fill="rgba(45,232,220,.07)">ВОПРОСЫ</text></svg>
+  </div>
+  <div class="container">
+    <div class="section-head section-head--full">
+      <h2 class="section-h2">Сетевой фильтр для игрового ПК</h2>
+      <p class="section-lead">Заземление, защита от скачков напряжения, отличие от удлинителя — коротко о главном.</p>
+    </div>
+    <div class="faq-body">
+      <div class="faq-list">
+        <details class="faq-item" data-faq open>
+          <summary><span class="faq-item__q">Какой сетевой фильтр выбрать для игрового ПК?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Для игрового ПК рекомендуется выбирать сетевой фильтр с заземлением, защитой от перегрузки и короткого замыкания, а также запасом по мощности. Современный игровой компьютер, монитор и периферия могут создавать значительную нагрузку, поэтому важно использовать модели, рассчитанные на длительную работу под высокой мощностью.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Можно ли подключать игровой компьютер через сетевой фильтр?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Да. Качественный сетевой фильтр предназначен для подключения компьютеров, мониторов, игровых консолей и другой электроники. Он обеспечивает распределение нагрузки между устройствами и дополнительно защищает оборудование от аварийных режимов работы сети.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Подойдёт ли фильтр для мощного ПК с игровой видеокартой?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Да. Игровые ПК с производительными видеокартами могут потреблять сотни ватт мощности даже без учёта мониторов и периферии. Поэтому важно использовать фильтр с достаточным запасом по нагрузке и проводниками увеличенного сечения.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Можно ли подключить компьютер и монитор одновременно?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Да. Одновременное подключение системного блока, монитора, роутера, колонок и зарядных устройств является штатным режимом работы сетевого фильтра при условии соблюдения допустимой суммарной мощности.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Зачем нужна варисторная защита в сетевом фильтре?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Варистор ограничивает кратковременные импульсы повышенного напряжения, возникающие при коммутационных процессах в электросети. Это помогает снизить воздействие опасных скачков напряжения на чувствительные электронные компоненты.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Для чего нужно заземление в сетевом фильтре?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Заземление является частью системы электробезопасности и обеспечивает корректную работу устройств, рассчитанных на подключение к заземлённой сети. Особенно это важно для компьютеров, мониторов и блоков питания с помехоподавляющими фильтрами.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Что показывает индикатор заземления?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Индикатор позволяет визуально контролировать наличие заземляющего проводника в розетке. Это помогает убедиться, что сетевой фильтр подключён к электросети с рабочим заземлением.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Чем сетевой фильтр отличается от обычного удлинителя?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Обычный удлинитель увеличивает количество точек подключения. Сетевой фильтр дополнительно оснащается защитными элементами и рассчитан на безопасную работу подключённого оборудования при нештатных ситуациях в электросети.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Можно ли подключать игровую консоль через сетевой фильтр?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Да. Игровые консоли, телевизоры, аудиосистемы и сетевое оборудование относятся к бытовой электронике и могут подключаться через сетевой фильтр при соблюдении допустимой нагрузки.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Какой фильтр лучше для компьютера и монитора?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Рекомендуется использовать фильтр с заземлением, защитой от перегрузки и короткого замыкания, качественной контактной группой и медным кабелем достаточного сечения. Такие параметры обеспечивают надёжную работу оборудования при длительной эксплуатации.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Почему важен медный кабель 3×1,5 мм²?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Сечение проводников напрямую влияет на способность кабеля безопасно передавать высокую мощность без чрезмерного нагрева. Кабель из чистой меди 3×1,5 мм² обеспечивает низкое сопротивление и рассчитан на длительную работу под высокой нагрузкой.</p></div>
+        </details>
+        <details class="faq-item" data-faq>
+          <summary><span class="faq-item__q">Почему важна качественная контактная группа?</span><svg class="icon" data-caret><use href="#ph-caret-down"></use></svg></summary>
+          <div data-ans><p class="faq-item__a">Плотный контакт уменьшает переходное сопротивление в месте подключения вилки. Это снижает нагрев контактов, повышает надёжность соединения и обеспечивает стабильную работу оборудования в течение всего срока службы устройства.</p></div>
+        </details>
+      </div>
+      <aside class="faq-aside">
+        <div class="faq-card">
+          <img src="assets/faq-pic.webp" alt="" class="faq-card__img" loading="lazy" decoding="async">
+          <div class="faq-card__text">
+            <h3 class="faq-card__title">Собери питание<br class="faq-br"> для своего сетапа</h3>
+            <p class="faq-card__body">Сравни сетевые фильтры для ПК по мощности, количеству розеток<br class="faq-br"> и USB разъемов</p>
+            <a href="#compare" class="buy-btn faq-card__cta">Подобрать</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col"><a href="https://agni-tech.ru/company/" target="_blank" rel="noopener" class="f-head">Компания</a><a href="https://agni-tech.ru/company/partners/" target="_blank" rel="noopener" class="f-head">Для юридических лиц</a><a href="https://agni-tech.ru/loyality/agni-club/" target="_blank" rel="noopener" class="f-head">Бонусы</a><a href="https://agni-tech.ru/sale/" target="_blank" rel="noopener" class="f-head">Акции</a></div>
+    <div class="footer-col"><a href="https://agni-tech.ru/catalog/" target="_blank" rel="noopener" class="f-head">Каталог</a><a href="https://agni-tech.ru/catalog/setevye-filtrs-horizontalny/" target="_blank" rel="noopener" class="f-lnk">Плоские сетевые фильтры</a><a href="https://agni-tech.ru/catalog/setevye-filtrs-bashni/" target="_blank" rel="noopener" class="f-lnk">Сетевые фильтры башни</a><a href="https://agni-tech.ru/catalog/razvetvitely/" target="_blank" rel="noopener" class="f-lnk">Разветвители для розеток</a><a href="https://agni-tech.ru/catalog/charge-device/" target="_blank" rel="noopener" class="f-lnk">Зарядные устройства</a><a href="https://agni-tech.ru/catalog/charge-device/cabels/" target="_blank" rel="noopener" class="f-lnk">Кабели для зарядки</a></div>
+    <div class="footer-col"><a href="https://agni-tech.ru/help/" target="_blank" rel="noopener" class="f-head">Оформление и отмена заказа</a><a href="https://agni-tech.ru/help/payment/" target="_blank" rel="noopener" class="f-lnk">Условия оплаты</a><a href="https://agni-tech.ru/help/delivery/" target="_blank" rel="noopener" class="f-lnk">Условия доставки</a><a href="https://agni-tech.ru/help/warranty/" target="_blank" rel="noopener" class="f-lnk">Гарантия и возврат</a></div>
+    <div class="footer-col"><span style="color:#E4F3F2">Условия работы</span><a href="https://agni-tech.ru/loyality/" target="_blank" rel="noopener" class="f-lnk">Программа лояльности</a><a href="https://agni-tech.ru/contacts/" target="_blank" rel="noopener" class="f-lnk">Контакты</a><a href="https://agni-tech.ru/policy/" target="_blank" rel="noopener" class="f-lnk">Политика конфиденциальности</a><a href="https://agni-tech.ru/offer/" target="_blank" rel="noopener" class="f-lnk">Публичная оферта</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-address">Рязанская область, г. Рязань, проезд Старообрядческий, д. 1</span>
+    <div class="footer-contact"><span>Общие вопросы</span><a href="mailto:info@agni-tech.ru" class="f-mail">info@agni-tech.ru</a></div>
+    <div class="footer-contact"><span>Тех. поддержка</span><a href="mailto:service@agni-tech.ru" class="f-mail">service@agni-tech.ru</a></div>
+    <div class="footer-contact"><span>Оптовым клиентам</span><a href="mailto:sales@agni-tech.ru" class="f-mail">sales@agni-tech.ru</a></div>
+    <div class="footer-social">
+      <a href="https://vk.com/agni_filters" target="_blank" rel="noopener" aria-label="ВКонтакте" class="foot-soc" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.90479 7C4.03627 13.2466 7.19136 16.9999 12.7229 16.9999H13.0366V13.4266C15.0692 13.6266 16.6062 15.0977 17.223 16.9999H20.0951C19.3063 14.1566 17.2331 12.5855 15.9387 11.9844C17.2331 11.2444 19.0534 9.44219 19.4882 7H16.8791C16.3128 8.9822 14.6343 10.7833 13.0366 10.9544V7H10.4274V13.9266C8.80931 13.5266 6.76664 11.5844 6.67562 7H3.90479Z" fill="currentColor"></path></svg></a>
+      <a href="https://dzen.ru/agni_tech" target="_blank" rel="noopener" aria-label="Дзен" class="foot-soc" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0287 5C14.7974 5 16.4229 5.27993 17.5653 6.38965C18.7309 7.57854 19 9.19234 19 11.9609V12.0391C19 14.8085 18.7309 16.4332 17.5653 17.6104C16.4221 18.7201 14.8083 19 12.0279 19H11.9721C9.19259 19 7.56703 18.7201 6.43473 17.6104C5.26911 16.4215 5 14.8077 5 12.0391V11.9609C5 9.19234 5.26911 7.56687 6.43473 6.38965C7.57786 5.27992 9.19258 5 11.9729 5H12.0287ZM11.8883 6.66657C11.8351 6.66658 11.7909 6.70987 11.7884 6.76316C11.7159 8.67995 11.4727 9.84623 10.6562 10.6626C9.84068 11.4781 8.67683 11.7214 6.76327 11.7939C6.70996 11.7956 6.66667 11.8397 6.66667 11.8938V12.117C6.66667 12.1703 6.70996 12.2145 6.76327 12.217C8.67682 12.2895 9.8415 12.5335 10.6562 13.3482C11.471 14.1629 11.7143 15.3251 11.7876 17.2351C11.7893 17.2885 11.8334 17.3318 11.8875 17.3318H12.1117C12.165 17.3318 12.2091 17.2884 12.2116 17.2351C12.2849 15.3251 12.5282 14.1629 13.3429 13.3482C14.1585 12.5327 15.3223 12.2895 17.2358 12.217C17.2892 12.2154 17.3325 12.1712 17.3325 12.117V11.8938H17.3333C17.3333 11.8405 17.29 11.7964 17.2367 11.7939C15.3231 11.7214 14.1585 11.4773 13.3438 10.6626C12.5273 9.84623 12.2841 8.68078 12.2116 6.76316C12.2099 6.70987 12.1658 6.66659 12.1117 6.66657H11.8883Z" fill="currentColor"></path></svg></a>
+      <a href="https://www.pinterest.com/agnifilters/" target="_blank" rel="noopener" aria-label="Pinterest" class="foot-soc" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1863 5C8.52464 5 6.58057 7.46022 6.58057 10.14C6.58057 11.3841 7.24153 12.9349 8.30262 13.4288C8.46357 13.5039 8.54881 13.4695 8.58444 13.3142C8.61434 13.1965 8.75811 12.6212 8.82172 12.3527C8.8338 12.31 8.83457 12.2649 8.82398 12.2218C8.81338 12.1788 8.79178 12.1392 8.76129 12.107C8.4114 11.6826 8.13277 10.9005 8.13277 10.1718C8.13277 8.2996 9.55011 6.48912 11.963 6.48912C14.0496 6.48912 15.507 7.90823 15.507 9.94208C15.507 12.2394 14.3492 13.8291 12.8409 13.8291C12.0082 13.8291 11.3835 13.1411 11.5826 12.2935C11.8231 11.2855 12.2862 10.1947 12.2862 9.46925C12.2862 8.81633 11.935 8.27096 11.2143 8.27096C10.3612 8.27096 9.67798 9.15234 9.67798 10.3334C9.67798 11.0856 9.93244 11.5922 9.93244 11.5922C9.93244 11.5922 9.09081 15.1514 8.93814 15.8139C8.67541 16.9371 8.97058 18.7571 8.99793 18.9169C9.01129 19.0021 9.10735 19.0314 9.15824 18.9589C9.24031 18.8475 10.2556 17.3266 10.5412 16.2275L11.068 14.2096C11.3472 14.7372 12.1539 15.1839 13.0152 15.1839C15.5732 15.1839 17.4193 12.8274 17.4193 9.90263C17.4205 7.10067 15.1304 5 12.1863 5Z" fill="currentColor"></path></svg></a>
+      <a href="https://rutube.ru/channel/49981902/" target="_blank" rel="noopener" aria-label="Rutube" class="foot-soc" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.9145 8.50024H4.5V18.0001H6.84173V14.9092H11.3292L13.377 18.0001H15.9998L13.7416 14.8954C14.4435 14.7814 14.9478 14.5111 15.2562 14.0836C15.5645 13.6561 15.7187 12.9721 15.7187 12.061V11.3485C15.7187 10.8078 15.6634 10.3804 15.5645 10.053C15.4666 9.72487 15.2979 9.43986 15.0602 9.18423C14.8081 8.94155 14.527 8.77056 14.1914 8.65656C13.8541 8.55724 13.4332 8.50024 12.9145 8.50024ZM12.5354 12.8158H6.84173V10.5937H12.5354C12.8582 10.5937 13.0831 10.6507 13.1956 10.7508C13.3072 10.8502 13.377 11.0358 13.377 11.3062V12.1033C13.377 12.3883 13.3072 12.574 13.1956 12.6733C13.0831 12.7726 12.8582 12.8158 12.5354 12.8158Z" fill="currentColor"></path><path d="M17.7497 9.50019C18.7157 9.50019 19.4997 8.71708 19.4997 7.75022C19.4997 6.78336 18.7157 6.00024 17.7497 6.00024C16.7837 6.00024 15.9998 6.78336 15.9998 7.75022C15.9998 8.71708 16.7837 9.50019 17.7497 9.50019Z" fill="currentColor"></path></svg></a>
+      <a href="https://yandex.ru/rythm/businesses/@0199959c065370728145b5f041d62825" target="_blank" rel="noopener" aria-label="Ритм" class="foot-soc" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.40063 19.9996L9.83192 9.46851H12.7943L10.363 19.9996H7.40063Z" fill="currentColor"></path><path d="M8.99512 9.46735L9.6615 6.58093H12.6239L11.9575 9.46735H8.99512Z" fill="currentColor"></path><path d="M16.5994 9.46851L15.0653 16.1133C14.886 16.8899 14.1111 17.3741 13.3344 17.1948C12.5578 17.0155 12.0736 16.2406 12.2529 15.464L13.637 9.46851H16.5994Z" fill="currentColor"></path><path d="M15.7531 9.46812H12.7908L13.0235 8.46019C13.2028 7.68356 13.9777 7.19931 14.7543 7.37862C15.531 7.55791 16.0152 8.33285 15.8359 9.10948L15.7531 9.46812Z" fill="currentColor"></path><path d="M13.8237 6.58165H10.8613L11.199 5.11887C11.3783 4.34224 12.1533 3.85801 12.9299 4.03731C13.7065 4.21661 14.1908 4.99155 14.0115 5.76818L13.8237 6.58165Z" fill="currentColor"></path></svg></a>
+    </div>
+  </div>
+  <div class="footer-legal"><span>2026 © AGNI · Публикация информации с сайта agni-tech.ru без разрешения запрещена. Все права защищены.</span></div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
