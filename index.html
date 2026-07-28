@@ -570,7 +570,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
   <div id="events-modal" style="position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:#000;padding:0">
     <div id="events-player" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000">
       <button type="button" id="events-modal-close" aria-label="Закрыть" style="position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F0FAF9;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="ph ph-x"></i></button>
-      <video id="events-vid-full" data-src="assets/Sponsor_Agni_4K.webm" playsinline="" preload="none" style="width:100%;height:100%;max-width:100vw;max-height:100vh;object-fit:contain;display:block;background:#000"></video>
+      <video id="events-vid-full" data-src="assets/Sponsor_Agni_4K.webm" data-src-mp4="assets/Sponsor_Agni_4K.mp4" playsinline="" preload="none" style="width:100%;height:100%;max-width:100vw;max-height:100vh;object-fit:contain;display:block;background:#000"></video>
       <div id="events-controls" style="position:absolute;left:0;right:0;bottom:0;z-index:4;padding:18px clamp(16px,3vw,28px) max(18px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,rgba(0,0,0,.78));display:flex;align-items:center;gap:14px">
         <button type="button" id="events-pp" aria-label="Пауза" style="flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i id="events-pp-icon" class="ph-fill ph-pause"></i></button>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
@@ -1024,14 +1024,53 @@ class Component extends DCLogic {
       eVid.muted = true;
       eVid.loop = true;
       eVid.play().catch(() => {});
-      if (eFull && !eFull.getAttribute('src')) eFull.src = src;
+      // never copy preview src onto eFull — _sm/_md encodes have no audio track
+    };
+    const eventsFullSrc = () => {
+      // prefer MP4+AAC (Safari/iOS); fall back to webm with Opus (Chrome/Android)
+      const mp4 = eFull && eFull.getAttribute('data-src-mp4');
+      const webm = (eFull && eFull.getAttribute('data-src')) || 'assets/Sponsor_Agni_4K.webm';
+      const canMp4 = !!(mp4 && eFull.canPlayType && eFull.canPlayType('video/mp4; codecs="avc1.42E01E,mp4a.40.2"'));
+      return canMp4 ? mp4 : webm;
+    };
+    const unmuteEventsFull = () => {
+      if (!eFull) return;
+      eFull.muted = false;
+      eFull.defaultMuted = false;
+      eFull.volume = 1;
+      eFull.removeAttribute('muted');
     };
     const ensureEventsFull = () => {
       if (!eFull) return;
-      const src = eFull.getAttribute('data-src')
-        || (eVid && eVid.getAttribute('data-src'))
-        || 'assets/Sponsor_Agni_4K.webm';
-      if (!eFull.getAttribute('src')) eFull.src = src;
+      const src = eventsFullSrc();
+      const name = src.split('/').pop();
+      const cur = eFull.getAttribute('src') || eFull.currentSrc || '';
+      // always pin to the full (with-audio) asset — never keep a leftover preview _sm/_md src
+      if (!cur.includes(name)) {
+        eFull.src = src;
+        eFull.load();
+      }
+      unmuteEventsFull();
+    };
+    const playEventsFull = () => {
+      if (!eFull) return Promise.resolve();
+      unmuteEventsFull();
+      return eFull.play().catch(() => {
+        // media may still be buffering after src swap — one retry on canplay within same open
+        return new Promise((resolve) => {
+          const onReady = () => {
+            eFull.removeEventListener('canplay', onReady);
+            unmuteEventsFull();
+            eFull.play().then(resolve).catch(() => resolve());
+          };
+          eFull.addEventListener('canplay', onReady);
+          // safety: don't hang forever if canplay never fires
+          setTimeout(() => {
+            eFull.removeEventListener('canplay', onReady);
+            resolve();
+          }, 2500);
+        });
+      });
     };
     if (eVid) {
       eVid.muted = true;
@@ -1057,14 +1096,14 @@ class Component extends DCLogic {
       eFull.addEventListener('play', syncPpIcon);
       eFull.addEventListener('pause', syncPpIcon);
       eFull.addEventListener('click', () => {
-        if (eFull.paused) eFull.play().catch(() => {});
+        if (eFull.paused) playEventsFull();
         else eFull.pause();
       });
     }
     if (ePp) ePp.addEventListener('click', (e) => {
       e.stopPropagation();
       if (!eFull) return;
-      if (eFull.paused) eFull.play().catch(() => {});
+      if (eFull.paused) playEventsFull();
       else eFull.pause();
     });
     if (eSeek) {
@@ -1087,19 +1126,18 @@ class Component extends DCLogic {
         header.style.pointerEvents = 'none';
         header.setAttribute('aria-hidden', 'true');
       }
-      const fsTarget = ePlayer || eModal;
-      const req = fsTarget.requestFullscreen || fsTarget.webkitRequestFullscreen || fsTarget.msRequestFullscreen;
-      if (req) { try { req.call(fsTarget); } catch (err) {} }
       if (eFull) {
+        // unmute+play first while user gesture is still valid; fullscreen after
         ensureEventsFull();
-        eFull.muted = false;
-        eFull.volume = 1;
-        eFull.removeAttribute('muted');
-        eFull.currentTime = eVid ? eVid.currentTime : 0;
-        eFull.play().catch(() => {});
+        const t = eVid ? eVid.currentTime : 0;
+        try { if (t > 0 && isFinite(t)) eFull.currentTime = t; } catch (err) {}
+        playEventsFull();
         syncPpIcon();
         syncSeek();
       }
+      const fsTarget = ePlayer || eModal;
+      const req = fsTarget.requestFullscreen || fsTarget.webkitRequestFullscreen || fsTarget.msRequestFullscreen;
+      if (req) { try { req.call(fsTarget); } catch (err) {} }
     };
     const closeEventsModal = () => {
       if (!eModal) return;
@@ -1136,7 +1174,7 @@ class Component extends DCLogic {
       if (e.key === 'Escape') closeEventsModal();
       if (e.key === ' ' && eModal && eModal.style.display !== 'none' && e.target === document.body) {
         e.preventDefault();
-        if (eFull) { if (eFull.paused) eFull.play().catch(() => {}); else eFull.pause(); }
+        if (eFull) { if (eFull.paused) playEventsFull(); else eFull.pause(); }
       }
     };
     window.addEventListener('keydown', this._eventsEsc);
