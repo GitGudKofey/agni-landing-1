@@ -1281,7 +1281,8 @@ class Component extends DCLogic {
     const scMdEarly = this.state.gw === 'md';
     const scShortEarly = (scPhoneEarly || scMdEarly) && (this.state.gh === 'short' || this.state.gh === 'tight');
     const scTightEarly = (scPhoneEarly || scMdEarly) && this.state.gh === 'tight';
-    const phoneVidH = (scPhoneEarly && scTightEarly) ? 'min(30svh,220px)' : ((scPhoneEarly && scShortEarly) ? 'min(34svh,250px)' : 'min(38svh,280px)');
+    // floor only — actual height now comes from flex-grow inside the 100dvh sticky pad (see scVidBoxStyleT), so it grows when browser chrome hides
+    const phoneVidH = (scPhoneEarly && scTightEarly) ? '150px' : ((scPhoneEarly && scShortEarly) ? '175px' : '200px');
     const phoneVidW = 'min(100%,360px)';
     // per-breakpoint asset suffix: lg = no suffix; md/sm = _md / _sm
     const bp = scPhoneEarly ? 'sm' : (scMdEarly ? 'md' : 'lg');
@@ -1407,7 +1408,7 @@ class Component extends DCLogic {
         imgStyle: 'position:absolute;inset:0;width:100%;height:100%;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:' + (this.state.isTouch ? 'none' : (a ? 'auto' : 'none')),
         vidWrapStyleT: 'position:absolute;inset:0;opacity:' + wrapOpT + ';transition:opacity .4s ease;pointer-events:none;overflow:hidden',
         imgStyleT: (scPhoneEarly && !s.tower
-          ? 'position:absolute;left:50%;top:50%;width:' + phoneVidH + ';height:' + phoneVidW + ';max-width:none;object-fit:contain;object-position:center center;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'
+          ? 'position:absolute;left:50%;top:50%;width:' + phoneVidH + ';height:' + phoneVidW + ';width:100cqh;height:100cqw;max-width:none;object-fit:contain;object-position:center center;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'
           : 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'),
         vid: s.vid,
         vidSlide1: i === 0 ? s.vid : '',
@@ -1415,7 +1416,7 @@ class Component extends DCLogic {
         noVid: !s.vid,
         vidStyle: 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:' + (a && !s.left ? '1' : '0') + ';transition:opacity .32s ease;pointer-events:none',
         vidStyleT: (scPhoneEarly && !s.tower
-          ? 'position:absolute;left:50%;top:50%;width:' + phoneVidH + ';height:' + phoneVidW + ';max-width:none;object-fit:contain;object-position:center center;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'
+          ? 'position:absolute;left:50%;top:50%;width:' + phoneVidH + ';height:' + phoneVidW + ';width:100cqh;height:100cqw;max-width:none;object-fit:contain;object-position:center center;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'
           : 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;opacity:' + playOpT + ';transition:opacity 1.4s ease;pointer-events:none'),
         accentStyle: 'position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);opacity:' + (a && !s.left ? '1' : '0') + ';display:flex;flex-direction:column;gap:clamp(20px,3vh,34px);text-align:left;' + xf,
         accentStyleT: towerMdSlide
@@ -1515,14 +1516,15 @@ class Component extends DCLogic {
     // sm/md — shell geometry stable (no dual↔tower aspect swap = no 3→4 flash); tower letterboxed via object-fit:contain
     const scMainRowStyleT = scMd
       ? 'position:relative;display:block;width:100%;max-width:1080px;flex:1;min-height:0;align-self:stretch'
-      : ('display:flex;flex-direction:column;align-items:center;width:100%;gap:' + (scPhone ? 'clamp(4px,.8vh,8px)' : 'clamp(12px,1.6vh,18px)'));
+      : ('display:flex;flex-direction:column;align-items:center;width:100%;gap:' + (scPhone ? 'clamp(4px,.8vh,8px)' : 'clamp(12px,1.6vh,18px)') + (scPhone ? ';flex:1;min-height:0' : ''));
     const scStackLayerStyleT = scMd
       ? ('position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,1.6vh,18px);padding-bottom:clamp(72px,10vh,100px);box-sizing:border-box;opacity:' + (scMdTower ? '0' : '1') + ';transition:opacity .4s ease;pointer-events:none')
       : 'display:contents';
     const scShort = (scPhone || scMd) && (this.state.gh === 'short' || this.state.gh === 'tight');
     const scTight = (scPhone || scMd) && this.state.gh === 'tight';
+    // grows via flex inside the 100dvh pad (fills space freed when browser chrome hides); min-height is just the floor for tight/short bands
     const scVidBoxStyleT = scPhone
-      ? ('position:relative;height:' + phoneVidH + ';width:' + phoneVidW + ';flex-shrink:0;margin:0 auto;overflow:hidden')
+      ? ('position:relative;flex:1 1 0;min-height:' + phoneVidH + ';width:' + phoneVidW + ';container-type:size;margin:0 auto;overflow:hidden')
       : 'position:relative;width:min(100%,980px);aspect-ratio:1463 / 570;height:auto;flex-shrink:0;margin:0 auto';
     const scAccentBoxStyleT = scPhone
       ? ('position:relative;width:100%;max-width:540px;min-height:' + (scTight ? '88px' : (scShort ? '108px' : '200px')) + ';flex-shrink:0')
