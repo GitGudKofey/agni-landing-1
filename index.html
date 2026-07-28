@@ -296,7 +296,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
       </sc-if>
       </sc-if>
       </div>
-      <div style="{{ scChromeStyleT }}">
+      <div id="sc-chrome-t" style="{{ scChromeStyleT }}">
         <sc-if value="{{ scShowDots }}" hint-placeholder-val="{{ true }}">
         <div style="{{ scDotsWrapStyleT }}">
           <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="4">
@@ -810,7 +810,7 @@ details[data-faq][open] [data-ans]{max-height:420px;opacity:1;margin-top:14px}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:920}}">
 class Component extends DCLogic {
-  state = { scenario: 0, gw: 'lg', gh: 'comfy', vvBottom: 0, navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, playedScenes: {} };
+  state = { scenario: 0, gw: 'lg', gh: 'comfy', navOpen: false, cmpA: 0, cmpB: 3, triA: 0, triB: 1, triC: 3, navVisible: true, triStuck: false, triBuyOn: false, triOpen: null, isTouch: false, playedScenes: {} };
 
   _prepSceneVid(v) {
     if (!v || v._agniVidReady) return;
@@ -886,6 +886,7 @@ class Component extends DCLogic {
         if (this.state.playedScenes[i]) this._armSceneVid(v);
       });
     }
+    if (this._syncScChrome) this._syncScChrome();
   }
 
   componentDidMount() {
@@ -904,12 +905,39 @@ class Component extends DCLogic {
     };
     window.addEventListener('mousemove', this._onMove);
 
-    // width + height bands + visualViewport bottom inset (browser chrome under sticky CTA)
-    this._syncVvBottom = () => {
+    // sm CTA: pin to bottom of visualViewport (Chrome/Safari browser chrome)
+    this._syncScChrome = () => {
+      const el = document.getElementById('sc-chrome-t');
+      if (!el) return;
+      if (this.state.gw !== 'sm') {
+        el.style.position = '';
+        el.style.top = '';
+        el.style.bottom = '';
+        el.style.left = '';
+        el.style.right = '';
+        el.style.visibility = '';
+        el.style.transform = '';
+        return;
+      }
       const vv = window.visualViewport;
-      let b = 0;
-      if (vv) b = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
-      if (b !== this.state.vvBottom) this.setState({ vvBottom: b });
+      const ctaH = 48;
+      const pad = 10;
+      const offsetTop = vv ? vv.offsetTop : 0;
+      const height = vv ? vv.height : window.innerHeight;
+      const top = Math.round(offsetTop + height - ctaH - pad);
+      el.style.position = 'fixed';
+      el.style.top = top + 'px';
+      el.style.bottom = 'auto';
+      el.style.left = '12px';
+      el.style.right = '12px';
+      el.style.zIndex = '20';
+      el.style.transform = 'translateZ(0)';
+      const sec = document.getElementById('scenarios');
+      if (sec) {
+        const r = sec.getBoundingClientRect();
+        const visible = r.bottom > offsetTop + 80 && r.top < offsetTop + height - 24;
+        el.style.visibility = visible ? 'visible' : 'hidden';
+      }
     };
     this._onResize = () => {
       const w = window.innerWidth;
@@ -923,17 +951,14 @@ class Component extends DCLogic {
         patch.navOpen = gw === 'lg' ? false : this.state.navOpen;
       }
       if (gh !== this.state.gh) patch.gh = gh;
-      const vv = window.visualViewport;
-      let b = 0;
-      if (vv) b = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
-      if (b !== this.state.vvBottom) patch.vvBottom = b;
       if (Object.keys(patch).length) this.setState(patch);
+      this._syncScChrome();
     };
     this._onVvScroll = () => {
       if (this._vvRaf) return;
       this._vvRaf = requestAnimationFrame(() => {
         this._vvRaf = 0;
-        this._syncVvBottom();
+        this._syncScChrome();
       });
     };
     this._onResize();
@@ -942,6 +967,7 @@ class Component extends DCLogic {
       window.visualViewport.addEventListener('resize', this._onResize);
       window.visualViewport.addEventListener('scroll', this._onVvScroll, { passive: true });
     }
+    window.addEventListener('scroll', this._onVvScroll, { passive: true });
 
     // hide navbar on scroll-down, reveal on scroll-up
     this._lastNavY = window.scrollY;
@@ -1243,6 +1269,7 @@ class Component extends DCLogic {
         if (this._onVvScroll) window.visualViewport.removeEventListener('scroll', this._onVvScroll);
       }
     }
+    if (this._onVvScroll) window.removeEventListener('scroll', this._onVvScroll);
     if (this._vvRaf) cancelAnimationFrame(this._vvRaf);
     if (this._onNavScroll) window.removeEventListener('scroll', this._onNavScroll);
     if (this._onDocDown) document.removeEventListener('mousedown', this._onDocDown);
@@ -1550,14 +1577,13 @@ class Component extends DCLogic {
     const scTextBoxStyleT = 'display:none';
     const scAccentMedia = (scMd || scPhone) && !scShort;
     const scShowDots = !scPhone;
-    const vvBottom = Math.max(0, this.state.vvBottom || 0);
-    // sticky: phone reserves CTA only; bottom follows visualViewport browser chrome
+    // sticky: phone reserves CTA only; sm CTA is position:fixed to visualViewport (see _syncScChrome)
     const scStickyPadStyleT = scPhone
-      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(' + (56 + vvBottom) + 'px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
-      : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + ' + vvBottom + 'px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
+      ? ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '4px' : (scShort ? 'clamp(4px,.6vh,8px)' : 'clamp(6px,1vh,10px)')) + ';padding-top:' + (scTight ? 'clamp(44px,5.5svh,60px)' : (scShort ? 'clamp(52px,6.5svh,68px)' : 'clamp(60px,7.5svh,80px)')) + ';padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2')
+      : ('position:sticky;top:clamp(52px,7svh,88px);height:calc(100svh - clamp(52px,7svh,88px));display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:' + (scTight ? '8px' : (scShort ? 'clamp(10px,1.2vh,14px)' : 'clamp(12px,1.6vh,18px)')) + ';padding-top:' + (scTight ? 'clamp(72px,9vh,96px)' : (scShort ? 'clamp(84px,10.5vh,112px)' : 'clamp(100px,12.5vh,132px)')) + ';padding-bottom:calc(' + (scTight ? '80px' : (scShort ? '88px' : '100px')) + ' + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;pointer-events:none;z-index:2');
     const scChromeStyleT = scPhone
-      ? ('position:absolute;bottom:calc(' + vvBottom + 'px + max(8px,env(safe-area-inset-bottom,0px)));left:12px;right:12px;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none;transition:bottom .2s ease')
-      : ('position:absolute;bottom:calc(' + vvBottom + 'px + max(12px,env(safe-area-inset-bottom,0px)));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none;transition:bottom .2s ease');
+      ? 'position:fixed;left:12px;right:12px;bottom:10px;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;pointer-events:none;transform:translateZ(0)'
+      : 'position:absolute;bottom:max(12px,env(safe-area-inset-bottom,0px));left:0;right:0;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;pointer-events:none';
     const scDotsWrapStyleT = scPhone
       ? 'display:none'
       : 'pointer-events:auto;height:56px;display:flex;align-items:center;gap:10px;padding:0 4px;border-radius:100px;background:transparent';
