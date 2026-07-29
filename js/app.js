@@ -884,6 +884,18 @@
     }).join("");
   }
 
+  // sm-only: vertical thumbnail nav overlaid on the video box (frees up the
+  // bottom row for the full-width CTA instead of a horizontal dots strip)
+  function scVidNavHtml(scenes) {
+    return scenes.map(function (sc) {
+      return (
+        '<button type="button" class="sc-vid-nav-dot" data-sc-dot="' + sc.idx + '" title="' + escapeHtml(sc.titleText) + '" aria-label="' + escapeHtml(sc.titleText) + '">' +
+          '<img src="assets/' + sc.thumbStem + '.webp" alt="" loading="lazy" decoding="async">' +
+        "</button>"
+      );
+    }).join("");
+  }
+
   function scCtaHtml() {
     return (
       '<a href="#compare" class="sc-cta">' +
@@ -945,7 +957,10 @@
           '<h2 class="sc-heading sc-heading--tab">Один центр питания<br>для всего сетапа</h2>' +
           '<div class="sc-main-row">' +
             '<div class="sc-stack">' +
-              '<div class="sc-vid-box">' + vidSlides + "</div>" +
+              '<div class="sc-vid-wrap">' +
+                '<div class="sc-vid-box">' + vidSlides + "</div>" +
+                '<div class="sc-vid-nav">' + scVidNavHtml(scenes) + "</div>" +
+              "</div>" +
               '<div class="sc-accent-box">' + accSlides + "</div>" +
             "</div>" +
             towerMd +

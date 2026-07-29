@@ -840,25 +840,41 @@ html[data-gw="sm"] .sc-acc-slide .sc-spec-pre {
   #scenarios-root[data-active-tower="1"] .sc-stack { opacity: 0; }
 }
 
-/* ---- MD/SM video box ---- */
-.sc-vid-box {
+/* ---- MD/SM video box ----
+   .sc-vid-wrap spans the full row width so the sm thumbnail nav can anchor
+   to the true grid edge; .sc-vid-box itself stays capped/centered inside it. */
+.sc-vid-wrap {
   position: relative;
+  display: grid;
+  width: 100%;
   flex: 1 1 0;
   min-height: 200px;
-  width: min(100%, 360px);
-  container-type: size;
-  margin: 0 auto;
-  overflow: hidden;
 }
-html[data-gh="short"] .sc-vid-box { min-height: 175px; }
-html[data-gh="tight"] .sc-vid-box { min-height: 150px; }
+html[data-gh="short"] .sc-vid-wrap { min-height: 175px; }
+html[data-gh="tight"] .sc-vid-wrap { min-height: 150px; }
 @media (min-width: 640px) {
-  .sc-vid-box {
+  .sc-vid-wrap {
     flex: 0 0 auto;
     min-height: 0;
     width: min(100%, 980px);
-    aspect-ratio: 1463 / 570;
+  }
+}
+.sc-vid-box {
+  position: relative;
+  grid-area: 1 / 1;
+  justify-self: center;
+  align-self: stretch;
+  width: min(100%, 360px);
+  height: 100%;
+  container-type: size;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .sc-vid-box {
+    width: 100%;
     height: auto;
+    align-self: start;
+    aspect-ratio: 1463 / 570;
     container-type: normal;
   }
 }
@@ -901,6 +917,55 @@ html[data-gw="sm"] .sc-vid-slide:not(.is-tower) .sc-vid-el {
   transform: translate(-50%, -50%) rotate(-90deg);
   transform-origin: center center;
 }
+
+/* sm-only: vertical thumbnail nav overlaid on the video box (frees the
+   bottom row for a full-width CTA instead of a horizontal dots strip).
+   Shares .sc-vid-wrap's grid cell so it anchors to the true row edge —
+   not to .sc-vid-box's own (narrower, centered) edge on wider sm screens. */
+.sc-vid-nav {
+  grid-area: 1 / 1;
+  justify-self: end;
+  align-self: center;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-right: 10px;
+  pointer-events: auto;
+}
+@media (min-width: 640px) {
+  .sc-vid-nav { display: none; }
+}
+.sc-vid-nav-dot {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px;
+  padding: 3px;
+  cursor: pointer;
+  background: rgba(20, 20, 22, .55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: .55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.sc-vid-nav-dot.is-active {
+  opacity: 1;
+  background: rgba(15, 159, 148, .22);
+  box-shadow: 0 0 0 1.5px var(--c-accent), 0 0 12px rgba(15, 159, 148, .45);
+}
+.sc-vid-nav-dot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: grayscale(.25);
+}
+.sc-vid-nav-dot.is-active img { filter: none; }
 
 /* ---- MD/SM accent grid-stack ---- */
 .sc-accent-box {
@@ -1439,6 +1504,7 @@ html[data-gh="tight"] .sc-acc-media-wrap { display: none; }
   position: absolute;
   top: 18px;
   left: 18px;
+  max-width: calc(100% - 36px);
   z-index: 2;
   display: inline-flex;
   align-items: center;
@@ -1452,6 +1518,10 @@ html[data-gh="tight"] .sc-acc-media-wrap { display: none; }
   font: 600 13px Roboto, sans-serif;
   color: var(--c-ink);
   letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 .events-play-btn__dot {
   width: 7px; height: 7px; border-radius: 50%;

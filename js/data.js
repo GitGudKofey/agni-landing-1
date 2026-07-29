@@ -18,6 +18,27 @@
   // ---- SCENARIOS — slide content for renderScenarios() (lg overlays + md/sm sticky) ----
   var scenarioBase = [
     {
+      n: "04",
+      icon: "ph-plug-charging",
+      tag: "65 Вт GaN",
+      title: "Вертикальные станции питания",
+      model: "TP-VG6U12E-C-W",
+      thumbStem: "4slide-preview",
+      vidStem: "scene4-top-v1short",
+      left: "tower",
+      right: "tower",
+      tower: true,
+      body: "Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.",
+      accents: [
+        { pre: "беспроводная зарядка", big: "Qi 15 Вт", label: "Положили смартфон — зарядка началась" },
+        { pre: "быстрая зарядка", big: "GaN 65 Вт", label: "Зарядка ноутбуков, Steam Deck, Nintendo Switch" }
+      ],
+      details: [
+        { kind: "vid", stem: "4slide-left" },
+        { kind: "img", stem: "4slide-left_2" }
+      ]
+    },
+    {
       n: "01",
       icon: "ph-sliders-horizontal",
       tag: "групповое питание",
@@ -94,27 +115,6 @@
       detailsLg: [
         { kind: "img", stem: "scene3-left-usb" },
         { kind: "img", stem: "3slide-left_2" }
-      ]
-    },
-    {
-      n: "04",
-      icon: "ph-plug-charging",
-      tag: "65 Вт GaN",
-      title: "Вертикальные станции питания",
-      model: "TP-VG6U12E-C-W",
-      thumbStem: "4slide-preview",
-      vidStem: "scene4-top-v1short",
-      left: "tower",
-      right: "tower",
-      tower: true,
-      body: "Вертикальная конструкция освобождает место на столе и обеспечивает удобный доступ ко всем розеткам и USB-разъёмам. 65 Вт GaN-зарядка для ноутбуков, Steam Deck, Nintendo Switch и смартфонов.",
-      accents: [
-        { pre: "беспроводная зарядка", big: "Qi 15 Вт", label: "Положили смартфон — зарядка началась" },
-        { pre: "быстрая зарядка", big: "GaN 65 Вт", label: "Зарядка ноутбуков, Steam Deck, Nintendo Switch" }
-      ],
-      details: [
-        { kind: "vid", stem: "4slide-left" },
-        { kind: "img", stem: "4slide-left_2" }
       ]
     }
   ];
