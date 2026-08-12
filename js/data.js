@@ -95,7 +95,7 @@
       icon: "ph-broadcast",
       tag: "до 8 устройств",
       title: "Мощные сетапы\nи стриминг",
-      model: "TP-FS6E",
+      model: "TP-FS4U6E-C",
       thumbStem: "3slide-preview",
       vidStem: "scene3-top-v1short",
       left: "dual",
